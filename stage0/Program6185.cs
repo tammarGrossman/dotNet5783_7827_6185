@@ -6,16 +6,16 @@ namespace stage0
         static void Main(string[] args)
         {
             welcome6185();
-            welcome7827();
+           // welcome7827();
             Console.ReadKey();
         }
-         static partial void welcome7827()
+        /* static partial void welcome7827()
         {
             string name;
             Console.Write("Enter your name:");
             name = Console.ReadLine();
             Console.WriteLine("{0}, welcome to my first console application", name);
-        }
+        }*/
         private static void welcome6185()
         {
             string name;
