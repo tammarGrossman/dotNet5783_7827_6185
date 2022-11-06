@@ -34,4 +34,13 @@ public struct Product
     	Price: {Price}
     	Amount in stock: {InStock}
        ";
+    public Product GetProduct(int id)
+    {
+        foreach (Product item in DataSource.products)
+        {
+            if (item.ID == id)//FIND
+                return item;
+            throw new Exception("not exists")
+        }
+    }
 }

@@ -1,8 +1,9 @@
 ﻿
 
+using System.Data;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Xml.Linq;
-
 namespace DO;
 
 /// <summary>
@@ -49,5 +50,32 @@ public struct Order
     	ShipDate: {ShipDate}
     	DeliveryDate: {DeliveryDate}
        ";
+
+    public int AddOrder(Order o)
+    {
+        //check if there is place
+        DataS
+        return o.ID;
+    }
+    public Order GetOrder(int id)
+    {
+        foreach (Order item in DataSource.orders)
+        {
+            if(item.ID==id)//FIND
+                return item;
+            throw new Exception("not exists");
+        }
+    }
+    public Order DeleteOrder(int id)
+    {
+        foreach (Order item in DataSource.orders)
+        {
+            if (item.ID == id)//FIND
+                return item;
+            throw new Exception("not exists");
+        }
+    }
+    // public Order[] GetOrders()=>return DataSource.Orders;
+
 
 }
