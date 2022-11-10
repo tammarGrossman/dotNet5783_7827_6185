@@ -35,13 +35,5 @@ public struct OrderItem
     	Price: {Price}
     	Amount: {Amount}
        ";
-    public OrderItem GetOrderItem(int id)
-    {
-        foreach (OrderItem item in DataSource.orderItems)
-        {
-            if (item.ID == id)//FIND
-                return item;
-            throw new Exception("not exists");
-        }
-    }
+  
 }

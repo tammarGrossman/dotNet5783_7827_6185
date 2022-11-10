@@ -51,31 +51,4 @@ public struct Order
     	DeliveryDate: {DeliveryDate}
        ";
 
-    public int AddOrder(Order o)
-    {
-        //check if there is place
-        DataS
-        return o.ID;
-    }
-    public Order GetOrder(int id)
-    {
-        foreach (Order item in DataSource.orders)
-        {
-            if(item.ID==id)//FIND
-                return item;
-            throw new Exception("not exists");
-        }
-    }
-    public Order DeleteOrder(int id)
-    {
-        foreach (Order item in DataSource.orders)
-        {
-            if (item.ID == id)//FIND
-                return item;
-            throw new Exception("not exists");
-        }
-    }
-    // public Order[] GetOrders()=>return DataSource.Orders;
-
-
 }
