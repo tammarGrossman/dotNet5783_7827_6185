@@ -69,11 +69,11 @@ static internal class DataSource
 
     static internal class Config
     {
-        static internal OrderIndex= 0;
-        static internal ProductIndex= 0;
-        static internal OrderItemIndex= 0;
-        static private lastOrder=1;
-        static private lastOrderItem=1;
+        static internal int OrderIndex= 0;
+        static internal int ProductIndex= 0;
+        static internal int OrderItemIndex= 0;
+        static private int lastOrder=1;
+        static private int lastOrderItem=1;
         public int LastOrder { get=>return lastOrder++; set; }
         public int LastOrderItem { get=>lastOrderItem++; set; }
     }
