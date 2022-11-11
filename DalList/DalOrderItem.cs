@@ -17,17 +17,16 @@ public class DalOrderItem
             throw new Exception("there is no place")
     }
 
-    //public OrderItem GetOrderItem(int id)
-    //{
-    //    foreach (OrderItem item in DataSource.orderItems)
-    //    {
-    //        if (item.ID == id)//FIND
-    //            return item;
-    //    }
-    //    throw new Exception("not exists");
-    //}
-
-    public OrderItem GetOrderItem(int pId, int oId)
+    public OrderItem GetOrderItem(int id)
+    {
+        foreach (OrderItem item in DataSource.orderItems)
+        {
+            if (item.OrderItemID == id)//FIND
+                return item;
+        }
+        throw new Exception("not exists");
+    }
+    public OrderItem GetOrderItemByIDS(int pId, int oId)
     {
         foreach (OrderItem item in DataSource.orderItems)
         {
@@ -40,7 +39,7 @@ public class DalOrderItem
     {
 
         OrderItem[] newOrderItems = new OrderItem[Config.OrderItemIndex]
-               OrderItem oI = new OrderItem();
+        OrderItem oI = new OrderItem();
         int i = 0;
         foreach (OrderItem item in DataSource.OrderItems)
         {
@@ -54,7 +53,7 @@ public class DalOrderItem
     }
 
 
-    public OrderItem DeleteOrderItems(int id)
+    public OrderItem DeleteOrderItem(int id)
     {
         foreach (OrderItem item in DataSource.orderItems)
         {
@@ -79,14 +78,14 @@ public class DalOrderItem
     }
 
 
-    public OrderItem GetProductsInOrder(int oId)
+    public OrderItem GetProductsInOrder(int oIID)
     {
         OrderItem[] newOrderItems = new OrderItem[Config.OrderItemIndex]
                OrderItem oI = new OrderItem();
         int i = 0;
         foreach (OrderItem item in DataSource.orderItems)
         {
-            if (item.OrderID == oId)
+            if (item.OrderID == oIID)
             { //FIND
                 oI.ProductID = item.ProductID;
                 oI.OrderID = item.OrderID;

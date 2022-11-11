@@ -1,10 +1,9 @@
 ﻿
-
 namespace Dal;
 
 public class DalProduct
 {
-    public int AddOrderItem(Product p)
+    public int AddProduct(Product p)
     {
         if (Config.orderItemIndex < DataSource.Products.length) {
             for (int i = 0; i < DataSource.Products.length; i++)
@@ -29,7 +28,6 @@ public class DalProduct
         throw new Exception("not exists")
 
     }
-    public Products[] GetProducts() =>return DataSource.Products;
 
     public OrdProducts DeleteProduct(int id)
     {
@@ -54,11 +52,10 @@ public class DalProduct
         throw new Exception("not exists");
     }
 
-
     public Product[] GetProducts()
     {
         Product[] newProducts= new Product[Config.ProductIndex]
-             Product p = new Product();
+        Product p = new Product();
         int i = 0;
         foreach (Product item in DataSource.Products)
         {

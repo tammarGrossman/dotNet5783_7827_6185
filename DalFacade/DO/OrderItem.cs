@@ -11,8 +11,14 @@ namespace DO;
 public struct OrderItem
 {
     /// <summary>
+    /// Unique OrderItemID of Product
+    /// </summary>
+    /// 
+    public int OrderItemID { get; set; }
+    /// <summary>
     /// Unique ID of Product
     /// </summary>
+    /// 
     public int ProductID { get; set; }
     /// <summary>
     /// Unique ID of Order
@@ -30,6 +36,7 @@ public struct OrderItem
 
     public override string ToString() =>
        $@"
+        Order Item ID={OrderItemID}
         Product ID={ProductID}, 
         Order ID - {OrderID}
     	Price: {Price}

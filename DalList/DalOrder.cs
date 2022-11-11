@@ -5,7 +5,7 @@ namespace Dal;
 public class DalOrder
 {
 
-    public int AddOrder(Order o)
+    public  int AddOrder(Order o)
     {
         if (Config.orderItemIndex < DataSource.Orders.length)
         {

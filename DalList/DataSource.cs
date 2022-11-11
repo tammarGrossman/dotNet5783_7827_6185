@@ -1,50 +1,25 @@
 ﻿
 using DO;
 using System.Runtime.CompilerServices;
-
 namespace Dal;
-
 static internal class DataSource
 {
     static readonly int rand;
     static internal Order[] Orders = new Order[100];
     static internal OrderItem[] OrderItems = new OrderItem[200];
     static internal Product[] Products = new Product[50];
+    private static s_Initialize()
+    {
+        createOrder();
+        createProduct();
+        createOrderItem();
+    }
     static DataSource()
     {
         rand = new Random();
         s_Initialize();
     }
-    /// <summary>
-    /// a function that push an object to its array if it is possible
-    /// </summary>
-    /// <param name="p"></param>
-    static private void AddProduct(Product p)
-    {
-
-    }
-    /// <summary>
-    /// a function that push an object to its array if it is possible
-    /// </summary>
-    /// <param name="o"></param>
-    static private void AddOrder(Order o)
-    {
-
-    }
-    /// <summary>
-    /// a function that push an object to its array if it is possible
-    /// </summary>
-    /// <param name="oI"></param>
-    static private void AddOrderItem(Product oI)
-    {
-
-    }
-    private static s_Initialize()
-    {
-        AddOrder(new Order());
-        AddProduct(new Product());
-        AddOrderItem(new OrderItem());
-    }
+   
     private static void createOrder()
     {
         for (int i = 0; i < Orders.length; i++)
@@ -66,15 +41,14 @@ static internal class DataSource
             OrderItems[i] = new OrderItem();
         }
     }
-
     static internal class Config
     {
         static internal int OrderIndex= 0;
         static internal int ProductIndex= 0;
         static internal int OrderItemIndex= 0;
-        static private int lastOrder=1;
-        static private int lastOrderItem=1;
-        public int LastOrder { get=>return lastOrder++; set; }
-        public int LastOrderItem { get=>lastOrderItem++; set; }
+        static private int lastOrder=0;
+        static private int lastOrderItem=0;
+        public int LastOrder { get=>return lastOrder++;}
+        public int LastOrderItem { get=>lastOrderItem++;}
     }
 }
