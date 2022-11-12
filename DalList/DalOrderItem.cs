@@ -1,7 +1,5 @@
 ﻿
-
 namespace Dal;
-
 public class DalOrderItem
 {
     public int AddOrderItem(OrderItem oI)

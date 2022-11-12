@@ -7,8 +7,7 @@ namespace DalTest
     { 
        private DalOrder dalOrder=new DalOrder();
        private DalOrderItem dalOrderItem=new DalOrderItem();
-       private DalProduct dalProduct=new DalProduct();
-        
+        private DalProduct dalProduct = new DalProduct();
              static void ProductCase()
             {
              int action;
@@ -259,19 +258,20 @@ namespace DalTest
                 idP = int.Parse(Console.ReadLine());
                 Console.WriteLine(dalOrderItem.GetOrderItemByIDS(idP,id));
             }
-                                 default:
-                                { 
-                                Console.WriteLine("enter again");
-                                action=int.Parse( Console.ReadLine()); 
-                                break;
-                                    }
+             default:
+            { 
+            Console.WriteLine("enter again");
+            action=int.Parse( Console.ReadLine()); 
+            break;
+                }
                             
-                            }
+           }
             
                   
 
         static void Main()
         {
+            
             do { 
             int entity;
             Console.WriteLine("enter 0 to exit");
