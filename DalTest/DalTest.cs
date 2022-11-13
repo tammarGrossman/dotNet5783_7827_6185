@@ -1,15 +1,17 @@
 ﻿using Dal;
 using DO;
+using System;
 using System.Data.Common;
 namespace DalTest
 {
     public class DalTest
     { 
-       private DalOrder dalOrder=new DalOrder();
-       private DalOrderItem dalOrderItem=new DalOrderItem();
-        private DalProduct dalProduct = new DalProduct();
+       private static DalOrder dalOrder=new DalOrder();
+       private static DalOrderItem dalOrderItem=new DalOrderItem();
+       private static DalProduct dalProduct = new DalProduct();
              static void ProductCase()
             {
+            
              int action;
              Console.WriteLine("enter 0 to add product");
              Console.WriteLine("enter 1 to show product by id");
@@ -66,13 +68,12 @@ namespace DalTest
                         Console.WriteLine("enter product price:");
                         p.Price = int.Parse(Console.ReadLine());
                         Console.WriteLine("enter product category:");
-                        p.Category = (Category)((Enum)Console.ReadLine());//check
+                        p.Category= (Enums.Category)Enum.Parse(typeof(Enums.Category), Console.ReadLine());
                         Console.WriteLine("enter product in stock:");
                         p.InStock = int.Parse(Console.ReadLine());
                         dalProduct.UpdateProduct(p);
                         break;
                     }
-
                     case 4:
                     {
                         int id;

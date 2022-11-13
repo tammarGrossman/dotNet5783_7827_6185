@@ -8,7 +8,8 @@ public class DalOrderItem
         if (Config.orderItemIndex < DataSource.OrderItems.length)
         {
             int i = Config.LastOrderItem;
-            DataSource.OrderItems[Config.OrderItemIndex] = oI;
+            oI.ID = i;
+            DataSource.OrderItems[Config.OrderItemIndex++] = oI;
             return i;
         }
         else

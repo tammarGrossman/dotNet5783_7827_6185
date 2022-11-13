@@ -1,5 +1,6 @@
 ﻿
 using DO;
+using System;
 using System.Runtime.CompilerServices;
 namespace Dal;
 static internal class DataSource
@@ -8,6 +9,7 @@ static internal class DataSource
     static internal Order[] Orders = new Order[100];
     static internal OrderItem[] OrderItems = new OrderItem[200];
     static internal Product[] Products = new Product[50];
+    
     static DataSource()
     {
         rand = new Random();
@@ -28,17 +30,24 @@ static internal class DataSource
 
         for (int i = 0; i < 20 ; i++)
         {
-            Orders[i] = new Order
+            Orders[i] = new Order();
+            Orders[i].OrderDate = DateTime.MinValue;
+            ts = new TimeSpan(rand.Next(1, 10), rand.Next(0, 24), rand.Next(0, 60), rand.Next(0, 60));
+
+            if (i < 16)
             {
-                //CHECK THE DATES
-                ID=Config.LastOrder,
-                OrderDate = DateTime.Now(),
-                DeliveryDate = DateTime.Now(),
-                ShipDate = DateTime.Now(),
-                CustomerAdress = customersAdresses[i],
-                CustomerEmail=customersEmails[i],
-                CustomerName = customersNames[i],
-            };
+                Orders[i].ShipDate = DateTime.MinValue + ts;
+            }
+
+            if (i < 10)
+            {
+                ts.Add(new TimeSpan(rand.Next(1, 10), rand.Next(0, 24), rand.Next(0, 60), rand.Next(0, 60)));
+                Orders[i].DeliveryDate = Orders[i].ShipDate + ts;
+            }
+            Orders[i].ID = Config.LastOrder;
+            Orders[i].CustomerAdress = customersAdresses[i];
+            Orders[i].CustomerEmail = customersEmails[i];
+            Orders[i].CustomerName = customersNames[i];
         }
     }
     private static void createProduct()
@@ -53,12 +62,12 @@ static internal class DataSource
                 Name = productsNames[i - 1],
                 Price = rand.Next(20, 201),
                 InStock = rand.Next(0, 50),
-                Category = ((Category)((Enum)categories[i - 1]));
-            };
-        }
+                Category = (Enums.Category)Enum.Parse(typeof(Enums.Category), categories[i-1]);
+        };
     }
-    private static void createOrderItem()
-    {
+}
+private static void createOrderItem()
+{
         int iOrder = 1;
         int iProduct = 1000000;
         for (int i = 0; i < 40 ; i++)

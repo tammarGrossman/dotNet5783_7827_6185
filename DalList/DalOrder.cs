@@ -12,7 +12,8 @@ public class DalOrder
 
             //check if there is place
             int i = Config.LastOrder;
-            DataSource.Orders[Config.OrderIndex] = o;
+            o.ID = i;
+            DataSource.Orders[Config.OrderIndex++] = o;
             return i;
         }
         else

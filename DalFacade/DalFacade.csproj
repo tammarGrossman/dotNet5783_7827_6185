@@ -12,4 +12,8 @@
 	  <RootNamespace />
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="..\DalList\DataSource.cs" Link="DataSource.cs" />
+  </ItemGroup>
+
 </Project>

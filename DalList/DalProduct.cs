@@ -12,7 +12,7 @@ public class DalProduct
                     throw Exception("wrong id")
             }
             //check if there is place
-            DataSource.Products[Config.ProductIndex] = p;
+            DataSource.Products[Config.ProductIndex++] = p;
             return p.ID;
         }
         else
