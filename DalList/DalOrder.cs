@@ -13,7 +13,7 @@ public class DalOrder
             //check if there is place
             int i = Config.LastOrder;
             o.ID = i;
-            DataSource.Orders[Config.OrderIndex++] = o;
+            DataSource.Orders[DataSource.Config.OrderIndex++] = o;
             return i;
         }
         else
@@ -55,7 +55,7 @@ public class DalOrder
 
     public Order[] GetOrders()
     {
-        Order[] newOrders = new Order[Config.OrderIndex]
+        Order[] newOrders = new Order[DataSource.Config.OrderIndex]
              Order o = new Order();
         int i = 0;
         foreach (Order item in DataSource.orders)

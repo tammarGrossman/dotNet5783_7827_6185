@@ -33,7 +33,10 @@ public struct OrderItem
     /// </summary>
     public int Amount { get; set; }
 
-
+    /// <summary>
+    /// print object details
+    /// </summary>
+    /// <returns></returns>
     public override string ToString() =>
        $@"
         Order Item ID={OrderItemID}

@@ -9,7 +9,7 @@ public class DalOrderItem
         {
             int i = Config.LastOrderItem;
             oI.ID = i;
-            DataSource.OrderItems[Config.OrderItemIndex++] = oI;
+            DataSource.OrderItems[DataSource.Config.OrderItemIndex++] = oI;
             return i;
         }
         else
@@ -79,8 +79,8 @@ public class DalOrderItem
 
     public OrderItem GetProductsInOrder(int oIID)
     {
-        OrderItem[] newOrderItems = new OrderItem[Config.OrderItemIndex]
-               OrderItem oI = new OrderItem();
+        OrderItem[] newOrderItems = new OrderItem[DataSource.Config.OrderItemIndex]
+        OrderItem oI = new OrderItem();
         int i = 0;
         foreach (OrderItem item in DataSource.orderItems)
         {

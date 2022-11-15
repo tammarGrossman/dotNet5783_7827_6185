@@ -12,7 +12,7 @@ public class DalProduct
                     throw Exception("wrong id")
             }
             //check if there is place
-            DataSource.Products[Config.ProductIndex++] = p;
+            DataSource.Products[DataSource.Config.ProductIndex++] = p;
             return p.ID;
         }
         else
@@ -54,7 +54,7 @@ public class DalProduct
 
     public Product[] GetProducts()
     {
-        Product[] newProducts= new Product[Config.ProductIndex]
+        Product[] newProducts= new Product[DataSource.Config.ProductIndex]
         Product p = new Product();
         int i = 0;
         foreach (Product item in DataSource.Products)

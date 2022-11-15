@@ -39,7 +39,10 @@ public struct Order
     /// the delivery date 
     /// </summary>
     public DateTime DeliveryDate { get; set; }
-
+    /// <summary>
+    /// print object details
+    /// </summary>
+    /// <returns></returns>
     public override string ToString() =>
        $@"
         Order ID={ID}
