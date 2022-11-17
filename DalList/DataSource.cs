@@ -3,11 +3,11 @@ using DO;
 namespace Dal;
 static internal class DataSource
 {
-    static readonly Random rand;
+    static readonly Random rand;// random
+    static bool start = false;//start project
     static internal Order[] Orders = new Order[100];
     static internal OrderItem[] OrderItems = new OrderItem[200];
     static internal Product[] Products = new Product[50];
-    
     static DataSource()
     {
         rand = new Random();
@@ -19,7 +19,9 @@ static internal class DataSource
         createProduct();
         createOrderItem();
     }
-   
+    /// <summary>
+    /// initilize orders
+    /// </summary>
     private static void createOrder()
     {
         string[] customersNames = new string [] { "moshe choen", "ruth choen", "david levi", "ben bash", "eli lev", "dana shal", "ron cahna", "esti shalom", "tammar choen", "michal levi", "shir gold", "dan fisher", "shimon yzchaki", "yair choen", "ruth dagush", "chen frid", "mini lev", "zipi bash", "dini levi", "tali choen", };
@@ -28,6 +30,7 @@ static internal class DataSource
 
         for (int i = 0; i < 20 ; i++)
         {
+            Config.OrderIndex++;
             Orders[i] = new Order();
             Orders[i].OrderDate = DateTime.MinValue;
             var ts = new TimeSpan(rand.Next(1, 10), rand.Next(0, 24), rand.Next(0, 60), rand.Next(0, 60));
@@ -48,6 +51,9 @@ static internal class DataSource
             Orders[i].CustomerName = customersNames[i];
         }
     }
+    /// <summary>
+    /// initilize products
+    /// </summary>
     private static void createProduct()
     {
         string[] productsNames = new string[] { "shirt", "skirt", "tights", "bottle", "shoes", "dumbbells", "mat", "rubberBand", "ball", "socks" };
@@ -55,28 +61,33 @@ static internal class DataSource
 
         for (int i = 1; i < 11; i++)
         {
+            Config.ProductIndex++;
             Products[i - 1] = new Product
             {
                 ID = i * 1000000,
                 Name = productsNames[i - 1],
                 Price = rand.Next(20, 201),
                 InStock = rand.Next(0, 50),
-                Category_ = (Category)Enum.Parse(typeof(Category), categories[i - 1])
+                Category_ = (Category)Enum.ToObject(typeof(Category), categories[i - 1])
             };
         }
     }
-
+    /// <summary>
+    /// initilize order items
+    /// </summary>
 private static void createOrderItem()
 {
-        int iOrder = 1;
-        int iProduct = 1000000;
+        int iOrder = 0;
+        int iProduct = 1;
         for (int i = 0; i < 40 ; i++)
         {
-            if (iProduct == 10000000)
+            Config.OrderItemIndex++;
+            if (iProduct == 11)
                 iProduct = 1;
-            if(iOrder==21)
-                iOrder = 1;
-            OrderItems[i] = new OrderItem() {
+            if(iOrder==20)
+                iOrder = 0;
+            OrderItems[i] = new OrderItem
+            {
                 OrderItemID =Config.LastOrderItem,
                 ProductID=(iProduct++)*1000000,
                 OrderID= iOrder++,
@@ -87,12 +98,19 @@ private static void createOrderItem()
 }
     static internal class Config
     {
+        //index and run number
         internal static int OrderIndex= 0;
         internal static int ProductIndex = 0;
         internal static int OrderItemIndex = 0;
         private static int lastOrder=0;
         private static int lastOrderItem=0;
+        static Config()
+        {
+            start = true;
+        }
         public static int LastOrder { get => lastOrder++; }
         public static int LastOrderItem { get=>lastOrderItem++;}
+
+
     }
 }

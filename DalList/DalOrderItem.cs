@@ -16,6 +16,9 @@ public class DalOrderItem
             int i = DataSource.Config.LastOrderItem;
             oI.OrderItemID = i;
             DataSource.OrderItems[DataSource.Config.OrderItemIndex++] = oI;
+            DalProduct dp = new DalProduct();
+            Product p = dp.GetProduct(oI.ProductID);
+            p.InStock -= oI.Amount;
             return i;
         }
         else
@@ -58,18 +61,19 @@ public class DalOrderItem
     /// <returns></returns>
     public OrderItem[] GetOrderItems()
     {
-
         OrderItem[] newOrderItems = new OrderItem[DataSource.Config.OrderItemIndex];
         OrderItem oI = new OrderItem();
-        int i = 0;
-        foreach (OrderItem item in DataSource.OrderItems)
+        for (int i = 0; i < DataSource.Config.OrderItemIndex; i++)
         {
-            oI.ProductID = item.ProductID;
-            oI.OrderID = item.OrderID;
-            oI.Price = item.Price;
-            oI.Amount = item.Amount;
-            newOrderItems[i++] = oI;
+            oI.OrderItemID = DataSource.OrderItems[i].OrderItemID;
+            oI.ProductID = DataSource.OrderItems[i].ProductID;
+            oI.OrderID = DataSource.OrderItems[i].OrderID;
+            oI.Price = DataSource.OrderItems[i].Price;
+            oI.Amount = DataSource.OrderItems[i].Amount;
+            newOrderItems[i] = oI;
         }
+        if(DataSource.Config.OrderItemIndex==0)
+            Console.WriteLine("there is no item in the order");
         return newOrderItems;
     }
     /// <summary>
@@ -79,18 +83,23 @@ public class DalOrderItem
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
 
-    public OrderItem DeleteOrderItem(int id)
+    public void DeleteOrderItem(int id)
     {
+        int exist = 0;
         for (int i = 0; i < DataSource.Config.OrderItemIndex; i++)
+        {
             if (DataSource.OrderItems[i].OrderItemID == id)//FIND
             {
+                exist = 1;
                 for (; i < DataSource.Config.OrderItemIndex; i++)
                 {
                     DataSource.OrderItems[i] = DataSource.OrderItems[i + 1];
                 }
                 DataSource.Config.OrderItemIndex--;
             }
-        throw new Exception("not exists");
+        }
+        if (exist == 0)
+            throw new Exception("not exists");
     }
     /// <summary>
     /// update object
@@ -118,25 +127,26 @@ public class DalOrderItem
     /// <param name="oIID"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public OrderItem[] GetProductsInOrder(int oIID)
+    public OrderItem[] GetProductsInOrder(int oID)
     {
         OrderItem[] newOrderItems = new OrderItem[DataSource.Config.OrderItemIndex];
         OrderItem oI = new OrderItem();
         int i = 0;
-        foreach (OrderItems item in DataSource.OrderItems)
+        for (; i < DataSource.Config.OrderItemIndex; i++)
         {
-            if (item.OrderID == oIID)
+            if (DataSource.OrderItems[i].OrderID == oID)
             { //FIND
-                oI.ProductID = item.ProductID;
-                oI.OrderID = item.OrderID;
-                oI.Price = item.Price;
-                oI.Amount = item.Amount;
-                newOrderItems[i++] = oI;
+                oI.OrderItemID = DataSource.OrderItems[i].OrderItemID;
+                oI.ProductID = DataSource.OrderItems[i].ProductID;
+                oI.OrderID = DataSource.OrderItems[i].OrderID;
+                oI.Price = DataSource.OrderItems[i].Price;
+                oI.Amount = DataSource.OrderItems[i].Amount;
+                newOrderItems[i] = oI;
             }
         }
             if(i!=0)
                 return newOrderItems;
-        throw new Exception("no products in the order");
+            else
+               throw new Exception("no products in the order");
     }
 }
-

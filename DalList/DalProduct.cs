@@ -10,7 +10,7 @@ public class DalProduct
     /// <exception cref="Exception"></exception>
     public int AddProduct(Product p)
     {
-        if (DataSource.Config.OrderItemIndex < DataSource.Products.Length)
+        if (DataSource.Config.ProductIndex < DataSource.Products.Length)
         {
             for (int i = 0; i < DataSource.Products.Length; i++)
             {
@@ -30,7 +30,7 @@ public class DalProduct
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public Product[] GetProduct(int id)
+    public Product GetProduct(int id)
     {
         foreach (Product item in DataSource.Products)
         {
@@ -45,20 +45,25 @@ public class DalProduct
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public Product DeleteProduct(int id)
+    public void DeleteProduct(int id)
     {
+        int exist = 0;
         for (int i = 0; i < DataSource.Config.ProductIndex; i++)
+        {
             if (DataSource.Products[i].ID == id)
             { //FIND
+                exist = 1;
                 for (; i < DataSource.Config.ProductIndex; i++)
                 {
                     DataSource.Products[i] = DataSource.Products[i + 1];
                 }
                 DataSource.Config.ProductIndex--;
             }
-        throw new Exception("not exists");
+        }
+        if(exist==0)
+           throw new Exception("not exists");
     }
-}
+
 /// <summary>
 /// update object
 /// </summary>
@@ -84,16 +89,17 @@ public Product[] GetProducts()
     {
         Product[] newProducts = new Product[DataSource.Config.ProductIndex];
         Product p = new Product();
-        int i = 0;
-        foreach (Product item in DataSource.Products)
+        for (int i=0; i<DataSource.Config.ProductIndex;i++)
         {
-            p.ID = item.ID;
-            p.Name = item.Name;
-            p.Category = item.Category;
-            p.Price = item.Price;
-            p.InStock = item.InStock;
-            newProducts[i++] = p;
+               p.ID = DataSource.Products[i].ID;
+               p.Name = DataSource.Products[i].Name;
+               p.Category_ = DataSource.Products[i].Category_;
+               p.Price =  DataSource.Products[i].Price;
+               p.InStock =  DataSource.Products[i].InStock;
+              newProducts[i] = p;
         }
+        if(DataSource.Config.ProductIndex==0)
+            Console.WriteLine("there is no products");
         return newProducts;
     }
 }

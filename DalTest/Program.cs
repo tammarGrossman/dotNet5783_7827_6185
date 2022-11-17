@@ -1,4 +1,4 @@
-﻿//
+﻿
 using Dal;
 using DO;
 namespace DalTest
@@ -8,18 +8,23 @@ namespace DalTest
         private static DalOrder dalOrder = new DalOrder();
         private static DalOrderItem dalOrderItem = new DalOrderItem();
         private static DalProduct dalProduct = new DalProduct();
+        /// <summary>
+        /// the product case
+        /// </summary>
         static void ProductCase()
         {
             int action;
+            bool res;
+            //enter action
             Console.WriteLine("enter 0 to add product");
             Console.WriteLine("enter 1 to show product by id");
             Console.WriteLine("enter 2 to view all products");
             Console.WriteLine("enter 3 to update product");
             Console.WriteLine("enter 4 to  delete product");
-            action = int.Parse(Console.ReadLine());
+            res = int.TryParse(Console.ReadLine(), out action);
             switch (action)
             {
-                case 0:
+                case 0://add product
                     {
                         Product p = new Product();
                         Console.WriteLine("enter product ID:");
@@ -33,30 +38,30 @@ namespace DalTest
                         Console.WriteLine("enter product in stock:");
                         p.InStock = int.Parse(Console.ReadLine());
                         dalProduct.AddProduct(p);
-                        break;
                     }
-                case 1:
+                    break;
+                case 1://get product
                     {
                         int id;
                         Console.WriteLine("enter product ID:");
-                        id = int.Parse(Console.ReadLine());
+                        res = int.TryParse(Console.ReadLine(), out id);
                         Console.WriteLine(dalProduct.GetProduct(id));
-                        break;
                     }
-
-                case 2:
+                    break;
+                case 2://get all product
                     {
                         foreach (Product item in dalProduct.GetProducts())
                         {
                             Console.WriteLine(item);
                         }
-                        break;
                     }
-                case 3:
+                    break;
+
+                case 3://update product
                     {
                         int id;
                         Console.WriteLine("enter product ID:");
-                        id = int.Parse(Console.ReadLine());
+                        res = int.TryParse(Console.ReadLine(), out id);
                         Console.WriteLine(dalProduct.GetProduct(id));
                         Product p = new Product();
                         Console.WriteLine("enter product ID:");
@@ -72,35 +77,41 @@ namespace DalTest
                         dalProduct.UpdateProduct(p);
                         break;
                     }
-                case 4:
+                case 4://delete product
                     {
                         int id;
                         Console.WriteLine("enter product ID:");
-                        id = int.Parse(Console.ReadLine());
+                        res = int.TryParse(Console.ReadLine(),out id);
                         dalProduct.DeleteProduct(id);
-                        break;
                     }
-                default:
+                    break;
+
+                default://press again product
                     {
                         Console.WriteLine("enter again");
-                        action = int.Parse(Console.ReadLine());
-                        break;
+                        res = int.TryParse(Console.ReadLine(),out action);
                     }
-            }
+                    break;
 
+            }
         }
+        /// <summary>
+        /// the order case
+        /// </summary>
         static void OrderCase()
         {
+            DateTime deliveryD, orderD, shipD;
             int action, id;
+            bool res;
             Console.WriteLine("enter 0 to add order");
             Console.WriteLine("enter 1 to show order by id");
             Console.WriteLine("enter 2 to view all orders");
             Console.WriteLine("enter 3 to update order");
             Console.WriteLine("enter 4 to  delete order");
-            action = int.Parse(Console.ReadLine());
+            res = int.TryParse(Console.ReadLine(),out action);
             switch (action)
             {
-                case 0:
+                case 0://add order
                     {
                         Order o = new Order();
                         Console.WriteLine("enter customer name:");
@@ -108,37 +119,40 @@ namespace DalTest
                         Console.WriteLine("enter customer email:");
                         o.CustomerEmail = Console.ReadLine();
                         Console.WriteLine("enter customer adress:");
-                        o.CustomerAdress = Console.ReadLine();//check
+                        o.CustomerAdress = Console.ReadLine();
                         Console.WriteLine("enter order date:");
-                        o.OrderDate = DateTime.Parse(Console.ReadLine());
-                        Console.WriteLine("enter ship date:");
-                        o.ShipDate = DateTime.Parse(Console.ReadLine());
-                        Console.WriteLine("enter delivery date:");
-                        o.DeliveryDate = DateTime.Parse(Console.ReadLine());
+                        res = DateTime.TryParse(Console.ReadLine(),out orderD);
+                        Console.WriteLine("enter ship date:");                      
+                        res = DateTime.TryParse(Console.ReadLine(),out shipD);
+                        Console.WriteLine("enter delivery date:");              
+                        res = DateTime.TryParse(Console.ReadLine(),out deliveryD);
+                        o.OrderDate = orderD;
+                        o.ShipDate= shipD;
+                        o.DeliveryDate= deliveryD;  
                         dalOrder.AddOrder(o);
-                        break;
                     }
-                case 1:
+                    break;
+                case 1://get order
                     {
                         Console.WriteLine("enter order ID:");
-                        id = int.Parse(Console.ReadLine());
+                        res = int.TryParse(Console.ReadLine(),out id);
                         Console.WriteLine(dalOrder.GetOrder(id));
-                        break;
                     }
-                case 2:
+                    break;
+                  
+                case 2:  //get all order
                     {
                         foreach (Order item in dalOrder.GetOrders())
                         {
                             Console.WriteLine(item);
                         }
-                        break;
                     }
-
-                case 3:
+                    break;
+                case 3://update order
                     {
-                        Order o=new Order();
-                        Console.WriteLine("enter product ID:");
-                        id = int.Parse(Console.ReadLine());
+                        Order o = new Order();
+                        Console.WriteLine("enter order ID:");
+                        res = int.TryParse(Console.ReadLine(), out id);
                         Console.WriteLine(dalOrder.GetOrder(id));
                         o.ID = id;
                         Console.WriteLine("enter customer name:");
@@ -146,34 +160,42 @@ namespace DalTest
                         Console.WriteLine("enter customer email:");
                         o.CustomerEmail = Console.ReadLine();
                         Console.WriteLine("enter customer adress:");
-                        o.CustomerAdress = Console.ReadLine();//check
+                        o.CustomerAdress = Console.ReadLine();
                         Console.WriteLine("enter order date:");
-                        o.OrderDate = DateTime.Parse(Console.ReadLine());
+                        res = DateTime.TryParse(Console.ReadLine(), out orderD);
                         Console.WriteLine("enter ship date:");
-                        o.ShipDate = DateTime.Parse(Console.ReadLine());
+                        res = DateTime.TryParse(Console.ReadLine(), out shipD);
                         Console.WriteLine("enter delivery date:");
-                        o.DeliveryDate = DateTime.Parse(Console.ReadLine());
+                        res = DateTime.TryParse(Console.ReadLine(), out deliveryD);
+                        o.OrderDate = orderD;
+                        o.ShipDate = shipD;
+                        o.DeliveryDate = deliveryD;
                         dalOrder.UpdateOrder(o);
-                        break;
                     }
-                case 4:
+                    break;
+
+                case 4://delete order
                     {
                         Console.WriteLine("enter order ID:");
-                        id = int.Parse(Console.ReadLine());
+                        res = int.TryParse(Console.ReadLine(),out id);
                         dalOrder.DeleteOrder(id);
-                        break;
                     }
-                default:
+                    break;
+                default://press again order
                     {
                         Console.WriteLine("enter again");
-                        action = int.Parse(Console.ReadLine());
-                        break;
+                        res = int.TryParse(Console.ReadLine(), out action);
                     }
+                    break;
             }
         }
+        /// <summary>
+        /// orderItem case
+        /// </summary>
         static void OrderItemCase()
         {
             int action, id;
+            bool res;
             Console.WriteLine("enter 0 to add order item");
             Console.WriteLine("enter 1 to show order item by id");
             Console.WriteLine("enter 2 to view all order items");
@@ -181,10 +203,10 @@ namespace DalTest
             Console.WriteLine("enter 4 to  delete order item");
             Console.WriteLine("enter 5 to  view all products in order");
             Console.WriteLine("enter 6 to  get order item by product and order");
-            action = int.Parse(Console.ReadLine());
+            res = int.TryParse(Console.ReadLine(),out action);
             switch (action)
             {
-                case 0:
+                case 0://add order item
                     {
                         OrderItem oI = new OrderItem();
                         Console.WriteLine("enter product ID:");
@@ -192,86 +214,99 @@ namespace DalTest
                         Console.WriteLine("enter order ID:");
                         oI.OrderID = int.Parse(Console.ReadLine());
                         Console.WriteLine("enter product category:");
-                        oI.Price = int.Parse(Console.ReadLine());//check
-                        Console.WriteLine("enter product in stock:");
+                        oI.Price = int.Parse(Console.ReadLine());
+                        Console.WriteLine("enter product amount:");
                         oI.Amount = int.Parse(Console.ReadLine());
                         dalOrderItem.AddOrderItem(oI);
-                        break;
                     }
-                case 1:
+                    break;
+                case 1://get order item
                     {
                         Console.WriteLine("enter order item ID:");
-                        id = int.Parse(Console.ReadLine());
+                        res = int.TryParse(Console.ReadLine(), out id);
                         Console.WriteLine(dalOrderItem.GetOrderItem(id));
-                        break;
                     }
-                case 2:
+                    break;
+                case 2://get all order item
                     {
                         foreach (OrderItem item in dalOrderItem.GetOrderItems())
                         {
                             Console.WriteLine(item);
                         }
-
-                        break;
+                        
                     }
-                case 3:
+                    break;
+                case 3://update order item
                     {
                         OrderItem oI = new OrderItem();
+                        Console.WriteLine("enter order item ID:");
+                        res = int.TryParse(Console.ReadLine(), out id);
+                        Console.WriteLine(dalOrderItem.GetOrderItem(id));
+                        oI.OrderItemID = id;
                         Console.WriteLine("enter product ID:");
                         oI.ProductID = int.Parse(Console.ReadLine());
                         Console.WriteLine("enter order ID:");
                         oI.OrderID = int.Parse(Console.ReadLine());
                         Console.WriteLine("enter product category:");
-                        oI.Price = int.Parse(Console.ReadLine());//check
-                        Console.WriteLine("enter product in stock:");
+                        oI.Price = int.Parse(Console.ReadLine());
+                        Console.WriteLine("enter product amount:");
                         oI.Amount = int.Parse(Console.ReadLine());
-                        dalOrderItem.UpdateOrderItem(oI);
-                        break;
-                    }
-
-                case 4:
-                    {
-                        Console.WriteLine("enter order item ID:");
-                        id = int.Parse(Console.ReadLine());
-                        dalOrderItem.DeleteOrderItem(id);
-                        break;
-                    }
-                case 5:
-                    Console.WriteLine("enter order item id:");
-                    id = int.Parse(Console.ReadLine());
-                    foreach (OrderItem item in dalOrderItem.GetProductsInOrder(id))
-                    {
-                        Console.WriteLine(item);
+                        dalOrderItem.UpdateOrderItem(oI);                      
                     }
                     break;
-                case 6:
+                case 4://delete order item
+                    {
+                        Console.WriteLine("enter order item ID:");
+                        res = int.TryParse(Console.ReadLine(),out id);
+                        dalOrderItem.DeleteOrderItem(id);                       
+                    }
+                    break;
+                case 5://products in order 
+                    {
+                        Console.WriteLine("enter order id:");
+                        res = int.TryParse(Console.ReadLine(),out id);
+                        foreach (OrderItem item in dalOrderItem.GetProductsInOrder(id))
+                        {
+                            if (item.OrderItemID != 0)
+                                Console.WriteLine(item);
+                        }
+                       
+                    }
+                    break;
+                case 6://order item by product and order ids
                     {
                         int idP;
-                        Console.WriteLine("enter order id and product id:");
-                        id = int.Parse(Console.ReadLine());
-                        idP = int.Parse(Console.ReadLine());
+                        Console.WriteLine("enter order id:");
+                        res = int.TryParse(Console.ReadLine(),out id);
+                        Console.WriteLine("enter product id:");
+                        res = int.TryParse(Console.ReadLine(),out idP);
                         Console.WriteLine(dalOrderItem.GetOrderItemByIDS(idP, id));
                     }
-                default:
+                    break;
+                default://press again order item
                     {
                         Console.WriteLine("enter again");
-                        action = int.Parse(Console.ReadLine());
-                        break;
+                        res = int.TryParse(Console.ReadLine(), out action);
+                       
                     }
+                    break;
             }
-            static void Main()
+        }
+        static void Main()
+        {
+            int entity;
+            bool res;
+            Console.WriteLine("enter 0 to exit");
+            Console.WriteLine("enter 1 to products");
+            Console.WriteLine("enter 2 to orders");
+            Console.WriteLine("enter 3 to order items");
+            res = int.TryParse(Console.ReadLine(),out entity);
+            while (entity != 0)//enter entity
             {
-                int entity;
-                do
+                switch (entity)
                 {
-                    Console.WriteLine("enter 0 to exit");
-                    Console.WriteLine("enter 1 to products");
-                    Console.WriteLine("enter 2 to orders");
-                    Console.WriteLine("enter 3 to order items");
-                    entity = int.Parse(Console.ReadLine());
-                    switch (entity)
-                    {
-                        case 1:
+                    case 1://product case
+                        {
                             try
                             {
                                 ProductCase();
@@ -280,8 +315,10 @@ namespace DalTest
                             {
                                 Console.WriteLine(ex);
                             }
-                            break;
-                        case 2:
+                        }
+                        break;
+                    case 2://order case
+                        {
                             try
                             {
                                 OrderCase();
@@ -290,8 +327,10 @@ namespace DalTest
                             {
                                 Console.WriteLine(ex);
                             }
-                            break;
-                        case 3:
+                        }
+                        break;
+                    case 3://order item case
+                        {
                             try
                             {
                                 OrderItemCase();
@@ -300,24 +339,24 @@ namespace DalTest
                             {
                                 Console.WriteLine(ex);
                             }
-                            break;
+                        }
+                        break;
 
-                        default:
-                            {
-                                Console.WriteLine("enter again");
-                                entity = int.Parse(Console.ReadLine());
-                                break;
-                            }
-                    }
-                } while (entity != 0);
+                    default:
+                        {
+                            Console.WriteLine("enter again");
+                            res = int.TryParse(Console.ReadLine(),out  entity);
+                        }
+                        break;
+
                 }
+                //enter entity again
+                Console.WriteLine("enter 0 to exit");
+                Console.WriteLine("enter 1 to products");
+                Console.WriteLine("enter 2 to orders");
+                Console.WriteLine("enter 3 to order items");
+                res = int.TryParse(Console.ReadLine(),out entity);
+            }
         }
     }
 }
-
-//daltest-148 o.id=id
-//daltest-248 
-//dal product foreach item
-//daltest-110 data source
-//dalorder and dalproduct-foreach
-//DalOrderItem-97

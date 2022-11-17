@@ -44,18 +44,23 @@ public class DalOrder
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public Order DeleteOrder(int id)
+    public void DeleteOrder(int id)
     {
+        int exist = 0;
         for (int i = 0; i < DataSource.Config.OrderIndex; i++)
+        {
             if (DataSource.Orders[i].ID == id)//FIND
             {
+                exist = 1;
                 for (; i < DataSource.Config.OrderIndex; i++)
                 {
                     DataSource.Orders[i] = DataSource.Orders[i + 1];
                 }
                 DataSource.Config.OrderIndex--;
             }
-        throw new Exception("not exists");
+        }
+        if (exist == 0)
+            throw new Exception("not exists");
     }
     /// <summary>
     /// update object
@@ -81,19 +86,21 @@ public class DalOrder
     public Order[] GetOrders()
     {
         Order[] newOrders = new Order[DataSource.Config.OrderIndex];
-             Order o = new Order();
-        int i = 0;
-        foreach (Order item in DataSource.Orders)
+        Order o = new Order();
+        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
         {
-            o.ID = item.ID;
-            o.CustomerName = item.CustomerName;
-            o.CustomerEmail = item.CustomerEmail;
-            o.CustomerAdress = item.CustomerAdress;
-            o.OrderDate = item.OrderDate;
-            o.ShipDate = item.ShipDate;
-            o.DeliveryDdate = item.DeliveryDate;
-            newOrders[i++] = o;
+            o.ID = DataSource.Orders[i].ID;
+            o.CustomerName = DataSource.Orders[i].CustomerName;
+            o.CustomerEmail = DataSource.Orders[i].CustomerEmail;
+            o.CustomerAdress = DataSource.Orders[i].CustomerAdress;
+            o.OrderDate = DataSource.Orders[i].OrderDate;
+            o.ShipDate = DataSource.Orders[i].ShipDate;
+            o.DeliveryDate = DataSource.Orders[i].DeliveryDate;
+            newOrders[i] = o;
         }
+        if (DataSource.Config.OrderIndex == 0)
+            Console.WriteLine("there is no orders");
         return newOrders;
     }
+    
 }
