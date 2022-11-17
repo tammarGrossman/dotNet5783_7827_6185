@@ -21,7 +21,7 @@ public struct Product
     /// <summary>
     /// the category of Product
     /// </summary>
-    public Category Category { get; set; }
+    public Category Category_ { get; set; }
     /// <summary>
     /// if the product is in stock
     /// </summary>
@@ -34,7 +34,7 @@ public struct Product
     public override string ToString() =>
         $@"
         Product ID={ID}: {Name}, 
-        category - {Category}
+        category - {Category_}
     	Price: {Price}
     	Amount in stock: {InStock}
        ";

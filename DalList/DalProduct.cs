@@ -1,60 +1,63 @@
-﻿
+﻿using DO;
 namespace Dal;
 
 public class DalProduct
 {
     public int AddProduct(Product p)
     {
-        if (Config.orderItemIndex < DataSource.Products.length) {
-            for (int i = 0; i < DataSource.Products.length; i++)
+        if (DataSource.Config.OrderItemIndex < DataSource.Products.Length)
+        {
+            for (int i = 0; i < DataSource.Products.Length; i++)
             {
                 if (DataSource.Products[i].ID == p.ID)
-                    throw Exception("wrong id")
+                    throw new Exception("wrong id");
             }
             //check if there is place
             DataSource.Products[DataSource.Config.ProductIndex++] = p;
             return p.ID;
         }
         else
-            throw  new Exception("there is no place")
+            throw new Exception("there is no place");
     }
-    public Product GetProduct(int id)
-    {
-        foreach (Product item in DataSource.products)
-        {
-            if (item.ID == id)//FIND
-                return item;
-        }
-        throw new Exception("not exists")
-
-    }
-
-    public OrdProducts DeleteProduct(int id)
+    public Product[] GetProduct(int id)
     {
         foreach (Product item in DataSource.Products)
         {
             if (item.ID == id)//FIND
-                item = null;
+                return item;
         }
         throw new Exception("not exists");
-
     }
-    public void UpdateProduct(Product p)
+
+    public Product DeleteProduct(int id)
     {
-        foreach (Order item in DataSource.Products)
-        {
-            if (item.ID == p.ID)
+        for (int i = 0; i < DataSource.Config.ProductIndex; i++)
+            if (DataSource.Products[i].ID == id)
             { //FIND
-                item = p;
-                return;
+                for (; i < DataSource.Config.ProductIndex; i++)
+                {
+                    DataSource.Products[i] = DataSource.Products[i + 1];
+                }
+                DataSource.Config.ProductIndex--;
             }
-        }
         throw new Exception("not exists");
     }
-
-    public Product[] GetProducts()
+}
+public void UpdateProduct(Product p)
+{
+    bool exist = false;
+    for (int i = 0; i < DataSource.Config.ProductIndex; i++)
+        if (DataSource.Products[i].ID == p.ID)//FIND
+        {
+            exist = true;
+            DataSource.Products[i] = p;
+        }
+    if (!exist)
+        throw new Exception("not exists");
+}
+public Product[] GetProducts()
     {
-        Product[] newProducts= new Product[DataSource.Config.ProductIndex]
+        Product[] newProducts = new Product[DataSource.Config.ProductIndex];
         Product p = new Product();
         int i = 0;
         foreach (Product item in DataSource.Products)

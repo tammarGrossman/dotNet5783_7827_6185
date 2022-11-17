@@ -1,3 +1,3 @@
 ﻿
 namespace DO;
-enum Category { Women,Men,Kids,Accesories }
+public enum Category { Women,Men,Kids,Accesories }

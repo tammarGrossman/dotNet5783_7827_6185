@@ -1,5 +1,5 @@
 ﻿
-
+using DO;
 namespace Dal;
 
 public class DalOrder
@@ -7,22 +7,21 @@ public class DalOrder
 
     public  int AddOrder(Order o)
     {
-        if (Config.orderItemIndex < DataSource.Orders.length)
+        if (DataSource.Config.OrderIndex < DataSource.Orders.Length)
         {
-
             //check if there is place
-            int i = Config.LastOrder;
+            int i = DataSource.Config.LastOrder;
             o.ID = i;
             DataSource.Orders[DataSource.Config.OrderIndex++] = o;
             return i;
         }
         else
-            throw new Exception("there is no place")
+            throw new Exception("there is no place");
     }
 
     public Order GetOrder(int id)
     {
-        foreach (Order item in DataSource.orders)
+        foreach (Order item in DataSource.Orders)
         {
             if (item.ID == id)//FIND
                 return item;
@@ -31,34 +30,36 @@ public class DalOrder
     }
     public Order DeleteOrder(int id)
     {
-        foreach (Order item in DataSource.orders)
-        {
-            if (item.ID == id)//FIND
-                item = null;
-        }
+        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
+            if (DataSource.Orders[i].ID == id)//FIND
+            {
+                for (; i < DataSource.Config.OrderIndex; i++)
+                {
+                    DataSource.Orders[i] = DataSource.Orders[i + 1];
+                }
+                DataSource.Config.OrderIndex--;
+            }
         throw new Exception("not exists");
-
     }
     public void UpdateOrder(Order o)
     {
-        foreach (Order item in DataSource.orders)
-        {
-            if (item.ID == o.ID)
-            { //FIND
-                item = o;
-                return;
+        bool exist=false;
+        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
+            if (DataSource.Orders[i].ID == o.ID)//FIND
+            {
+                exist = true;
+                DataSource.Orders[i] = o;
             }
-        }
-        throw new Exception("not exists");
-
+        if(!exist)
+         throw new Exception("not exists");
     }
 
     public Order[] GetOrders()
     {
-        Order[] newOrders = new Order[DataSource.Config.OrderIndex]
+        Order[] newOrders = new Order[DataSource.Config.OrderIndex];
              Order o = new Order();
         int i = 0;
-        foreach (Order item in DataSource.orders)
+        foreach (Order item in DataSource.Orders)
         {
             o.ID = item.ID;
             o.CustomerName = item.CustomerName;
@@ -66,12 +67,9 @@ public class DalOrder
             o.CustomerAdress = item.CustomerAdress;
             o.OrderDate = item.OrderDate;
             o.ShipDate = item.ShipDate;
-            o.DeliveryDdate = item.DeliveryDdate;
+            o.DeliveryDdate = item.DeliveryDate;
             newOrders[i++] = o;
         }
         return newOrders;
     }
-}
-
-
 }
