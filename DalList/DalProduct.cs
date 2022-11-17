@@ -1,6 +1,5 @@
 ﻿using DO;
 namespace Dal;
-
 public class DalProduct
 {
     public int AddProduct(Product p)
@@ -28,7 +27,6 @@ public class DalProduct
         }
         throw new Exception("not exists");
     }
-
     public Product DeleteProduct(int id)
     {
         for (int i = 0; i < DataSource.Config.ProductIndex; i++)
