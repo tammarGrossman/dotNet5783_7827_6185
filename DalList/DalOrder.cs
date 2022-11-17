@@ -4,7 +4,12 @@ namespace Dal;
 
 public class DalOrder
 {
-
+    /// <summary>
+    /// add object
+    /// </summary>
+    /// <param name="o"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public  int AddOrder(Order o)
     {
         if (DataSource.Config.OrderIndex < DataSource.Orders.Length)
@@ -18,7 +23,12 @@ public class DalOrder
         else
             throw new Exception("there is no place");
     }
-
+    /// <summary>
+    /// get object
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public Order GetOrder(int id)
     {
         foreach (Order item in DataSource.Orders)
@@ -28,6 +38,12 @@ public class DalOrder
         }
         throw new Exception("not exists");
     }
+    /// <summary>
+    /// delete object
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public Order DeleteOrder(int id)
     {
         for (int i = 0; i < DataSource.Config.OrderIndex; i++)
@@ -41,6 +57,11 @@ public class DalOrder
             }
         throw new Exception("not exists");
     }
+    /// <summary>
+    /// update object
+    /// </summary>
+    /// <param name="o"></param>
+    /// <exception cref="Exception"></exception>
     public void UpdateOrder(Order o)
     {
         bool exist=false;
@@ -53,7 +74,10 @@ public class DalOrder
         if(!exist)
          throw new Exception("not exists");
     }
-
+    /// <summary>
+    /// get all objects
+    /// </summary>
+    /// <returns></returns>
     public Order[] GetOrders()
     {
         Order[] newOrders = new Order[DataSource.Config.OrderIndex];

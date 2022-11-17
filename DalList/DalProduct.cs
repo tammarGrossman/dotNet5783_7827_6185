@@ -2,6 +2,12 @@
 namespace Dal;
 public class DalProduct
 {
+    /// <summary>
+    /// add object
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public int AddProduct(Product p)
     {
         if (DataSource.Config.OrderItemIndex < DataSource.Products.Length)
@@ -18,6 +24,12 @@ public class DalProduct
         else
             throw new Exception("there is no place");
     }
+    /// <summary>
+    /// get object
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public Product[] GetProduct(int id)
     {
         foreach (Product item in DataSource.Products)
@@ -27,6 +39,12 @@ public class DalProduct
         }
         throw new Exception("not exists");
     }
+    /// <summary>
+    /// delete object
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public Product DeleteProduct(int id)
     {
         for (int i = 0; i < DataSource.Config.ProductIndex; i++)
@@ -41,6 +59,11 @@ public class DalProduct
         throw new Exception("not exists");
     }
 }
+/// <summary>
+/// update object
+/// </summary>
+/// <param name="p"></param>
+/// <exception cref="Exception"></exception>
 public void UpdateProduct(Product p)
 {
     bool exist = false;
@@ -53,6 +76,10 @@ public void UpdateProduct(Product p)
     if (!exist)
         throw new Exception("not exists");
 }
+/// <summary>
+/// get all objects
+/// </summary>
+/// <returns></returns>
 public Product[] GetProducts()
     {
         Product[] newProducts = new Product[DataSource.Config.ProductIndex];

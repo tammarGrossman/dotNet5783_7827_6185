@@ -2,6 +2,12 @@
 namespace Dal;
 public class DalOrderItem
 {
+    /// <summary>
+    /// add object
+    /// </summary>
+    /// <param name="oI"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public int AddOrderItem(OrderItem oI)
     {
         //check if there is place
@@ -15,6 +21,12 @@ public class DalOrderItem
         else
             throw new Exception("there is no place");
     }
+    /// <summary>
+    /// get object
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public OrderItem GetOrderItem(int id)
     {
         foreach (OrderItem item in DataSource.OrderItems)
@@ -24,6 +36,13 @@ public class DalOrderItem
         }
         throw new Exception("not exists");
     }
+    /// <summary>
+    /// get object by ids
+    /// </summary>
+    /// <param name="pId"></param>
+    /// <param name="oId"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public OrderItem GetOrderItemByIDS(int pId, int oId)
     {
         foreach (OrderItem item in DataSource.OrderItems)
@@ -33,6 +52,10 @@ public class DalOrderItem
         }
         throw new Exception("not exists");
     }
+    /// <summary>
+    /// get all objects
+    /// </summary>
+    /// <returns></returns>
     public OrderItem[] GetOrderItems()
     {
 
@@ -49,7 +72,12 @@ public class DalOrderItem
         }
         return newOrderItems;
     }
-
+    /// <summary>
+    /// delete object
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
 
     public OrderItem DeleteOrderItem(int id)
     {
@@ -64,6 +92,11 @@ public class DalOrderItem
             }
         throw new Exception("not exists");
     }
+    /// <summary>
+    /// update object
+    /// </summary>
+    /// <param name="oI"></param>
+    /// <exception cref="Exception"></exception>
     public void UpdateOrderItem(OrderItem oI)
     {
         bool exist = false;
@@ -79,7 +112,12 @@ public class DalOrderItem
         throw new Exception("not exists");
     }
 
-
+    /// <summary>
+    /// get objects in order
+    /// </summary>
+    /// <param name="oIID"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public OrderItem[] GetProductsInOrder(int oIID)
     {
         OrderItem[] newOrderItems = new OrderItem[DataSource.Config.OrderItemIndex];
