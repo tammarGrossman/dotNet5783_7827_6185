@@ -1,6 +1,7 @@
 ﻿using DO;
 namespace Dal;
-public class DalOrderItem
+using DalApi;
+internal  class DalOrderItem : IOrderItem
 {
     /// <summary>
     /// add object
@@ -8,7 +9,7 @@ public class DalOrderItem
     /// <param name="oI"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public int AddOrderItem(OrderItem oI)
+    public int Add(OrderItem oI)
     {
         //check if there is place
         if (DataSource.Config.OrderItemIndex < DataSource.OrderItems.Length)
@@ -30,7 +31,7 @@ public class DalOrderItem
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public OrderItem GetOrderItem(int id)
+    public OrderItem Get(int id)
     {
         foreach (OrderItem item in DataSource.OrderItems)
         {
@@ -59,7 +60,7 @@ public class DalOrderItem
     /// get all objects
     /// </summary>
     /// <returns></returns>
-    public OrderItem[] GetOrderItems()
+    public OrderItem[] GetAll()
     {
         OrderItem[] newOrderItems = new OrderItem[DataSource.Config.OrderItemIndex];
         OrderItem oI = new OrderItem();
@@ -83,7 +84,7 @@ public class DalOrderItem
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
 
-    public void DeleteOrderItem(int id)
+    public void Delete(int id)
     {
         int exist = 0;
         for (int i = 0; i < DataSource.Config.OrderItemIndex; i++)
@@ -106,7 +107,7 @@ public class DalOrderItem
     /// </summary>
     /// <param name="oI"></param>
     /// <exception cref="Exception"></exception>
-    public void UpdateOrderItem(OrderItem oI)
+    public void Update(OrderItem oI)
     {
         bool exist = false;
         for (int i = 0; i < DataSource.Config.OrderItemIndex; i++)

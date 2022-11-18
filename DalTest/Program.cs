@@ -1,13 +1,15 @@
 ﻿
 using Dal;
+using DalApi;
 using DO;
 namespace DalTest
 {
     public class Program
     {
-        private static DalOrder dalOrder = new DalOrder();
-        private static DalOrderItem dalOrderItem = new DalOrderItem();
-        private static DalProduct dalProduct = new DalProduct();
+        static IDal dalList;
+        private static DalOrder dalOrder = dalList.Order;
+        private static DalOrderItem dalOrderItem = dalList.OrderItem;
+        private static DalProduct dalProduct = dalList.Product;
         /// <summary>
         /// the product case
         /// </summary>

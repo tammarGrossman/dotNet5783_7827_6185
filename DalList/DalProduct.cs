@@ -1,14 +1,19 @@
-﻿using DO;
+﻿using DalApi;
+using DO;
+using System.Security.Principal;
+
 namespace Dal;
-public class DalProduct
+internal class DalProduct :IProduct
+
 {
+
     /// <summary>
     /// add object
     /// </summary>
     /// <param name="p"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public int AddProduct(Product p)
+    public int Add(Product p)
     {
         if (DataSource.Config.ProductIndex < DataSource.Products.Length)
         {
@@ -30,7 +35,7 @@ public class DalProduct
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public Product GetProduct(int id)
+    public Product Get(int id)
     {
         foreach (Product item in DataSource.Products)
         {
@@ -45,7 +50,7 @@ public class DalProduct
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public void DeleteProduct(int id)
+    public void Delete(int id)
     {
         int exist = 0;
         for (int i = 0; i < DataSource.Config.ProductIndex; i++)
@@ -69,7 +74,7 @@ public class DalProduct
 /// </summary>
 /// <param name="p"></param>
 /// <exception cref="Exception"></exception>
-public void UpdateProduct(Product p)
+public void Update(Product p)
 {
     bool exist = false;
     for (int i = 0; i < DataSource.Config.ProductIndex; i++)
@@ -85,7 +90,7 @@ public void UpdateProduct(Product p)
 /// get all objects
 /// </summary>
 /// <returns></returns>
-public Product[] GetProducts()
+public Product[] GetAll()
     {
         Product[] newProducts = new Product[DataSource.Config.ProductIndex];
         Product p = new Product();

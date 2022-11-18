@@ -5,9 +5,9 @@ static internal class DataSource
 {
     static readonly Random rand;// random
     static bool start = false;//start project
-    static internal Order[] Orders = new Order[100];
-    static internal OrderItem[] OrderItems = new OrderItem[200];
-    static internal Product[] Products = new Product[50];
+    static internal List<Order> Orders;//= new Order[100];
+    static internal List<OrderItem> OrderItems; //= new OrderItem[200];
+    static internal List<Product> Products;// = new Product[50];
     static DataSource()
     {
         rand = new Random();
@@ -30,7 +30,7 @@ static internal class DataSource
 
         for (int i = 0; i < 20 ; i++)
         {
-            Config.OrderIndex++;
+            //Config.OrderIndex++;
             Orders[i] = new Order();
             Orders[i].OrderDate = DateTime.MinValue;
             var ts = new TimeSpan(rand.Next(1, 10), rand.Next(0, 24), rand.Next(0, 60), rand.Next(0, 60));
@@ -61,7 +61,7 @@ static internal class DataSource
 
         for (int i = 1; i < 11; i++)
         {
-            Config.ProductIndex++;
+            //Config.ProductIndex++;
             Products[i - 1] = new Product
             {
                 ID = i * 1000000,
@@ -81,7 +81,7 @@ private static void createOrderItem()
         int iProduct = 1;
         for (int i = 0; i < 40 ; i++)
         {
-            Config.OrderItemIndex++;
+            //Config.OrderItemIndex++;
             if (iProduct == 11)
                 iProduct = 1;
             if(iOrder==20)
@@ -98,10 +98,10 @@ private static void createOrderItem()
 }
     static internal class Config
     {
-        //index and run number
-        internal static int OrderIndex= 0;
-        internal static int ProductIndex = 0;
-        internal static int OrderItemIndex = 0;
+        ////index and run number
+        //internal static int OrderIndex= 0;
+        //internal static int ProductIndex = 0;
+        //internal static int OrderItemIndex = 0;
         private static int lastOrder=0;
         private static int lastOrderItem=0;
         static Config()

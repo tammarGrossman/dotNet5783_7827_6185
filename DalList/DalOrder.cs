@@ -1,8 +1,8 @@
 ﻿//
 using DO;
 namespace Dal;
-
-public class DalOrder
+using DalApi;
+internal class DalOrder : IOrder
 {
     /// <summary>
     /// add object
@@ -10,7 +10,7 @@ public class DalOrder
     /// <param name="o"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public  int AddOrder(Order o)
+    public  int Add(Order o)
     {
         if (DataSource.Config.OrderIndex < DataSource.Orders.Length)
         {
@@ -29,7 +29,7 @@ public class DalOrder
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public Order GetOrder(int id)
+    public Order Get(int id)
     {
         foreach (Order item in DataSource.Orders)
         {
@@ -44,7 +44,7 @@ public class DalOrder
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public void DeleteOrder(int id)
+    public void Delete(int id)
     {
         int exist = 0;
         for (int i = 0; i < DataSource.Config.OrderIndex; i++)
@@ -67,7 +67,7 @@ public class DalOrder
     /// </summary>
     /// <param name="o"></param>
     /// <exception cref="Exception"></exception>
-    public void UpdateOrder(Order o)
+    public void Update(Order o)
     {
         bool exist=false;
         for (int i = 0; i < DataSource.Config.OrderIndex; i++)
@@ -83,7 +83,7 @@ public class DalOrder
     /// get all objects
     /// </summary>
     /// <returns></returns>
-    public Order[] GetOrders()
+    public Order[] GetAll()
     {
         Order[] newOrders = new Order[DataSource.Config.OrderIndex];
         Order o = new Order();
