@@ -102,5 +102,4 @@ internal class DalOrder : IOrder
             Console.WriteLine("there is no orders");
         return newOrders;
     }
-    
 }
