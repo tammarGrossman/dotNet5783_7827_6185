@@ -12,18 +12,18 @@ internal  class DalOrderItem : IOrderItem
     public int Add(OrderItem oI)
     {
         //check if there is place
-        if (DataSource.Config.OrderItemIndex < DataSource.OrderItems.Length)
-        {
+        //if (DataSource.Config.OrderItemIndex < DataSource.OrderItems.Length)
+        //{
             int i = DataSource.Config.LastOrderItem;
             oI.OrderItemID = i;
-            DataSource.OrderItems[DataSource.Config.OrderItemIndex++] = oI;
+            DataSource.OrderItems.Add(oI);
             DalProduct dp = new DalProduct();
             Product p = dp.GetProduct(oI.ProductID);
             p.InStock -= oI.Amount;
             return i;
-        }
-        else
-            throw new Exception("there is no place");
+        //}
+        //else
+            //throw new Exception("there is no place");
     }
     /// <summary>
     /// get object
@@ -62,18 +62,18 @@ internal  class DalOrderItem : IOrderItem
     /// <returns></returns>
     public OrderItem[] GetAll()
     {
-        OrderItem[] newOrderItems = new OrderItem[DataSource.Config.OrderItemIndex];
+        OrderItem[] newOrderItems = new OrderItem[DataSource.OrderItems.Count()];
         OrderItem oI = new OrderItem();
-        for (int i = 0; i < DataSource.Config.OrderItemIndex; i++)
+        foreach (OrderItem item in DataSource.OrderItems)
         {
-            oI.OrderItemID = DataSource.OrderItems[i].OrderItemID;
-            oI.ProductID = DataSource.OrderItems[i].ProductID;
-            oI.OrderID = DataSource.OrderItems[i].OrderID;
-            oI.Price = DataSource.OrderItems[i].Price;
-            oI.Amount = DataSource.OrderItems[i].Amount;
+            oI.OrderItemID = item.OrderItemID;
+            oI.ProductID = item.ProductID;
+            oI.OrderID = item.OrderID;
+            oI.Price = item.Price;
+            oI.Amount = item.Amount;
             newOrderItems[i] = oI;
-        }
-        if(DataSource.Config.OrderItemIndex==0)
+        }        
+        if(DataSource.OrderItems.Count() == 0)
             Console.WriteLine("there is no item in the order");
         return newOrderItems;
     }
@@ -87,16 +87,17 @@ internal  class DalOrderItem : IOrderItem
     public void Delete(int id)
     {
         int exist = 0;
-        for (int i = 0; i < DataSource.Config.OrderItemIndex; i++)
+        foreach (OrderItem item in DataSource.OrderItems)
         {
-            if (DataSource.OrderItems[i].OrderItemID == id)//FIND
+            if (item.OrderItemID == id)//FIND
             {
                 exist = 1;
-                for (; i < DataSource.Config.OrderItemIndex; i++)
-                {
-                    DataSource.OrderItems[i] = DataSource.OrderItems[i + 1];
-                }
-                DataSource.Config.OrderItemIndex--;
+                //for (; i < DataSource.Config.OrderItemIndex; i++)
+                //{
+                //    DataSource.OrderItems[i] = DataSource.OrderItems[i + 1];
+                //}
+                //DataSource.Config.OrderItemIndex--;
+                DataSource.OrderItems.Remove(item); 
             }
         }
         if (exist == 0)
@@ -110,12 +111,13 @@ internal  class DalOrderItem : IOrderItem
     public void Update(OrderItem oI)
     {
         bool exist = false;
-        for (int i = 0; i < DataSource.Config.OrderItemIndex; i++)
+        foreach (OrderItem item in DataSource.OrderItems)
         {
-            if (DataSource.OrderItems[i].OrderItemID == oI.OrderItemID)
+            if (item.OrderItemID == oI.OrderItemID)
             { //FIND
                 exist = true;
-                DataSource.OrderItems[i] = oI;
+               DataSource.OrderItems.Remove(item);  
+               DataSource.OrderItems.Add(oI);
             }
         }
         if(!exist)
@@ -129,19 +131,19 @@ internal  class DalOrderItem : IOrderItem
     /// <exception cref="Exception"></exception>
     public OrderItem[] GetProductsInOrder(int oID)
     {
-        OrderItem[] newOrderItems = new OrderItem[DataSource.Config.OrderItemIndex];
+        OrderItem[] newOrderItems = new OrderItem[DataSource.OrderItems.Count()];
         OrderItem oI = new OrderItem();
         int i = 0;
-        for (; i < DataSource.Config.OrderItemIndex; i++)
-        {
-            if (DataSource.OrderItems[i].OrderID == oID)
+        foreach (OrderItem item in DataSource.OrderItems)
+            {
+            if (item.OrderID == oID)
             { //FIND
-                oI.OrderItemID = DataSource.OrderItems[i].OrderItemID;
-                oI.ProductID = DataSource.OrderItems[i].ProductID;
-                oI.OrderID = DataSource.OrderItems[i].OrderID;
-                oI.Price = DataSource.OrderItems[i].Price;
-                oI.Amount = DataSource.OrderItems[i].Amount;
-                newOrderItems[i] = oI;
+                oI.OrderItemID = item.OrderItemID;
+                oI.ProductID = item.ProductID;
+                oI.OrderID = item.OrderID;
+                oI.Price = item.Price;
+                oI.Amount = item.Amount;
+                newOrderItems[i++] = oI;//check if need to change to list
             }
         }
             if(i!=0)

@@ -11,17 +11,14 @@ internal class DalOrder : IOrder
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     public  int Add(Order o)
-    {
-        if (DataSource.Config.OrderIndex < DataSource.Orders.Length)
-        {
-            //check if there is place
+    {  //check if there is place
+        /*if (DataSource.Config.OrderIndex < DataSource.Orders.Length) */        
             int i = DataSource.Config.LastOrder;
             o.ID = i;
-            DataSource.Orders[DataSource.Config.OrderIndex++] = o;
-            return i;
-        }
-        else
-            throw new Exception("there is no place");
+            DataSource.Orders.Add(o);
+            return i;       
+        //else
+            //throw new Exception("there is no place");
     }
     /// <summary>
     /// get object
@@ -47,16 +44,17 @@ internal class DalOrder : IOrder
     public void Delete(int id)
     {
         int exist = 0;
-        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
+        foreach(Order item in DataSource.Orders)
         {
-            if (DataSource.Orders[i].ID == id)//FIND
+            if (item.ID == id)//FIND
             {
                 exist = 1;
-                for (; i < DataSource.Config.OrderIndex; i++)
-                {
-                    DataSource.Orders[i] = DataSource.Orders[i + 1];
-                }
-                DataSource.Config.OrderIndex--;
+                DataSource.Orders.Remove(item);
+                //for (; i < DataSource.Config.OrderIndex; i++)
+                //{
+                //    DataSource.Orders[i] = DataSource.Orders[i + 1];
+                //}
+                //DataSource.Config.OrderIndex--;
             }
         }
         if (exist == 0)
@@ -70,12 +68,15 @@ internal class DalOrder : IOrder
     public void Update(Order o)
     {
         bool exist=false;
-        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
-            if (DataSource.Orders[i].ID == o.ID)//FIND
-            {
-                exist = true;
-                DataSource.Orders[i] = o;
-            }
+    foreach (Order item in DataSource.Orders)
+    {
+        if (item.ID == o.ID)//FIND
+        {
+            exist = true;
+            DataSource.Orders.Remove(item);
+            DataSource.Orders.Add(o);
+        }
+    }
         if(!exist)
          throw new Exception("not exists");
     }
@@ -85,20 +86,20 @@ internal class DalOrder : IOrder
     /// <returns></returns>
     public Order[] GetAll()
     {
-        Order[] newOrders = new Order[DataSource.Config.OrderIndex];
+        Order[] newOrders = new Order[DataSource.Orders.Count()];
         Order o = new Order();
-        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
+        foreach (Order item in DataSource.Orders)
         {
-            o.ID = DataSource.Orders[i].ID;
-            o.CustomerName = DataSource.Orders[i].CustomerName;
-            o.CustomerEmail = DataSource.Orders[i].CustomerEmail;
-            o.CustomerAdress = DataSource.Orders[i].CustomerAdress;
-            o.OrderDate = DataSource.Orders[i].OrderDate;
-            o.ShipDate = DataSource.Orders[i].ShipDate;
-            o.DeliveryDate = DataSource.Orders[i].DeliveryDate;
+            o.ID = item.ID;
+            o.CustomerName = item.CustomerName;
+            o.CustomerEmail = item.CustomerEmail;
+            o.CustomerAdress = item.CustomerAdress;
+            o.OrderDate = item.OrderDate;
+            o.ShipDate = item.ShipDate;
+            o.DeliveryDate = item.DeliveryDate;
             newOrders[i] = o;
         }
-        if (DataSource.Config.OrderIndex == 0)
+        if (DataSource.Orders.Count() == 0)
             Console.WriteLine("there is no orders");
         return newOrders;
     }
