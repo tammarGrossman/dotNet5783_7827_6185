@@ -4,6 +4,10 @@ namespace Dal;
 using DalApi;
 internal class DalOrder : IOrder
 {
+    public DalOrder()
+    {
+    }
+
     /// <summary>
     /// add object
     /// </summary>
@@ -84,8 +88,9 @@ internal class DalOrder : IOrder
     /// get all objects
     /// </summary>
     /// <returns></returns>
-    public Order[] GetAll()
+    public IEnumerable<Order> GetAll()
     {
+        int i = 0;
         Order[] newOrders = new Order[DataSource.Orders.Count()];
         Order o = new Order();
         foreach (Order item in DataSource.Orders)
@@ -97,7 +102,7 @@ internal class DalOrder : IOrder
             o.OrderDate = item.OrderDate;
             o.ShipDate = item.ShipDate;
             o.DeliveryDate = item.DeliveryDate;
-            newOrders[i] = o;
+            newOrders[i++] = o;
         }
         if (DataSource.Orders.Count() == 0)
             Console.WriteLine("there is no orders");

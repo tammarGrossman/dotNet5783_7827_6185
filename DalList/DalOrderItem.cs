@@ -18,7 +18,7 @@ internal  class DalOrderItem : IOrderItem
             oI.OrderItemID = i;
             DataSource.OrderItems.Add(oI);
             DalProduct dp = new DalProduct();
-            Product p = dp.GetProduct(oI.ProductID);
+            Product p = dp.Get(oI.ProductID);
             p.InStock -= oI.Amount;
             return i;
         //}
@@ -60,8 +60,9 @@ internal  class DalOrderItem : IOrderItem
     /// get all objects
     /// </summary>
     /// <returns></returns>
-    public OrderItem[] GetAll()
+    public IEnumerable<OrderItem> GetAll()
     {
+        int i = 0;
         OrderItem[] newOrderItems = new OrderItem[DataSource.OrderItems.Count()];
         OrderItem oI = new OrderItem();
         foreach (OrderItem item in DataSource.OrderItems)
@@ -71,7 +72,7 @@ internal  class DalOrderItem : IOrderItem
             oI.OrderID = item.OrderID;
             oI.Price = item.Price;
             oI.Amount = item.Amount;
-            newOrderItems[i] = oI;
+            newOrderItems[i++] = oI;
         }        
         if(DataSource.OrderItems.Count() == 0)
             Console.WriteLine("there is no item in the order");
@@ -129,7 +130,7 @@ internal  class DalOrderItem : IOrderItem
     /// <param name="oIID"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public OrderItem[] GetProductsInOrder(int oID)
+    public IEnumerable<OrderItem> GetProductsInOrder(int oID)
     {
         OrderItem[] newOrderItems = new OrderItem[DataSource.OrderItems.Count()];
         OrderItem oI = new OrderItem();

@@ -7,7 +7,7 @@ public interface IProduct
     /// get all products
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Product> GetAll();
+    public IEnumerable<BO.ProductForList> GetAll();
     /// <summary>
     /// add a product
     /// </summary>

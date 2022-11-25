@@ -94,8 +94,9 @@ public void Update(Product p)
 /// get all objects
 /// </summary>
 /// <returns></returns>
-public Product[] GetAll()
+public IEnumerable<Product> GetAll()
     {
+        int i = 0;
         Product[] newProducts = new Product[DataSource.Products.Count()];
         Product p = new Product();
         foreach (Product item in DataSource.Products)
@@ -106,7 +107,7 @@ public Product[] GetAll()
                p.Category_ = item.Category_;
                p.Price = item.Price;
                p.InStock = item.InStock;
-               newProducts[i] = p;
+               newProducts[i++] = p;
         }
         if(DataSource.Products.Count()==0)
             Console.WriteLine("there is no products");

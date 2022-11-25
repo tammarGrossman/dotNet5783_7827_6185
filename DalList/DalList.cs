@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Dal
 {
-    sealed public class DalList : IDal
+    sealed public class Dallist : IDal
     {
         public IOrder Order => new DalOrder();
         public IProduct Product => new DalProduct();

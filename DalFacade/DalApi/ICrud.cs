@@ -9,9 +9,9 @@ namespace DalApi
     public interface ICrud<T>
     {
         public T Get(int id); 
-        public T Add(T entity);
-        public T Delete(int id);    
-        public T Update(T entity);
+        public int Add(T entity);
+        public void Delete(int id);    
+        public void Update(T entity);
         public IEnumerable<T> GetAll();
     }
 }

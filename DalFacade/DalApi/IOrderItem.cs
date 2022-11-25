@@ -15,6 +15,6 @@ namespace DalApi
         /// </summary>
         /// <param name="oID"></param>
         /// <returns></returns>
-        public OrderItem[] GetProductsInOrder(int oID);
+        public IEnumerable<OrderItem> GetProductsInOrder(int oID);
     }
 }
