@@ -11,5 +11,9 @@ internal class OrderTracking
     /// status of Order
     /// </summary>
     public OrderStatus Status { get; set; }
-  //  public int MyProperty { get; set; } לעשות רשימה של צמדים
+    /// <summary>
+    /// list of tuple date time and status of the state of order
+    /// </summary>
+    public IEnumerable<Tuple<DateTime, string>> Tracking { get; set; }
+
 }

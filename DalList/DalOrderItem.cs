@@ -63,7 +63,7 @@ internal  class DalOrderItem : IOrderItem
     public IEnumerable<OrderItem> GetAll()
     {
         int i = 0;
-        OrderItem[] newOrderItems = new OrderItem[DataSource.OrderItems.Count()];
+        List<OrderItem> newOrderItems = new List<OrderItem>();
         OrderItem oI = new OrderItem();
         foreach (OrderItem item in DataSource.OrderItems)
         {
@@ -72,7 +72,7 @@ internal  class DalOrderItem : IOrderItem
             oI.OrderID = item.OrderID;
             oI.Price = item.Price;
             oI.Amount = item.Amount;
-            newOrderItems[i++] = oI;
+            newOrderItems.Add(oI);
         }        
         if(DataSource.OrderItems.Count() == 0)
             Console.WriteLine("there is no item in the order");
@@ -98,6 +98,9 @@ internal  class DalOrderItem : IOrderItem
                 //    DataSource.OrderItems[i] = DataSource.OrderItems[i + 1];
                 //}
                 //DataSource.Config.OrderItemIndex--;
+                DalProduct dp = new DalProduct();
+                Product p = dp.Get(item.ProductID);
+                p.InStock += item.Amount;
                 DataSource.OrderItems.Remove(item); 
             }
         }
@@ -117,8 +120,11 @@ internal  class DalOrderItem : IOrderItem
             if (item.OrderItemID == oI.OrderItemID)
             { //FIND
                 exist = true;
-               DataSource.OrderItems.Remove(item);  
-               DataSource.OrderItems.Add(oI);
+                DalProduct dp = new DalProduct();
+                Product p = dp.Get(oI.ProductID);
+                p.InStock -= oI.Amount;
+                DataSource.OrderItems.Remove(item);  
+                DataSource.OrderItems.Add(oI);
             }
         }
         if(!exist)
@@ -132,7 +138,7 @@ internal  class DalOrderItem : IOrderItem
     /// <exception cref="Exception"></exception>
     public IEnumerable<OrderItem> GetProductsInOrder(int oID)
     {
-        OrderItem[] newOrderItems = new OrderItem[DataSource.OrderItems.Count()];
+        List<OrderItem> newOrderItems=new List<OrderItem>();
         OrderItem oI = new OrderItem();
         int i = 0;
         foreach (OrderItem item in DataSource.OrderItems)
@@ -144,7 +150,7 @@ internal  class DalOrderItem : IOrderItem
                 oI.OrderID = item.OrderID;
                 oI.Price = item.Price;
                 oI.Amount = item.Amount;
-                newOrderItems[i++] = oI;//check if need to change to list
+                newOrderItems.Add(oI);
             }
         }
             if(i!=0)

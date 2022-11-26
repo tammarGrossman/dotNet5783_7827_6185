@@ -91,7 +91,7 @@ internal class DalOrder : IOrder
     public IEnumerable<Order> GetAll()
     {
         int i = 0;
-        Order[] newOrders = new Order[DataSource.Orders.Count()];
+        List<Order> newOrders = new List<Order>();
         Order o = new Order();
         foreach (Order item in DataSource.Orders)
         {
@@ -102,7 +102,7 @@ internal class DalOrder : IOrder
             o.OrderDate = item.OrderDate;
             o.ShipDate = item.ShipDate;
             o.DeliveryDate = item.DeliveryDate;
-            newOrders[i++] = o;
+            newOrders.Add(o);
         }
         if (DataSource.Orders.Count() == 0)
             Console.WriteLine("there is no orders");

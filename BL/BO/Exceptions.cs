@@ -10,4 +10,8 @@ public class Exceptions
     {
        public Duplication(string message) : base(message) { }
     }
+    public class NotLegal : Exception
+    {
+        public NotLegal(string message) : base(message) { }
+    }
 }

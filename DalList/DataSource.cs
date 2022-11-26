@@ -5,9 +5,9 @@ static internal class DataSource
 {
     static readonly Random rand;// random
     static bool start = false;//start project
-    static internal List<Order> Orders;//= new Order[100];
-    static internal List<OrderItem> OrderItems; //= new OrderItem[200];
-    static internal List<Product> Products;// = new Product[50];
+    static internal List<Order> Orders=new List<Order>();
+    static internal List<OrderItem> OrderItems=new List<OrderItem>(); 
+    static internal List<Product> Products=new List<Product>();
     static DataSource()
     {
         rand = new Random();
@@ -63,14 +63,12 @@ static internal class DataSource
         for (int i = 1; i < 11; i++)
         {
             //Config.ProductIndex++;
-
             p.ID = i * 1000000;
                 p.Name = productsNames[i - 1];
                 p.Price = rand.Next(20, 201);
                 p.InStock = rand.Next(0, 50);
                 p.Category_ = (Category)Enum.ToObject(typeof(Category), categories[i - 1]);
-                Products.Add(p);        
-            
+                Products.Add(p);                    
         }
     }
     /// <summary>
