@@ -1,7 +1,7 @@
 ﻿
 namespace BO;
 
-internal class OrderTracking
+public class OrderTracking
 {
     /// <summary>
     /// Unique ID of Order

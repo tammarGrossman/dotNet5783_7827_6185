@@ -37,7 +37,7 @@ internal class DalOrder : IOrder
             if (item.ID == id)//FIND
                 return item;
         }
-        throw new Exception("not exists");
+        throw new NotExist("not exists");
     }
     /// <summary>
     /// delete object
@@ -62,7 +62,7 @@ internal class DalOrder : IOrder
             }
         }
         if (exist == 0)
-            throw new Exception("not exists");
+            throw new NotExist("not exists");
     }
     /// <summary>
     /// update object
@@ -82,7 +82,7 @@ internal class DalOrder : IOrder
         }
     }
         if(!exist)
-         throw new Exception("not exists");
+         throw new NotExist("not exists");
     }
     /// <summary>
     /// get all objects

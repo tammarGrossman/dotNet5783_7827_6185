@@ -1,14 +1,14 @@
 ﻿
 using BlApi;
+using BO;
 using Dal;
-using DalApi;
 using static BO.Exceptions;
 
 namespace BlImplementation;
 
 internal class Product:IProduct
 {
-     DalApi.Idal dal = new Dallist();  
+     DalApi.IDal dal = new Dallist();  
     public IEnumerable<BO.ProductForList> GetAll()
     {
         List<BO.ProductForList> products = new List<BO.ProductForList>();
@@ -23,8 +23,9 @@ internal class Product:IProduct
         }
         return products;
     }
-    public Product Get(int id)
+    public BO.Product Get(int id)
     {
+        try { 
         BO.Product BlProduct = new BO.Product();  
         DO.Product DalProduct= dal.Product.Get(id);
         BlProduct.Name = DalProduct.Name;
@@ -33,9 +34,15 @@ internal class Product:IProduct
         BlProduct.Category_ = DalProduct.Category_;
         BlProduct.InStock=DalProduct.InStock;
         return BlProduct;
+        }
+        catch (string ex)
+        {
+            throw new NotExist(ex);
+        }
     }
-    public Product Get(int id, Cart c)
+    public ProductItem Get(int id,BO.Cart c)
     {
+        try { 
         if (id > 0)
         {
             DO.Product DalProduct = dal.Product.Get(id);
@@ -54,8 +61,13 @@ internal class Product:IProduct
         }
         else
             throw new NotLegal();
+        }
+        catch (string ex)
+        {
+            throw new NotExist(ex);
+        }
     }
-    public void Add(Product p)
+    public int Add(BO.Product p)
     {
         DO.Product doProduct = new DO.Product();
         if (p.ID > 0 && p.Name != "" && p.Price > 0 && p.InStock > 0)
@@ -65,19 +77,20 @@ internal class Product:IProduct
             doProduct.Price = p.Price;
             doProduct.Category_ = p.Category_;
             doProduct.InStock = p.InStock;
-            dal.Product.Add(doProduct); 
+            return dal.Product.Add(doProduct); 
         }
         else
             throw new NotLegal();
     }
     public void Delete(int id)
     {
+        try { 
         bool exist = false;
         List<DO.Order> orders=dal.Order.GetAll();
         List<DO.OrderItem> orderItems;
         foreach (DO.Order order in orders)
         {
-            foreach (OrderItem orderItem in dal.OrderItem.GetProductsInOrder(order.ID)
+            foreach (OrderItem orderItem in dal.OrderItem.GetProductsInOrder(order.ID))
             {
                 if(orderItem.ProductID==id)
                 {
@@ -89,9 +102,15 @@ internal class Product:IProduct
             dal.Product.Delete(id);
         else
            throw new Exception();//
+        }
+        catch (string ex)
+        {
+            throw NotExist(ex);
+        }
     }
-    public void Update(Product p)
+    public void Update(BO.Product p)
     {
+        try {
         DO.Product doProduct = new DO.Product();
         if (p.ID > 0 && p.Name != "" && p.Price > 0 && p.InStock > 0)
         {
@@ -104,5 +123,10 @@ internal class Product:IProduct
         }
         else
             throw new NotLegal();
+        }
+        catch (string ex)
+        {
+            throw NotExist(ex);
+        }
     }
 }

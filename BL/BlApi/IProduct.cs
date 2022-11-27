@@ -12,7 +12,7 @@ public interface IProduct
     /// add a product
     /// </summary>
     /// <param name="p"></param>
-    public void Add(Product p);
+    public int Add(Product p);
     /// <summary>
     /// get a product
     /// </summary>

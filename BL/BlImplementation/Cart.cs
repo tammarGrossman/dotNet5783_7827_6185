@@ -1,127 +1,139 @@
 ﻿
-
 using BlApi;
-using DalApi;
 using static BO.Exceptions;
 
 namespace BlImplementation;
 
 internal class Cart : ICart
 {
-    DalApi.Idal dal = new Dal.DalList();
-    public void Add(Cart c, int id)
+    DalApi.IDal dal = new Dal.DalList();
+    public void Add(BO.Cart c, int id)
     {
-        double totalPrice;
-        bool exist = false, pExist = false;
-        BO.OrderItem BOorderItem = new BO.OrderItem();
-        DO.Product doProduct = dal.Product.Get(id);
-        foreach (var item in c.Items)
+        try
         {
-            if (doProduct.ID == item.ProductID && doProduct.InStock > 0)
+            double totalPrice;
+            bool exist = false, pExist = false;
+            BO.OrderItem BOorderItem = new BO.OrderItem();
+            DO.Product doProduct = dal.Product.Get(id);
+            foreach (var item in c.Items)
             {
-                exist = true;
-                //BOorderItem.ID = item.ID;
-                //BOorderItem.Name = item.Name;
-                //BOorderItem.ProductID = item.ProductID;
-                //BOorderItem.Price = item.Price;
-                //BOorderItem.Amount = item.Amount + 1;
-                //BOorderItem.TotalPrice = item.TotalPrice + item.Price;
-               // Cart newC=  Update(c, id, item.Amount + 1);
-                //else
-                //  throw new NotFound("the product does not exist in the stock");
-            }
-        }
-        if (!exist)
-        {
-            List<DO.Product> products = dal.Product.getAll();
-            foreach (var product in products)
-            {
-                if (product.ID == id && product.InStock > 0)
+                if (doProduct.ID == item.ProductID && doProduct.InStock > 0)
                 {
-                    pExist = true;
-                    BOorderItem.ID = product.ID;//check what is the id
-                    BOorderItem.ProductID = product.ProductID;
-                    BOorderItem.Name = product.Name;
-                    BOorderItem.Price = product.Price;
-                    BOorderItem.TotalPrice = BOorderItem.Price;
-                    BOorderItem.Amount = 1;
+                    exist = true;
+                    /*down*/
                 }
             }
-            if (!pExist)
-                throw new NotFound("the product does not exist");
-        }
-        c.Items.Add(BlorderItem);
-        foreach (var item in c.Items)
-        {
-            totalPrice += item.TotalPrice;
-        }
-        c.TotalPrice = totalPrice;
-    }
-    public Cart Update(Cart c, int id, int quantity)
-    {
-        int pInStock;
-        BO.OrderItem BOorderItem = new BO.OrderItem();
-
-        bool exist = false;
-        int newQuantity = 0;
-        foreach (var item in c.Items)
-        {
-            if (item.ID == id)
+            if (!exist)
             {
-                pInStock = dal.Product.Get(item.ProductID).InStock;
-                exist = true;
-                newQuantity = item.Amount + quantity;
-                if (newQuantity == 0)
-                    c.Items.Remove(item);
-                else if (newQuantity < 0)
-                    throw new NotLegal("your cart does not contain this amount of this item");
-                else if (newQuantity > pInStock)
-                    throw new NotLegal("there is not enough amount of this item in the store");
-                else
+                List<DO.Product> products = dal.Product.getAll();
+                foreach (var product in products)
                 {
-                    BOorderItem.ID = item.ID;
-                    BOorderItem.Name = item.Name;
-                    BOorderItem.ProductID = item.ProductID;
-                    BOorderItem.Price = item.Price;
-                    BOorderItem.Amount = newQuantity;
-                    BOorderItem.TotalPrice = item.TotalPrice + item.Price;
-                    c.Items.Remove(item);
-                    c.Items.Add(BlorderItem);
+                    if (product.ID == id && product.InStock > 0)
+                    {
+                        pExist = true;
+                        BOorderItem.ID = product.ID;//check what is the id
+                        BOorderItem.ProductID = product.ProductID;
+                        BOorderItem.Name = product.Name;
+                        BOorderItem.Price = product.Price;
+                        BOorderItem.TotalPrice = BOorderItem.Price;
+                        BOorderItem.Amount = 1;
+                    }
+                }
+                if (!pExist)
+                    throw new NotFound("the product does not exist");
+            }
+            c.Items.Add(BlorderItem);
+            foreach (var item in c.Items)
+            {
+                totalPrice += item.TotalPrice;
+            }
+            c.TotalPrice = totalPrice;
+        }
+        catch(string ex)
+        {
+            throw new NotExist(ex);   
+        }
+    }
+    public BO.Cart Update(BO.Cart c, int id, int quantity)
+    {
+        try
+        {
+            int pInStock;
+            BO.OrderItem BOorderItem = new BO.OrderItem();
+
+            bool exist = false;
+            int newQuantity = 0;
+            foreach (var item in c.Items)
+            {
+                if (item.ID == id)
+                {
+                    pInStock = dal.Product.Get(item.ProductID).InStock;
+                    exist = true;
+                    newQuantity = item.Amount + quantity;
+                    if (newQuantity == 0)
+                        c.Items.Remove(item);
+                    else if (newQuantity < 0)
+                        throw new NotLegal("your cart does not contain this amount of this item");
+                    else if (newQuantity > pInStock)
+                        throw new NotLegal("there is not enough amount of this item in the store");
+                    else
+                    {
+                        BOorderItem.ID = item.ID;
+                        BOorderItem.Name = item.Name;
+                        BOorderItem.ProductID = item.ProductID;
+                        BOorderItem.Price = item.Price;
+                        BOorderItem.Amount = newQuantity;
+                        BOorderItem.TotalPrice = item.TotalPrice + item.Price;
+                        c.Items.Remove(item);
+                        c.Items.Add(BlorderItem);
+                    }
                 }
             }
+            if (!exist)
+                throw new NotExist("the product item does not exist in the cart");
+            foreach (var item in c.Items)
+            {
+                totalPrice += item.TotalPrice;
+            }
+            c.TotalPrice = totalPrice;
         }
-        if (!exist)
-            throw new NotFound("the product item does not exist in the cart");
-        foreach (var item in c.Items)
+        catch(string ex)
         {
-            totalPrice += item.TotalPrice;
+            throw new NotExist(ex);
         }
-        c.TotalPrice = totalPrice;
-
     }
-    public void OrderConfirmation(Cart c)
+    public void OrderConfirmation(BO.Cart c)
     {
-        int newOrderID;
-        DO.OrderItem newOrderItem = new DO.OrderItem();
-        DO.Order newOrder = new DO.Order();
-        newOrder.OrderDate = DateTime.Now;
-        newOrder.CustomerName = c.CustomerName;
-        newOrder.CustomerAdress = c.CustomerAdress;
-        newOrder.CustomerEmail = c.CustomerEmail;
-        newOrder.ShipDate = DateTime.MinValue;
-        newOrder.DeliveryDate= DateTime.MinValue;
-        newOrderID=dal.Order.Add(newOrder);
-        foreach (var item in c.Items)
-        {
-            newOrderItem.OrderID = newOrderID;
-            newOrderItem.ProductID = item.ProductID;
-            newOrderItem.Price = item.Price;
-            newOrderItem.Amount = item.Amount;
-            dal.OrderItem.Add(newOrderItem);
-        }
-
+            int newOrderID;
+            DO.OrderItem newOrderItem = new DO.OrderItem();
+            DO.Order newOrder = new DO.Order();
+            newOrder.OrderDate = DateTime.Now;
+            newOrder.CustomerName = c.CustomerName;
+            newOrder.CustomerAdress = c.CustomerAdress;
+            newOrder.CustomerEmail = c.CustomerEmail;
+            newOrder.ShipDate = DateTime.MinValue;
+            newOrder.DeliveryDate = DateTime.MinValue;
+            newOrderID = dal.Order.Add(newOrder);
+            foreach (var item in c.Items)
+            {
+                newOrderItem.OrderID = newOrderID;
+                newOrderItem.ProductID = item.ProductID;
+                newOrderItem.Price = item.Price;
+                newOrderItem.Amount = item.Amount;
+                dal.OrderItem.Add(newOrderItem);
+            }
     }
-
-
-
 }
+
+
+
+
+//BOorderItem.ID = item.ID;
+//BOorderItem.Name = item.Name;
+//BOorderItem.ProductID = item.ProductID;
+//BOorderItem.Price = item.Price;
+//BOorderItem.Amount = item.Amount + 1;
+//BOorderItem.TotalPrice = item.TotalPrice + item.Price;
+// Cart newC=  Update(c, id, item.Amount + 1);
+//else
+//  throw new NotFound("the product does not exist in the stock");

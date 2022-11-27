@@ -41,7 +41,7 @@ internal class DalProduct :IProduct
             if (item.ID == id)//FIND
                 return item;
         }
-        throw new Exception("not exists");
+        throw new NotExist("not exists");
     }
     /// <summary>
     /// delete object
@@ -88,7 +88,7 @@ public void Update(Product p)
             }
         }
     if (!exist)
-        throw new Exception("not exists");
+        throw new NotExist("not exists");
 }
 /// <summary>
 /// get all objects

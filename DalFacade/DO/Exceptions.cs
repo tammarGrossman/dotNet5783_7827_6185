@@ -1,9 +1,9 @@
 ﻿
 namespace DO;
 
-public class NotFound:Exception
+public class NotExist:Exception
 {
-   public  NotFound(string message) : base(message) { }
+   public NotExist(string message) : base(message) { }
 }
 public class Duplication:Exception
 {

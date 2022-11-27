@@ -1,15 +1,11 @@
 ﻿
 using BlApi;
 using BO;
-using DalApi;
-using DO;
 using static BO.Exceptions;
-
 namespace BlImplementation;
-
 internal class Order:IOrder
 {
-      DalApi.Idal dal = new Dal.DalList();  
+      DalApi.IDal dal = new Dal.DalList();  
     public IEnumerable<BO.OrderForList> GetAll()
     {
         List<BO.OrderForList> orders = new List<BO.OrderForList>();
@@ -35,46 +31,54 @@ internal class Order:IOrder
         return orders;
     }
 
-    public Order Get(int id)
+    public BO.Order Get(int id)
     {
-        //check what to do with productName
-        // DO.Product DalProduct=dal.Product.Get(id);
-        if (id > 0)
+        try
         {
-            double totalPrice;
-            BO.Order BlOrder = new BO.Order();
-            DO.Order DalOrder = dal.Order.Get(id);
-            BO.OrderItem BlorderItem = new BO.OrderItem();
-            foreach (OrderItem item in dal.OrderItem.GetProductByID(id))
+            //check what to do with productName
+            // DO.Product DalProduct=dal.Product.Get(id);
+            if (id > 0)
             {
-                BlorderItem.OrderItemID = item.OrderItemID;
-                BlorderItem.ProductID = item.ProductID;
-                BlorderItem.OrderID = item.OrderID;
-                BlorderItem.Price = item.Price;
-                BlorderItem.Amount = item.Amount;
-                BlOrder.Items.Add(BlorderItem);
-                totalPrice += BlorderItem.Price * BlorderItem.Amount;
-            } 
-            BlOrder.ID = DalOrder.ID;
-            BlOrder.CustomerName = DalOrder.CustomerName;
-            BlOrder.CustomerEmail = DalOrder.CustomerEmail;
-            BlOrder.CustomerAddres = DalOrder.CustomerAddres;
-            BlOrder.PaymentDate = DalOrder.OrderDate;
-            BlOrder.ShipDate = DalOrder.ShipDate;
-            BlOrder.DeliveryDate = DalOrder.DeliveryDate;
-            BlOrder.TotalPrice = totalPrice;
-           // BlOrder.Status;//check what to do with status
-            return BlOrder;
+                double totalPrice;
+                BO.Order BlOrder = new BO.Order();
+                DO.Order DalOrder = dal.Order.Get(id);
+                BO.OrderItem BlorderItem = new BO.OrderItem();
+                foreach (OrderItem item in dal.OrderItem.GetProductByID(id))
+                {
+                    BlorderItem.OrderItemID = item.OrderItemID;
+                    BlorderItem.ProductID = item.ProductID;
+                    BlorderItem.OrderID = item.OrderID;
+                    BlorderItem.Price = item.Price;
+                    BlorderItem.Amount = item.Amount;
+                    BlOrder.Items.Add(BlorderItem);
+                    totalPrice += BlorderItem.Price * BlorderItem.Amount;
+                }
+                BlOrder.ID = DalOrder.ID;
+                BlOrder.CustomerName = DalOrder.CustomerName;
+                BlOrder.CustomerEmail = DalOrder.CustomerEmail;
+                BlOrder.CustomerAddres = DalOrder.CustomerAddres;
+                BlOrder.PaymentDate = DalOrder.OrderDate;
+                BlOrder.ShipDate = DalOrder.ShipDate;
+                BlOrder.DeliveryDate = DalOrder.DeliveryDate;
+                BlOrder.TotalPrice = totalPrice;
+                // BlOrder.Status;//check what to do with status
+                return BlOrder;
+            }
+            else
+                throw new NotLegal();
         }
-        else
-            throw new NotLegal();
+        catch(string ex)
+        {
+            throw new NotExist(ex);
+        }
     }
 
-    public Order UpdateSend(int id)
+    public BO.Order UpdateSend(int id)
     {
+        try { 
         double totalPrice;
-       DO.Order dalOrder=dal.Order.Get(id);
-       BO.Order blOrder=new BO.Order();
+        DO.Order dalOrder=dal.Order.Get(id);
+        BO.Order blOrder=new BO.Order();
         BO.OrderItem BlorderItem = new BO.OrderItem();
         DO.Order DOorder=new DO.Order();
         if (dalOrder.ShipDate==DateTime.MinValue)
@@ -86,7 +90,7 @@ internal class Order:IOrder
             DOorder.OrderDate = dalOrder.OrderDate;
             DOorder.DeliveryDate = dalOrder.DeliveryDate;
             DOorder.ShipDate = DateTime.Now();
-            dal.Order.Update(DOorder)
+            dal.Order.Update(DOorder);
             foreach (OrderItem item in dal.OrderItem.GetProductByID(id))
             {
                 BlorderItem.OrderItemID = item.OrderItemID;
@@ -109,9 +113,15 @@ internal class Order:IOrder
             return blOrder;
         }
         throw new NotLegal();
+        }
+        catch (string ex)
+        {
+            throw new NotExist(ex);
+        }
     }
-    public Order UpdateSupply(int id)
+    public BO.Order UpdateSupply(int id)
     {
+        try { 
         double totalPrice;
         DO.Order dalOrder = dal.Order.Get(id);
         BO.Order blOrder = new BO.Order();
@@ -126,7 +136,7 @@ internal class Order:IOrder
             DOorder.OrderDate = dalOrder.OrderDate;
             DOorder.ShipDate = dalOrder.ShipDate;
             DOorder.DeliveryDate = DateTime.Now();
-            dal.Order.Update(DOorder)
+                dal.Order.Update(DOorder);
             foreach (OrderItem item in dal.OrderItem.GetProductByID(id))
             {
                 BlorderItem.OrderItemID = item.OrderItemID;
@@ -149,8 +159,14 @@ internal class Order:IOrder
             return blOrder;
         }
         throw new NotLegal();
+        }
+        catch (string ex)
+        {
+            throw new NotExist(ex);
+        }
     }
     public OrderTracking TrackOrder(int id)
     {
-}
+        Console.WriteLine("help");
+    }
 }

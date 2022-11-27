@@ -38,7 +38,7 @@ internal  class DalOrderItem : IOrderItem
             if (item.OrderItemID == id)//FIND
                 return item;
         }
-        throw new Exception("not exists");
+        throw new NotExist("not exists");
     }
     /// <summary>
     /// get object by ids
@@ -54,7 +54,7 @@ internal  class DalOrderItem : IOrderItem
             if (item.ProductID == pId && item.OrderID == oId)//FIND
                 return item;
         }
-        throw new Exception("not exists");
+        throw new NotExist("not exists");
     }
     /// <summary>
     /// get all objects
@@ -105,7 +105,7 @@ internal  class DalOrderItem : IOrderItem
             }
         }
         if (exist == 0)
-            throw new Exception("not exists");
+            throw new NotExist("not exists");
     }
     /// <summary>
     /// update object
@@ -128,7 +128,7 @@ internal  class DalOrderItem : IOrderItem
             }
         }
         if(!exist)
-        throw new Exception("not exists");
+        throw new NotExist("not exists");
     }
     /// <summary>
     /// get objects in order
@@ -156,6 +156,6 @@ internal  class DalOrderItem : IOrderItem
             if(i!=0)
                 return newOrderItems;
             else
-               throw new Exception("no products in the order");
+               throw new NotExist("no products in the order");
     }
 }
