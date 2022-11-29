@@ -1,4 +1,5 @@
 ﻿using DO;
+using System.Reflection;
 
 namespace BO;
 public class Cart
@@ -23,16 +24,13 @@ public List<OrderItem> Items { get; set; }
 /// the total price of all items in the cart
 /// </summary>
 public double TotalPrice { get; set; }
-//לבדוק איך מדפיסים אברי רשימה
-/// <summary>
-/// print all properties in object
-/// </summary>
-/// <returns></returns>
-public override string ToString() =>
-      $@"
-        Customer Name - {CustomerName}
-    	Customer Email: {CustomerEmail}
-    	Customer Adress: {CustomerAdress}
-    	Total Price: {TotalPrice}
-       ";
+    //לבדוק איך מדפיסים אברי רשימה
+    /// <summary>
+    /// print all properties in object
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return Descriptions.Description(this);
+    }
 }

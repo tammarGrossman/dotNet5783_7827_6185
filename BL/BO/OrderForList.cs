@@ -1,4 +1,6 @@
 ﻿
+using System.Reflection;
+
 namespace BO;
 
 public class OrderForList
@@ -23,4 +25,8 @@ public class OrderForList
     /// the amount of items in the orders list
     /// </summary>
     public int AmountOfItems { get; set; }
+    public override string ToString()
+    {
+        return Descriptions.Description(this);
+    }
 }

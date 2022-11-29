@@ -6,12 +6,12 @@ namespace BlImplementation;
 
 internal class Cart : ICart
 {
-    DalApi.IDal dal = new Dal.DalList();
+    DalApi.IDal dal = new Dal.Dallist();
     public void Add(BO.Cart c, int id)
     {
         try
         {
-            double totalPrice;
+            double totalPrice=0;
             bool exist = false, pExist = false;
             BO.OrderItem BOorderItem = new BO.OrderItem();
             DO.Product doProduct = dal.Product.Get(id);
@@ -25,14 +25,14 @@ internal class Cart : ICart
             }
             if (!exist)
             {
-                List<DO.Product> products = dal.Product.getAll();
+                IEnumerable<DO.Product> products = dal.Product.GetAll();
                 foreach (var product in products)
                 {
                     if (product.ID == id && product.InStock > 0)
                     {
                         pExist = true;
                         BOorderItem.ID = product.ID;//check what is the id
-                        BOorderItem.ProductID = product.ProductID;
+                        BOorderItem.ProductID = product.ID;
                         BOorderItem.Name = product.Name;
                         BOorderItem.Price = product.Price;
                         BOorderItem.TotalPrice = BOorderItem.Price;
@@ -42,16 +42,16 @@ internal class Cart : ICart
                 if (!pExist)
                     throw new NotFound("the product does not exist");
             }
-            c.Items.Add(BlorderItem);
+            c.Items.Add(BOorderItem);
             foreach (var item in c.Items)
             {
                 totalPrice += item.TotalPrice;
             }
             c.TotalPrice = totalPrice;
         }
-        catch(string ex)
+        catch(Exception ex)
         {
-            throw new NotExist(ex);   
+            throw new NotExist("ex");   
         }
     }
     public BO.Cart Update(BO.Cart c, int id, int quantity)
@@ -60,7 +60,7 @@ internal class Cart : ICart
         {
             int pInStock;
             BO.OrderItem BOorderItem = new BO.OrderItem();
-
+            double totalPrice=0;
             bool exist = false;
             int newQuantity = 0;
             foreach (var item in c.Items)
@@ -85,7 +85,8 @@ internal class Cart : ICart
                         BOorderItem.Amount = newQuantity;
                         BOorderItem.TotalPrice = item.TotalPrice + item.Price;
                         c.Items.Remove(item);
-                        c.Items.Add(BlorderItem);
+                        c.Items.Add(BOorderItem);
+                     
                     }
                 }
             }
@@ -96,10 +97,11 @@ internal class Cart : ICart
                 totalPrice += item.TotalPrice;
             }
             c.TotalPrice = totalPrice;
+            return c;
         }
-        catch(string ex)
+        catch(Exception ex)
         {
-            throw new NotExist(ex);
+            throw new NotExist("ex");
         }
     }
     public void OrderConfirmation(BO.Cart c)

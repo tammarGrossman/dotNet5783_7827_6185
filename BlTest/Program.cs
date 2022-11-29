@@ -4,13 +4,15 @@ using BlApi;
 using BlImplementation;
 using BO;
 using Dal;
+using DalApi;
 using System.Diagnostics;
 
 namespace BlTest
 {
     internal class Program
     {
-        IBl bl = new Bl();//check if correct
+        static IBl bl = new Bl();//check if correct
+        static IDal dal = new Dallist();
         /// <summary>
         /// the product case
         /// </summary>
@@ -60,12 +62,12 @@ namespace BlTest
                         res = int.TryParse(Console.ReadLine(), out id);
                         Console.WriteLine("enter cart ID:");
                         res = int.TryParse(Console.ReadLine(), out cartID);
-                        Console.WriteLine(bl.Product.Get(c,id));
+                        Console.WriteLine(bl.Product.Get(id,c));
                     }
                     break;
                 case 4://get all product
                     {
-                        foreach (Product item in bl.Product.GetAll())
+                        foreach (var item in bl.Product.GetAll())
                         {
                             Console.WriteLine(item);
                         }
@@ -76,7 +78,7 @@ namespace BlTest
                         int id;
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine(dalList.Product.Get(id));
+                        Console.WriteLine(dal.Product.Get(id));
                         Product p = new Product();
                         Console.WriteLine("enter product ID:");
                         p.ID = int.Parse(Console.ReadLine());
@@ -132,7 +134,7 @@ namespace BlTest
 
                 case 2:  //get all order
                     {
-                        foreach (Order item in bl.Order.GetAll())
+                        foreach (var item in bl.Order.GetAll())
                         {
                             Console.WriteLine(item);
                         }
@@ -217,7 +219,6 @@ namespace BlTest
         }
         static void Main(string[] args)
         {
-            IEnumerable<ProductForList?> productFL = bl.ProductForList;
             int entity;
             bool res;
             Console.WriteLine("enter 0 to exit");

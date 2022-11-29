@@ -1,5 +1,7 @@
 ﻿
 
+using System.Reflection;
+
 namespace BO;
 
 public class OrderItem
@@ -28,4 +30,8 @@ public class OrderItem
     /// the total price of object
     /// </summary>
     public double TotalPrice { get; set; }
+    public override string ToString()
+    {
+        return Descriptions.Description(this);
+    }
 }

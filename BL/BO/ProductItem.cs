@@ -31,11 +31,8 @@ public class ProductItem
     /// print object details
     /// </summary>
     /// <returns></returns>
-    public override string ToString() =>
-        $@"
-        Product ID={ID}: {Name}, 
-        category - {Category_}
-    	Price: {Price}
-    	Amount in stock: {InStock}
-       ";
+    public override string ToString()
+    {
+        return Descriptions.Description(this);
+    }
 }

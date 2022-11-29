@@ -20,10 +20,8 @@ public class ProductForList
     /// the category of Product
     /// </summary>
     public Category Category_ { get; set; }
-    public override string ToString() =>
-       $@"
-        Product ID={ID}: {Name}, 
-        category - {Category_}
-    	Price: {Price}
-       ";
+    public override string ToString()
+    {
+        return Descriptions.Description(this);
+    }
 }

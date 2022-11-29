@@ -31,13 +31,13 @@ internal class Product:IProduct
         BlProduct.Name = DalProduct.Name;
         BlProduct.ID= DalProduct.ID;
         BlProduct.Price = DalProduct.Price;
-        BlProduct.Category_ = DalProduct.Category_;
+        BlProduct.Category_ = (Category)DalProduct.Category_;
         BlProduct.InStock=DalProduct.InStock;
         return BlProduct;
         }
-        catch (string ex)
+        catch (Exception ex)
         {
-            throw new NotExist(ex);
+            throw new NotExist("ex");
         }
     }
     public ProductItem Get(int id,BO.Cart c)
@@ -49,8 +49,8 @@ internal class Product:IProduct
             BO.ProductItem BlProductItem = new BO.ProductItem();
             BlProductItem.ID = DalProduct.ID;
             BlProductItem.Name= DalProduct.Name;
-            BlProductItem.Price = DalProduct.Name;
-            BlProductItem.Category_ = DalProduct.Category_;
+            BlProductItem.Price = DalProduct.Price;
+            BlProductItem.Category_ = (Category)DalProduct.Category_;
             BlProductItem.InStock = DalProduct.InStock;
             foreach (var item in c.Items)
             {
@@ -60,11 +60,11 @@ internal class Product:IProduct
             return BlProductItem;
         }
         else
-            throw new NotLegal();
+            throw new NotLegal("HHH");
         }
-        catch (string ex)
+        catch (Exception ex)
         {
-            throw new NotExist(ex);
+            throw new NotExist("ex");
         }
     }
     public int Add(BO.Product p)
@@ -75,22 +75,22 @@ internal class Product:IProduct
             doProduct.ID = p.ID;
             doProduct.Name = p.Name;
             doProduct.Price = p.Price;
-            doProduct.Category_ = p.Category_;
+            doProduct.Category_ = (DO.Category)p.Category_;
             doProduct.InStock = p.InStock;
             return dal.Product.Add(doProduct); 
         }
         else
-            throw new NotLegal();
+            throw new NotLegal("BBB");
     }
     public void Delete(int id)
     {
         try { 
         bool exist = false;
-        List<DO.Order> orders=dal.Order.GetAll();
+        IEnumerable<DO.Order>orders = dal.Order.GetAll();
         List<DO.OrderItem> orderItems;
         foreach (DO.Order order in orders)
         {
-            foreach (OrderItem orderItem in dal.OrderItem.GetProductsInOrder(order.ID))
+            foreach (DO.OrderItem orderItem in dal.OrderItem.GetProductsInOrder(order.ID))
             {
                 if(orderItem.ProductID==id)
                 {
@@ -103,9 +103,9 @@ internal class Product:IProduct
         else
            throw new Exception();//
         }
-        catch (string ex)
+        catch (Exception ex)
         {
-            throw NotExist(ex);
+            throw new NotExist("ex");
         }
     }
     public void Update(BO.Product p)
@@ -117,16 +117,16 @@ internal class Product:IProduct
             doProduct.ID = p.ID;
             doProduct.Name = p.Name;
             doProduct.Price = p.Price;
-            doProduct.Category_ = p.Category_;
+           // doProduct.Category_ = p.Category_;
             doProduct.InStock = p.InStock;
             dal.Product.Update(doProduct);
         }
         else
-            throw new NotLegal();
+            throw new NotLegal("bbb");
         }
-        catch (string ex)
+        catch (Exception ex)
         {
-            throw NotExist(ex);
+            throw new NotExist("ex");
         }
     }
 }

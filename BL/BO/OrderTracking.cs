@@ -1,4 +1,6 @@
 ﻿
+using System.Reflection;
+
 namespace BO;
 
 public class OrderTracking
@@ -15,5 +17,8 @@ public class OrderTracking
     /// list of tuple date time and status of the state of order
     /// </summary>
     public IEnumerable<Tuple<DateTime, string>> Tracking { get; set; }
-
+    public override string ToString()
+    {
+        return Descriptions.Description(this);
+    }
 }

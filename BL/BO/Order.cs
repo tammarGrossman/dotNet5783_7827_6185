@@ -1,5 +1,6 @@
 ﻿
 using DO;
+using System.Reflection;
 
 namespace BO;
 
@@ -25,7 +26,7 @@ public class Order
     /// the order date 
     /// </summary>
 
-   
+
     public DateTime PaymentDate { get; set; }
     /// <summary>
     /// the ship date 
@@ -56,16 +57,8 @@ public class Order
     /// </summary>
     /// <returns></returns>
     /// לבדוק איך להדפיס את אברי הרשימה
-    public override string ToString() =>
-       $@"
-        Order ID={ID}
-        Customer Name - {CustomerName}
-    	Customer Email: {CustomerEmail}
-    	Customer Adress: {CustomerAdress}
-        Order Date - {PaymentDate}
-    	ShipDate: {ShipDate}
-    	DeliveryDate: {DeliveryDate}
-        Status: {Status}
-        Total Price:{TotalPrice}
-       ";
+    public override string ToString()
+    {
+        return Descriptions.Description(this);
+    }
 }
