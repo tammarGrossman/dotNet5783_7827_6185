@@ -15,14 +15,16 @@ internal class DalOrder : IOrder
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     public  int Add(Order o)
-    {  //check if there is place
-        /*if (DataSource.Config.OrderIndex < DataSource.Orders.Length) */        
-            int i = DataSource.Config.LastOrder;
-            o.ID = i;
-            DataSource.Orders.Add(o);
-            return i;       
-        //else
-            //throw new Exception("there is no place");
+    {
+        int i = DataSource.Config.LastOrder;
+        o.ID = i;
+        foreach (var item in DataSource.Orders)
+        {
+            if (o.ID == item.ID)
+                throw new Duplication("this order is already exist");
+        }
+        DataSource.Orders.Add(o);
+        return i;
     }
     /// <summary>
     /// get object

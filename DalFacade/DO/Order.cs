@@ -39,7 +39,7 @@ public struct Order
     /// print object details
     /// </summary>
     /// <returns></returns>
-    public override string ToString() =>
+    public override string ToString()=>
        $@"
         Order ID={ID}
         Customer Name - {CustomerName}
@@ -49,5 +49,4 @@ public struct Order
     	ShipDate: {ShipDate}
     	DeliveryDate: {DeliveryDate}
        ";
-
 }

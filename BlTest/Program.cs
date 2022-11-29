@@ -1,17 +1,14 @@
 ﻿
-
 using BlApi;
 using BlImplementation;
 using BO;
 using Dal;
 using DalApi;
-using System.Diagnostics;
-
 namespace BlTest
 {
     internal class Program
     {
-        static IBl bl = new Bl();//check if correct
+        static IBl bl = new Bl();
         static IDal dal = new Dallist();
         /// <summary>
         /// the product case

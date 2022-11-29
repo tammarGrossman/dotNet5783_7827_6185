@@ -5,9 +5,9 @@ static internal class DataSource
 {
     static readonly Random rand;// random
     static bool start = false;//start project
-    static internal List<Order> Orders=new List<Order>();
-    static internal List<OrderItem> OrderItems=new List<OrderItem>(); 
-    static internal List<Product> Products=new List<Product>();
+    internal static List<Order> Orders=new List<Order>();
+    internal static List<OrderItem> OrderItems=new List<OrderItem>();
+    internal static List<Product> Products=new List<Product>();
     static DataSource()
     {
         rand = new Random();
@@ -43,7 +43,8 @@ static internal class DataSource
             if (i < 10)
             {
                 ts.Add(new TimeSpan(rand.Next(1, 10), rand.Next(0, 24), rand.Next(0, 60), rand.Next(0, 60)));
-                o.DeliveryDate = Orders[i].ShipDate + ts;
+                // o.DeliveryDate = Orders[i].ShipDate + ts;
+                o.DeliveryDate = o.ShipDate + ts;
             }
            o.ID = Config.LastOrder;
            o.CustomerAdress = customersAdresses[i];
@@ -64,11 +65,12 @@ static internal class DataSource
         {
             //Config.ProductIndex++;
             p.ID = i * 1000000;
-                p.Name = productsNames[i - 1];
-                p.Price = rand.Next(20, 201);
-                p.InStock = rand.Next(0, 50);
-                p.Category_ = (Category)Enum.ToObject(typeof(Category), categories[i - 1]);
-                Products.Add(p);                    
+            p.Name = productsNames[i - 1];
+            p.Price = rand.Next(20, 201);
+            p.InStock = rand.Next(0, 50);
+            p.Category_ = (Category)Enum.ToObject(typeof(Category), categories[i - 1]);
+            Products.Add(p);
+            Console.WriteLine(p);
         }
     }
     /// <summary>
@@ -96,10 +98,6 @@ private static void createOrderItem()
 }
     static internal class Config
     {
-        //index and run number
-        //internal static int OrderIndex= 0;
-        //internal static int ProductIndex = 0;
-        //internal static int OrderItemIndex = 0;
         private static int lastOrder=0;
         private static int lastOrderItem=0;
         static Config()

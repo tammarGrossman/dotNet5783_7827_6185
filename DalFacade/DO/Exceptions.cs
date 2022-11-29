@@ -7,5 +7,5 @@ public class NotExist:Exception
 }
 public class Duplication:Exception
 {
-    Duplication(string message) : base(message) { }
+   public  Duplication(string message) : base(message) { }
 }

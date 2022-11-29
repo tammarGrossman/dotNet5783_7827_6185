@@ -1,7 +1,5 @@
 ﻿using DalApi;
 using DO;
-using System.Security.Principal;
-
 namespace Dal;
 internal class DalProduct :IProduct
 
@@ -14,19 +12,16 @@ internal class DalProduct :IProduct
     /// <exception cref="Exception"></exception>
     public int Add(Product p)
     {
-        //if (DataSource.Config.ProductIndex < DataSource.Products.Length)
-        //{
         foreach (Product item in DataSource.Products)
           {
                 if (item.ID == p.ID)
-                    throw new Exception("wrong id");
-           }
-            //check if there is place
-            DataSource.Products.Add(p);
+                    throw new Duplication("this product is already exist");
+                //if(p==item)
+                //throw new Duplication("this product is already exist");
+
+        }
+        DataSource.Products.Add(p);
             return p.ID;
-        //}
-        //else
-        // throw new Exception("there is no place");
     }
     /// <summary>
     /// get object
@@ -36,6 +31,7 @@ internal class DalProduct :IProduct
     /// <exception cref="Exception"></exception>
     public Product Get(int id)
     {
+        Console.WriteLine("hello get func id={0}",id);
         foreach (Product item in DataSource.Products)
         {
             if (item.ID == id)//FIND
@@ -80,21 +76,22 @@ public void Update(Product p)
     bool exist = false;
         foreach (Product item in DataSource.Products)
         {
-            if (item.ID == p.ID)//FIND
+            if (item.ID == p.ID && !exist)//FIND
             {
                 exist = true;
                 DataSource.Products.Remove(item);
-               DataSource.Products.Add(p);
             }
         }
     if (!exist)
         throw new NotExist("not exists");
-}
-/// <summary>
-/// get all objects
-/// </summary>
-/// <returns></returns>
-public IEnumerable<Product> GetAll()
+    else
+        DataSource.Products.Add(p);
+    }
+    /// <summary>
+    /// get all objects
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<Product> GetAll()
     {
         int i = 0;
         List<Product> newProducts = new List<Product>();

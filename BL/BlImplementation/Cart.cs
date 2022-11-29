@@ -1,9 +1,7 @@
 ﻿
 using BlApi;
 using static BO.Exceptions;
-
 namespace BlImplementation;
-
 internal class Cart : ICart
 {
     DalApi.IDal dal = new Dal.Dallist();
@@ -11,7 +9,7 @@ internal class Cart : ICart
     {
         try
         {
-            double totalPrice=0;
+            double totalPrice = 0;
             bool exist = false, pExist = false;
             BO.OrderItem BOorderItem = new BO.OrderItem();
             DO.Product doProduct = dal.Product.Get(id);
@@ -43,15 +41,15 @@ internal class Cart : ICart
                     throw new NotFound("the product does not exist");
             }
             c.Items.Add(BOorderItem);
-            foreach (var item in c.Items)
+            foreach (BO.OrderItem item in c.Items)
             {
                 totalPrice += item.TotalPrice;
             }
             c.TotalPrice = totalPrice;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            throw new NotExist("ex");   
+            throw new NotExist(ex.Message);
         }
     }
     public BO.Cart Update(BO.Cart c, int id, int quantity)
@@ -60,7 +58,7 @@ internal class Cart : ICart
         {
             int pInStock;
             BO.OrderItem BOorderItem = new BO.OrderItem();
-            double totalPrice=0;
+            double totalPrice = 0;
             bool exist = false;
             int newQuantity = 0;
             foreach (var item in c.Items)
@@ -86,7 +84,7 @@ internal class Cart : ICart
                         BOorderItem.TotalPrice = item.TotalPrice + item.Price;
                         c.Items.Remove(item);
                         c.Items.Add(BOorderItem);
-                     
+
                     }
                 }
             }
@@ -99,31 +97,38 @@ internal class Cart : ICart
             c.TotalPrice = totalPrice;
             return c;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            throw new NotExist("ex");
+            throw new NotExist(ex.Message);
         }
     }
     public void OrderConfirmation(BO.Cart c)
     {
-            int newOrderID;
-            DO.OrderItem newOrderItem = new DO.OrderItem();
-            DO.Order newOrder = new DO.Order();
-            newOrder.OrderDate = DateTime.Now;
-            newOrder.CustomerName = c.CustomerName;
-            newOrder.CustomerAdress = c.CustomerAdress;
-            newOrder.CustomerEmail = c.CustomerEmail;
-            newOrder.ShipDate = DateTime.MinValue;
-            newOrder.DeliveryDate = DateTime.MinValue;
-            newOrderID = dal.Order.Add(newOrder);
-            foreach (var item in c.Items)
+        int newOrderID;
+        DO.OrderItem newOrderItem = new DO.OrderItem();
+        DO.Order newOrder = new DO.Order();
+        newOrder.OrderDate = DateTime.Now;
+        newOrder.CustomerName = c.CustomerName;
+        newOrder.CustomerAdress = c.CustomerAdress;
+        newOrder.CustomerEmail = c.CustomerEmail;
+        newOrder.ShipDate = DateTime.MinValue;
+        newOrder.DeliveryDate = DateTime.MinValue;
+        newOrderID = dal.Order.Add(newOrder);
+        foreach (var item in c.Items)
+        {
+            newOrderItem.OrderID = newOrderID;
+            newOrderItem.ProductID = item.ProductID;
+            newOrderItem.Price = item.Price;
+            newOrderItem.Amount = item.Amount;
+            try
             {
-                newOrderItem.OrderID = newOrderID;
-                newOrderItem.ProductID = item.ProductID;
-                newOrderItem.Price = item.Price;
-                newOrderItem.Amount = item.Amount;
                 dal.OrderItem.Add(newOrderItem);
             }
+            catch (Exception ex)
+            {
+                throw new Duplication(ex.Message);
+            }
+        }
     }
 }
 

@@ -17,7 +17,7 @@ internal class Product:IProduct
             BO.ProductForList product = new BO.ProductForList();
             product.Name = item.Name;
             product.Price = item.Price;
-            //pr.category = item.CategoryP;  
+            product.Category_ = (Category)item.Category_;  
             product.ID = item.ID;
             products.Add(product);
         }
@@ -25,20 +25,21 @@ internal class Product:IProduct
     }
     public BO.Product Get(int id)
     {
-        try { 
+       try 
+        { 
         BO.Product BlProduct = new BO.Product();  
-        DO.Product DalProduct= dal.Product.Get(id);
-        BlProduct.Name = DalProduct.Name;
-        BlProduct.ID= DalProduct.ID;
-        BlProduct.Price = DalProduct.Price;
-        BlProduct.Category_ = (Category)DalProduct.Category_;
-        BlProduct.InStock=DalProduct.InStock;
+        DO.Product DOProduct= dal.Product.Get(id);
+        BlProduct.Name = DOProduct.Name;
+        BlProduct.ID= DOProduct.ID;
+        BlProduct.Price = DOProduct.Price;
+        BlProduct.Category_ = (Category)DOProduct.Category_;
+        BlProduct.InStock= DOProduct.InStock;
         return BlProduct;
-        }
+       }
         catch (Exception ex)
         {
-            throw new NotExist("ex");
-        }
+            throw new NotExist(ex.Message);
+}
     }
     public ProductItem Get(int id,BO.Cart c)
     {
@@ -60,16 +61,17 @@ internal class Product:IProduct
             return BlProductItem;
         }
         else
-            throw new NotLegal("HHH");
+            throw new NotLegal("this is not legal id of product");
         }
         catch (Exception ex)
         {
-            throw new NotExist("ex");
+            throw new NotExist(ex.Message);
         }
     }
     public int Add(BO.Product p)
     {
         DO.Product doProduct = new DO.Product();
+        
         if (p.ID > 0 && p.Name != "" && p.Price > 0 && p.InStock > 0)
         {
             doProduct.ID = p.ID;
@@ -77,35 +79,44 @@ internal class Product:IProduct
             doProduct.Price = p.Price;
             doProduct.Category_ = (DO.Category)p.Category_;
             doProduct.InStock = p.InStock;
-            return dal.Product.Add(doProduct); 
+            return dal.Product.Add(doProduct);
+            //try
+            //{
+            //    Console.WriteLine("doproduct{0}",doProduct);
+            //    return dal.Product.Add(doProduct);
+            //}
+            //catch(Exception ex)
+            //{
+            //    throw new Duplication(ex.Message);
+            //}
         }
         else
-            throw new NotLegal("BBB");
+            throw new NotLegal("this is not legal id and name of product");
     }
     public void Delete(int id)
     {
-        try { 
-        bool exist = false;
-        IEnumerable<DO.Order>orders = dal.Order.GetAll();
-        List<DO.OrderItem> orderItems;
-        foreach (DO.Order order in orders)
+        try
         {
-            foreach (DO.OrderItem orderItem in dal.OrderItem.GetProductsInOrder(order.ID))
+            bool exist = false;
+            IEnumerable<DO.Order> orders = dal.Order.GetAll();
+            List<DO.OrderItem> orderItems;
+            foreach (DO.Order order in orders)
             {
-                if(orderItem.ProductID==id)
+                foreach (DO.OrderItem orderItem in dal.OrderItem.GetProductsInOrder(order.ID))
                 {
-                    exist = true;
+                    if (orderItem.ProductID == id)
+                    {
+                        exist = true;
+                        dal.Product.Delete(id);
+                    }
                 }
             }
-        }
-        if(!exist)
-            dal.Product.Delete(id);
-        else
-           throw new Exception();//
+            if (!exist)
+                throw new NotExist("there is no such a product");
         }
         catch (Exception ex)
         {
-            throw new NotExist("ex");
+            throw new NotExist(ex.Message);
         }
     }
     public void Update(BO.Product p)
@@ -117,16 +128,16 @@ internal class Product:IProduct
             doProduct.ID = p.ID;
             doProduct.Name = p.Name;
             doProduct.Price = p.Price;
-           // doProduct.Category_ = p.Category_;
+            doProduct.Category_ = (DO.Category)p.Category_;
             doProduct.InStock = p.InStock;
             dal.Product.Update(doProduct);
         }
         else
-            throw new NotLegal("bbb");
+            throw new NotLegal("this is not legal details of id and name of product");
         }
         catch (Exception ex)
         {
-            throw new NotExist("ex");
+            throw new NotExist(ex.Message);
         }
     }
 }

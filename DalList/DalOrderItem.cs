@@ -11,19 +11,20 @@ internal  class DalOrderItem : IOrderItem
     /// <exception cref="Exception"></exception>
     public int Add(OrderItem oI)
     {
-        //check if there is place
-        //if (DataSource.Config.OrderItemIndex < DataSource.OrderItems.Length)
-        //{
-            int i = DataSource.Config.LastOrderItem;
-            oI.OrderItemID = i;
+       
+        int i = DataSource.Config.LastOrderItem;
+        oI.OrderItemID = i;
+        foreach (var item in DataSource.OrderItems)
+        {
+            if (oI.OrderItemID == item.OrderItemID)
+                throw new Duplication("this order item is already exist");
+
+        }
             DataSource.OrderItems.Add(oI);
             DalProduct dp = new DalProduct();
             Product p = dp.Get(oI.ProductID);
             p.InStock -= oI.Amount;
             return i;
-        //}
-        //else
-            //throw new Exception("there is no place");
     }
     /// <summary>
     /// get object
