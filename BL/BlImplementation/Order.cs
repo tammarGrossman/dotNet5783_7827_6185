@@ -1,6 +1,5 @@
 ﻿
 using BlApi;
-using BO;
 using static BO.Exceptions;
 namespace BlImplementation;
 internal class Order : IOrder
@@ -108,7 +107,7 @@ internal class Order : IOrder
                 blOrder.ShipDate = DOorder.ShipDate;
                 blOrder.DeliveryDate = DOorder.DeliveryDate;
                 blOrder.TotalPrice = totalPrice;
-                blOrder.Status = OrderStatus.sent;
+                blOrder.Status = BO.OrderStatus.sent;
                 return blOrder;
             }
              throw new NotLegal("this is not a legal value of order");
@@ -156,7 +155,7 @@ internal class Order : IOrder
                 blOrder.ShipDate = DOorder.ShipDate;
                 blOrder.DeliveryDate = DOorder.DeliveryDate;
                 blOrder.TotalPrice = totalPrice;
-                blOrder.Status = OrderStatus.received;
+                blOrder.Status = BO.OrderStatus.received;
                 return blOrder;
             }
             throw new NotLegal("this is not legal details of order");
@@ -166,9 +165,9 @@ internal class Order : IOrder
             throw new NotExist(ex.Message);
         }
     }
-    public OrderTracking TrackOrder(int id)
+    public BO.OrderTracking TrackOrder(int id)
     {
-        OrderTracking orderTracking = new OrderTracking();
+        BO.OrderTracking orderTracking = new BO.OrderTracking();
         bool exist = false;
         foreach (DO.Order item in dal.Order.GetAll())
         {
@@ -178,17 +177,17 @@ internal class Order : IOrder
                 orderTracking.ID = item.ID;
                 if (item.DeliveryDate > DateTime.MinValue)
                 {
-                    orderTracking.Status = OrderStatus.received;
+                    orderTracking.Status = BO.OrderStatus.received;
                     orderTracking.Tracking.Add(new Tuple<DateTime, string>(item.DeliveryDate, "Order delivered"));
                 }
                 else if (item.ShipDate > DateTime.MinValue)
                 {
-                    orderTracking.Status = OrderStatus.sent;
+                    orderTracking.Status = BO.OrderStatus.sent;
                     orderTracking.Tracking.Add(new Tuple<DateTime, string>(item.ShipDate, "Order Sent"));
                 }
                 else
                 {
-                    orderTracking.Status = OrderStatus.ordered;
+                    orderTracking.Status = BO.OrderStatus.ordered;
                     orderTracking.Tracking.Add(new Tuple<DateTime,string>(item.OrderDate.Date, "Order recieved"));
                 }
             }

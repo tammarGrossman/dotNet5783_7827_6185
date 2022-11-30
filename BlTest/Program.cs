@@ -167,7 +167,7 @@ namespace BlTest
                     break;
             }
         }
-        static void CartCase()
+        static void CartCase(Cart c)
         {
             int action;
             bool res;
@@ -181,7 +181,6 @@ namespace BlTest
                 case 1://add product to cart
                     {
                         int id;
-                        Cart c = new Cart(); 
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
                         bl.Cart.Add(c,id);
@@ -190,7 +189,6 @@ namespace BlTest
                 case 2://update product in cart
                     {
                         int amount,id;
-                        Cart c=new Cart();
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
                         Console.WriteLine("enter product amount:");
@@ -200,7 +198,6 @@ namespace BlTest
                     }
                 case 3://confirm order
                     {
-                        Cart c = new Cart();
                         bl.Cart.OrderConfirmation(c);
                     }
                     break;
@@ -216,6 +213,7 @@ namespace BlTest
         }
         static void Main(string[] args)
         {
+            Cart c = new Cart();
             int entity;
             bool res;
             Console.WriteLine("enter 0 to exit");
@@ -255,7 +253,15 @@ namespace BlTest
                         {
                             try
                             {
-                                CartCase();
+                                Console.WriteLine("enter customer name:");
+                                c.CustomerName = Console.ReadLine();
+                                Console.WriteLine("enter customer adress:");
+                                c.CustomerAdress= Console.ReadLine();
+                                Console.WriteLine("enter customer email:");
+                                c.CustomerEmail= Console.ReadLine();
+                                if (Validation.NameAdress(c.CustomerName))
+
+                                    CartCase(c);
                             }
                             catch (Exception ex)
                             {

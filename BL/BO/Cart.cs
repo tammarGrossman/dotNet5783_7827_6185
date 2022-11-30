@@ -28,7 +28,7 @@ public double TotalPrice { get; set; }
     {
         Items = new List<OrderItem>();
     }
-    //לבדוק איך מדפיסים אברי רשימה
+    
     /// <summary>
     /// print all properties in object
     /// </summary>

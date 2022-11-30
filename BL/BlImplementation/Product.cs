@@ -1,6 +1,5 @@
 ﻿
 using BlApi;
-using BO;
 using Dal;
 using static BO.Exceptions;
 
@@ -17,7 +16,7 @@ internal class Product:IProduct
             BO.ProductForList product = new BO.ProductForList();
             product.Name = item.Name;
             product.Price = item.Price;
-            product.Category_ = (Category)item.Category_;  
+            product.Category_ = (BO.Category)item.Category_;  
             product.ID = item.ID;
             products.Add(product);
         }
@@ -32,7 +31,7 @@ internal class Product:IProduct
         BlProduct.Name = DOProduct.Name;
         BlProduct.ID= DOProduct.ID;
         BlProduct.Price = DOProduct.Price;
-        BlProduct.Category_ = (Category)DOProduct.Category_;
+        BlProduct.Category_ = (BO.Category)DOProduct.Category_;
         BlProduct.InStock= DOProduct.InStock;
         return BlProduct;
        }
@@ -41,7 +40,7 @@ internal class Product:IProduct
             throw new NotExist(ex.Message);
 }
     }
-    public ProductItem Get(int id,BO.Cart c)
+    public BO.ProductItem Get(int id,BO.Cart c)
     {
         try { 
         if (id > 0)
@@ -51,7 +50,7 @@ internal class Product:IProduct
             BlProductItem.ID = DalProduct.ID;
             BlProductItem.Name= DalProduct.Name;
             BlProductItem.Price = DalProduct.Price;
-            BlProductItem.Category_ = (Category)DalProduct.Category_;
+            BlProductItem.Category_ = (BO.Category)DalProduct.Category_;
             BlProductItem.InStock = DalProduct.InStock;
             foreach (var item in c.Items)
             {
