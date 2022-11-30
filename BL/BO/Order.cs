@@ -6,6 +6,7 @@ namespace BO;
 
 public class Order
 {
+    
     /// <summary>
     /// Unique ID of Order
     /// </summary>
@@ -49,15 +50,18 @@ public class Order
     /// </summary>
     public List<OrderItem> Items { get; set; }
 
+    public Order()
+    {
+        Items = new List<OrderItem>();
+    }
 
 
-
-    /// <summary>
-    /// print object details
-    /// </summary>
-    /// <returns></returns>
-    /// לבדוק איך להדפיס את אברי הרשימה
-    public override string ToString()
+/// <summary>
+/// print object details
+/// </summary>
+/// <returns></returns>
+/// לבדוק איך להדפיס את אברי הרשימה
+public override string ToString()
     {
         return Descriptions.Description(this);
     }

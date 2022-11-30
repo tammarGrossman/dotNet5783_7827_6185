@@ -97,7 +97,7 @@ internal class Product:IProduct
     {
         try
         {
-            bool exist = false;
+            bool existInOrder = false;
             IEnumerable<DO.Order> orders = dal.Order.GetAll();
             List<DO.OrderItem> orderItems;
             foreach (DO.Order order in orders)
@@ -106,13 +106,14 @@ internal class Product:IProduct
                 {
                     if (orderItem.ProductID == id)
                     {
-                        exist = true;
-                        dal.Product.Delete(id);
+                        existInOrder = true;
                     }
                 }
             }
-            if (!exist)
-                throw new NotExist("there is no such a product");
+            if (!existInOrder)
+               dal.Product.Delete(id);
+            else
+                throw new NotExist("there is such a product in other orders");
         }
         catch (Exception ex)
         {

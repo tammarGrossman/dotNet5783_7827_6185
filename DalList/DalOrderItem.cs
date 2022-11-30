@@ -88,25 +88,29 @@ internal  class DalOrderItem : IOrderItem
 
     public void Delete(int id)
     {
+        OrderItem orderItem = new OrderItem();
         int exist = 0;
         foreach (OrderItem item in DataSource.OrderItems)
         {
             if (item.OrderItemID == id)//FIND
             {
                 exist = 1;
-                //for (; i < DataSource.Config.OrderItemIndex; i++)
-                //{
-                //    DataSource.OrderItems[i] = DataSource.OrderItems[i + 1];
-                //}
-                //DataSource.Config.OrderItemIndex--;
                 DalProduct dp = new DalProduct();
                 Product p = dp.Get(item.ProductID);
                 p.InStock += item.Amount;
-                DataSource.OrderItems.Remove(item); 
+                orderItem.OrderItemID=item.OrderItemID;
+                orderItem.ProductID = item.ProductID;
+                orderItem.OrderID = item.OrderID;
+                orderItem.Price = item.Price;
+                orderItem.Amount = item.Amount;
+
             }
         }
         if (exist == 0)
             throw new NotExist("not exists");
+        else
+            DataSource.OrderItems.Remove(orderItem);
+
     }
     /// <summary>
     /// update object
@@ -115,6 +119,7 @@ internal  class DalOrderItem : IOrderItem
     /// <exception cref="Exception"></exception>
     public void Update(OrderItem oI)
     {
+        OrderItem orderItem = new OrderItem();
         bool exist = false;
         foreach (OrderItem item in DataSource.OrderItems)
         {
@@ -124,12 +129,21 @@ internal  class DalOrderItem : IOrderItem
                 DalProduct dp = new DalProduct();
                 Product p = dp.Get(oI.ProductID);
                 p.InStock -= oI.Amount;
-                DataSource.OrderItems.Remove(item);  
-                DataSource.OrderItems.Add(oI);
+                orderItem.OrderItemID = item.OrderItemID;
+                orderItem.ProductID = item.ProductID;
+                orderItem.OrderID = item.OrderID;
+                orderItem.Price = item.Price;
+                orderItem.Amount = item.Amount;
             }
         }
         if(!exist)
         throw new NotExist("not exists");
+        else
+        {
+            DataSource.OrderItems.Remove(orderItem);
+            DataSource.OrderItems.Add(oI);
+
+        }
     }
     /// <summary>
     /// get objects in order
@@ -146,6 +160,7 @@ internal  class DalOrderItem : IOrderItem
             {
             if (item.OrderID == oID)
             { //FIND
+                i++;
                 oI.OrderItemID = item.OrderItemID;
                 oI.ProductID = item.ProductID;
                 oI.OrderID = item.OrderID;
@@ -154,9 +169,9 @@ internal  class DalOrderItem : IOrderItem
                 newOrderItems.Add(oI);
             }
         }
-            if(i!=0)
-                return newOrderItems;
-            else
-               throw new NotExist("no products in the order");
+        if (i != 0)
+            return newOrderItems;
+        else
+            throw new NotExist("no products in the order");
     }
 }

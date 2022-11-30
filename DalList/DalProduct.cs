@@ -31,7 +31,6 @@ internal class DalProduct :IProduct
     /// <exception cref="Exception"></exception>
     public Product Get(int id)
     {
-        Console.WriteLine("hello get func id={0}",id);
         foreach (Product item in DataSource.Products)
         {
             if (item.ID == id)//FIND
@@ -48,44 +47,53 @@ internal class DalProduct :IProduct
     public void Delete(int id)
     {
         int exist = 0;
+        Product product = new Product();
         foreach (Product item in DataSource.Products)
         {
-
-               if (item.ID == id)
+            if (item.ID == id)
             { //FIND
                 exist = 1;
-                //for (; i < DataSource.Config.ProductIndex; i++)
-                //{
-                //    DataSource.Products[i] = DataSource.Products[i + 1];
-                //}
-                DataSource.Products.Remove(item);   
-                //DataSource.Config.ProductIndex--;
+                product.Name = item.Name;
+                product.ID = item.ID;
+                product.Price=item.Price;
+                product.InStock = item.InStock;
+                product.Category_ = item.Category_;
             }
         }
         if(exist==0)
            throw new Exception("not exists");
-    }
+        else
+            DataSource.Products.Remove(product);
 
-/// <summary>
-/// update object
-/// </summary>
-/// <param name="p"></param>
-/// <exception cref="Exception"></exception>
-public void Update(Product p)
-{
-    bool exist = false;
+    }
+    /// <summary>
+    /// update object
+    /// </summary>
+    /// <param name="p"></param>
+    /// <exception cref="Exception"></exception>
+    public void Update(Product p)
+    {
+        Product product = new Product();
+        bool exist = false;
         foreach (Product item in DataSource.Products)
         {
             if (item.ID == p.ID && !exist)//FIND
             {
                 exist = true;
-                DataSource.Products.Remove(item);
+                product.Name = item.Name;
+                product.ID = item.ID;
+                product.Price = item.Price;
+                product.InStock = item.InStock;
+                product.Category_ = item.Category_;
             }
         }
-    if (!exist)
-        throw new NotExist("not exists");
-    else
-        DataSource.Products.Add(p);
+        if (!exist)
+            throw new NotExist("not exists");
+        else
+        {
+            DataSource.Products.Remove(product);
+            DataSource.Products.Add(p);
+        }
     }
     /// <summary>
     /// get all objects
@@ -93,7 +101,6 @@ public void Update(Product p)
     /// <returns></returns>
     public IEnumerable<Product> GetAll()
     {
-        int i = 0;
         List<Product> newProducts = new List<Product>();
         Product p = new Product();
         foreach (Product item in DataSource.Products)

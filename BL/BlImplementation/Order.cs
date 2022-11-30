@@ -111,7 +111,7 @@ internal class Order : IOrder
                 blOrder.Status = OrderStatus.sent;
                 return blOrder;
             }
-            throw new NotLegal("this is not a legal value of order");
+             throw new NotLegal("this is not a legal value of order");
         }
         catch (Exception ex)
         {
@@ -179,8 +179,7 @@ internal class Order : IOrder
                 if (item.DeliveryDate > DateTime.MinValue)
                 {
                     orderTracking.Status = OrderStatus.received;
-                    orderTracking.Tracking.Add(new Tuple<DateTime, string>(item.DeliveryDate, "Order Recieved"));
-
+                    orderTracking.Tracking.Add(new Tuple<DateTime, string>(item.DeliveryDate, "Order delivered"));
                 }
                 else if (item.ShipDate > DateTime.MinValue)
                 {
@@ -190,7 +189,7 @@ internal class Order : IOrder
                 else
                 {
                     orderTracking.Status = OrderStatus.ordered;
-                    orderTracking.Tracking.Add(new Tuple<DateTime,string>(item.OrderDate.Date, "Order Created"));
+                    orderTracking.Tracking.Add(new Tuple<DateTime,string>(item.OrderDate.Date, "Order recieved"));
                 }
             }
         }

@@ -17,6 +17,10 @@ public class OrderTracking
     /// list of tuple date time and status of the state of order
     /// </summary>
     public List<Tuple<DateTime, string>> Tracking { get; set; }
+    public OrderTracking()
+    {
+        Tracking = new List<Tuple<DateTime, string>>();
+    }
     public override string ToString()
     {
         return Descriptions.Description(this);

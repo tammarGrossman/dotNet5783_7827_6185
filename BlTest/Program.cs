@@ -156,7 +156,7 @@ namespace BlTest
                     {
                         Console.WriteLine("enter order ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        bl.Order.TrackOrder(id);
+                        Console.WriteLine(bl.Order.TrackOrder(id));
                     }
                     break;
                 default://press again order

@@ -4,10 +4,6 @@ namespace Dal;
 using DalApi;
 internal class DalOrder : IOrder
 {
-    public DalOrder()
-    {
-    }
-
     /// <summary>
     /// add object
     /// </summary>
@@ -36,8 +32,10 @@ internal class DalOrder : IOrder
     {
         foreach (Order item in DataSource.Orders)
         {
-            if (item.ID == id)//FIND
+            if (item.ID == id)
+            { //FIND
                 return item;
+            }
         }
         throw new NotExist("not exists");
     }
@@ -50,21 +48,28 @@ internal class DalOrder : IOrder
     public void Delete(int id)
     {
         int exist = 0;
+        Order order=new Order();
         foreach(Order item in DataSource.Orders)
         {
             if (item.ID == id)//FIND
             {
+
                 exist = 1;
-                DataSource.Orders.Remove(item);
-                //for (; i < DataSource.Config.OrderIndex; i++)
-                //{
-                //    DataSource.Orders[i] = DataSource.Orders[i + 1];
-                //}
-                //DataSource.Config.OrderIndex--;
+                order.ID = item.ID;
+                order.OrderDate=item.OrderDate;
+                order.ShipDate=item.ShipDate;
+                order.CustomerEmail = item.CustomerEmail;
+                order.CustomerName = item.CustomerName;
+                order.CustomerAdress = item.CustomerAdress; 
+                order.DeliveryDate = item.DeliveryDate; 
+
             }
         }
         if (exist == 0)
             throw new NotExist("not exists");
+        else
+            DataSource.Orders.Remove(order);
+
     }
     /// <summary>
     /// update object
@@ -73,18 +78,30 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception"></exception>
     public void Update(Order o)
     {
+        Order order = new Order();
         bool exist=false;
     foreach (Order item in DataSource.Orders)
     {
         if (item.ID == o.ID)//FIND
         {
             exist = true;
-            DataSource.Orders.Remove(item);
-            DataSource.Orders.Add(o);
-        }
+            order.ID = item.ID;
+            order.OrderDate = item.OrderDate;
+            order.ShipDate = item.ShipDate;
+            order.CustomerEmail = item.CustomerEmail;
+            order.CustomerName = item.CustomerName;
+            order.CustomerAdress = item.CustomerAdress;
+            order.DeliveryDate = item.DeliveryDate;
+
+            }
     }
         if(!exist)
          throw new NotExist("not exists");
+        else
+        {
+            DataSource.Orders.Remove(order);
+            DataSource.Orders.Add(o);
+        }
     }
     /// <summary>
     /// get all objects
@@ -92,7 +109,6 @@ internal class DalOrder : IOrder
     /// <returns></returns>
     public IEnumerable<Order> GetAll()
     {
-        int i = 0;
         List<Order> newOrders = new List<Order>();
         Order o = new Order();
         foreach (Order item in DataSource.Orders)

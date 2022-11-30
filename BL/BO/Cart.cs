@@ -24,6 +24,10 @@ public List<OrderItem> Items { get; set; }
 /// the total price of all items in the cart
 /// </summary>
 public double TotalPrice { get; set; }
+    public Cart()
+    {
+        Items = new List<OrderItem>();
+    }
     //לבדוק איך מדפיסים אברי רשימה
     /// <summary>
     /// print all properties in object
