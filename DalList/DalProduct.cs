@@ -16,8 +16,6 @@ internal class DalProduct :IProduct
           {
                 if (item.ID == p.ID)
                     throw new Duplication("this product is already exist");
-                //if(p==item)
-                //throw new Duplication("this product is already exist");
 
         }
         DataSource.Products.Add(p);

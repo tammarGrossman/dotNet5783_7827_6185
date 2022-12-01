@@ -194,14 +194,13 @@ namespace BlTest
                         Console.WriteLine("enter product amount:");
                         res = int.TryParse(Console.ReadLine(), out amount);
                         bl.Cart.Update(c,id,amount);
-                        break;
                     }
+                    break;
                 case 3://confirm order
                     {
                         bl.Cart.OrderConfirmation(c);
                     }
                     break;
-
                 default://press again product
                     {
                         Console.WriteLine("enter again");
@@ -215,7 +214,7 @@ namespace BlTest
         {
             Cart c = new Cart();
             int entity;
-            bool res;
+            bool res,cartExist = false;
             Console.WriteLine("enter 0 to exit");
             Console.WriteLine("enter 1 to products");
             Console.WriteLine("enter 2 to orders");
@@ -253,14 +252,22 @@ namespace BlTest
                         {
                             try
                             {
-                                Console.WriteLine("enter customer name:");
-                                c.CustomerName = Console.ReadLine();
-                                Console.WriteLine("enter customer adress:");
-                                c.CustomerAdress= Console.ReadLine();
-                                Console.WriteLine("enter customer email:");
-                                c.CustomerEmail= Console.ReadLine();
-                                if (Validation.NameAdress(c.CustomerName))
-
+                                if (!cartExist)
+                                {
+                                    Console.WriteLine("enter customer name:");
+                                    c.CustomerName = Console.ReadLine();
+                                    Console.WriteLine("enter customer adress:");
+                                    c.CustomerAdress = Console.ReadLine();
+                                    Console.WriteLine("enter customer email:");
+                                    c.CustomerEmail = Console.ReadLine();
+                                    if (Validation.NameAdress(c.CustomerName) && Validation.NameAdress(c.CustomerAdress) && Validation.Email(c.CustomerEmail))
+                                    {
+                                        cartExist = true;
+                                        CartCase(c);
+                                    }
+                                    else
+                                        throw new Exceptions.NotLegal("the customer details are not legal");
+                                }
                                     CartCase(c);
                             }
                             catch (Exception ex)

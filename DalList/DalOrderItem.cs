@@ -23,7 +23,6 @@ internal  class DalOrderItem : IOrderItem
             DataSource.OrderItems.Add(oI);
             DalProduct dp = new DalProduct();
             Product p = dp.Get(oI.ProductID);
-            p.InStock -= oI.Amount;
             return i;
     }
     /// <summary>
@@ -97,13 +96,11 @@ internal  class DalOrderItem : IOrderItem
                 exist = 1;
                 DalProduct dp = new DalProduct();
                 Product p = dp.Get(item.ProductID);
-                p.InStock += item.Amount;
                 orderItem.OrderItemID=item.OrderItemID;
                 orderItem.ProductID = item.ProductID;
                 orderItem.OrderID = item.OrderID;
                 orderItem.Price = item.Price;
                 orderItem.Amount = item.Amount;
-
             }
         }
         if (exist == 0)
