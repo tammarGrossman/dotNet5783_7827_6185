@@ -1,4 +1,4 @@
-﻿//
+﻿
 using DO;
 namespace Dal;
 using DalApi;

@@ -44,7 +44,6 @@ static internal class DataSource
             if (i < 10)
             {
                 ts.Add(new TimeSpan(rand.Next(1, 10), rand.Next(0, 24), rand.Next(0, 60), rand.Next(0, 60)));
-                // o.DeliveryDate = Orders[i].ShipDate + ts;
                 o.DeliveryDate = o.ShipDate + ts;
             }
            o.ID = Config.LastOrder;
@@ -64,7 +63,6 @@ static internal class DataSource
         Product p = new Product();
         for (int i = 1; i < 11; i++)
         {
-            //Config.ProductIndex++;
             p.ID = i * 1000000;
             p.Name = productsNames[i - 1];
             p.Price = rand.Next(20, 201);
@@ -83,7 +81,6 @@ private static void createOrderItem()
         OrderItem oI = new OrderItem();
         for (int i = 0; i < 40 ; i++)
         {
-            //Config.OrderItemIndex++;
             if (iProduct == 11)
                 iProduct = 1;
             if(iOrder==20)

@@ -7,6 +7,11 @@ namespace BO;
 
 public static class Validation
 {
+    /// <summary>
+    /// the function check the validation of name and adress
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public static bool NameAdress(string name)
     {
         if (name == "")
@@ -19,6 +24,11 @@ public static class Validation
             return true;
         return true;
     }
+    /// <summary>
+    /// the function check the validation of email 
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
     public static bool Email(string email)
     {
         if (email == "")
@@ -33,6 +43,11 @@ public static class Validation
             return false; 
           return true;
     }
+    /// <summary>
+    /// help dunction to check if char isa digit
+    /// </summary>
+    /// <param name="c"></param>
+    /// <returns></returns>
     public static bool IsDigit(char c)
     {
         bool digit = false;
@@ -44,6 +59,11 @@ public static class Validation
         return digit;
 
     }
+    /// <summary>
+    /// the function check the validation of id 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public static bool ID(int id)
     {
         return id < 0 ? false : true;
@@ -54,7 +74,12 @@ public static class Validation
                 return false;
             return true;
         }
-        public static bool InStock(int s)
+    /// <summary>
+    /// the function check the validation of the amount in stock
+    /// </summary>
+    /// <param name="s"></param>
+    /// <returns></returns>
+    public static bool InStock(int s)
         {
             return s < 0 ? false: true;
         }

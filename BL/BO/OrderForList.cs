@@ -25,6 +25,10 @@ public class OrderForList
     /// the amount of items in the orders list
     /// </summary>
     public int AmountOfItems { get; set; }
+    /// <summary>
+    /// prints objects values
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return Descriptions.Description(this);

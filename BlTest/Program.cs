@@ -8,12 +8,15 @@ namespace BlTest
 {
     internal class Program
     {
+        /// <summary>
+        /// this variables are to action the functions of bl and dal 
+        /// </summary>
         static IBl bl = new Bl();
         static IDal dal = new Dallist();
         /// <summary>
         /// the product case
         /// </summary>
-        static void ProductCase()
+        static void ProductCase(Cart c)
         {
             int action;
             bool res;
@@ -53,12 +56,9 @@ namespace BlTest
                     break;
                 case 3://get product in cart by id
                     {
-                        int id,cartID;
-                        Cart c = new Cart();//check
+                        int id;
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine("enter cart ID:");
-                        res = int.TryParse(Console.ReadLine(), out cartID);
                         Console.WriteLine(bl.Product.Get(id,c));
                     }
                     break;
@@ -88,8 +88,8 @@ namespace BlTest
                         Console.WriteLine("enter product in stock:");
                         p.InStock = int.Parse(Console.ReadLine());
                         bl.Product.Update(p);
-                        break;
                     }
+                    break;
                 case 6://delete product
                     {
                         int id;
@@ -228,7 +228,7 @@ namespace BlTest
                         {
                             try
                             {
-                                ProductCase();
+                                ProductCase(c);
                             }
                             catch (Exception ex)
                             {
@@ -256,17 +256,11 @@ namespace BlTest
                                 {
                                     Console.WriteLine("enter customer name:");
                                     c.CustomerName = Console.ReadLine();
-                                    Console.WriteLine("enter customer adress:");
+                                   Console.WriteLine("enter customer adress:");
                                     c.CustomerAdress = Console.ReadLine();
                                     Console.WriteLine("enter customer email:");
                                     c.CustomerEmail = Console.ReadLine();
-                                    if (Validation.NameAdress(c.CustomerName) && Validation.NameAdress(c.CustomerAdress) && Validation.Email(c.CustomerEmail))
-                                    {
-                                        cartExist = true;
-                                        CartCase(c);
-                                    }
-                                    else
-                                        throw new Exceptions.NotLegal("the customer details are not legal");
+                                    cartExist = true; 
                                 }
                                     CartCase(c);
                             }

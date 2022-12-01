@@ -20,6 +20,10 @@ public class ProductForList
     /// the category of Product
     /// </summary>
     public Category Category_ { get; set; }
+    /// <summary>
+    /// the function prints the value of the items
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return Descriptions.Description(this);

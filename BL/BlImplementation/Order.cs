@@ -5,6 +5,10 @@ namespace BlImplementation;
 internal class Order : IOrder
 {
     DalApi.IDal dal = new Dal.Dallist();
+    /// <summary>
+    ///  a function to get all orders
+    /// </summary>
+    /// <returns></returns>
     public IEnumerable<BO.OrderForList> GetAll()
     {
         int amountOfProInOrd = 0;
@@ -28,12 +32,18 @@ internal class Order : IOrder
         }
         return orders;
     }
-
+    /// <summary>
+    /// a function to get order by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotLegal"></exception>
+    /// <exception cref="BO.Exceptions.NotExist"></exception>
     public BO.Order Get(int id)
     {
         try
         {
-            if (id > 0)
+            if (BO.Validation.ID( id ))
             {
                 double totalPrice = 0;
                 BO.Order BlOrder = new BO.Order();
@@ -68,7 +78,13 @@ internal class Order : IOrder
             throw new BO.Exceptions.NotExist(ex.Message);
         }
     }
-
+    /// <summary>
+    ///  a function to update sent date of order
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotLegal"></exception>
+    /// <exception cref="BO.Exceptions.NotExist"></exception>
     public BO.Order UpdateSend(int id)
     {
         try
@@ -117,6 +133,13 @@ internal class Order : IOrder
             throw new BO.Exceptions.NotExist(ex.Message);
         }
     }
+    /// <summary>
+    /// a function to update delivered date of order
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotLegal"></exception>
+    /// <exception cref="NotExist"></exception>
     public BO.Order UpdateSupply(int id)
     {
         try
@@ -165,6 +188,12 @@ internal class Order : IOrder
             throw new NotExist(ex.Message);
         }
     }
+    /// <summary>
+    /// a function to track order
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotExist"></exception>
     public BO.OrderTracking TrackOrder(int id)
     {
         BO.OrderTracking orderTracking = new BO.OrderTracking();

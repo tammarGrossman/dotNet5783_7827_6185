@@ -24,6 +24,9 @@ public List<OrderItem> Items { get; set; }
 /// the total price of all items in the cart
 /// </summary>
 public double TotalPrice { get; set; }
+    /// <summary>
+    /// constructor
+    /// </summary>
     public Cart()
     {
         Items = new List<OrderItem>();

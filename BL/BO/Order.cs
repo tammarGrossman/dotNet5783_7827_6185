@@ -49,7 +49,9 @@ public class Order
     /// the list of the items in the order
     /// </summary>
     public List<OrderItem> Items { get; set; }
-
+    /// <summary>
+    /// constructor
+    /// </summary>
     public Order()
     {
         Items = new List<OrderItem>();
@@ -60,7 +62,6 @@ public class Order
 /// print object details
 /// </summary>
 /// <returns></returns>
-/// לבדוק איך להדפיס את אברי הרשימה
 public override string ToString()
     {
         return Descriptions.Description(this);

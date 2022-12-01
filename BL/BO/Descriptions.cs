@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace BO
 {
+    /// <summary>
+    /// the function prints objects
+    /// </summary>
     static class Descriptions
     {
        public static string Description<T>(T t)

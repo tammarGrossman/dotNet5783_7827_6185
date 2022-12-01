@@ -30,6 +30,10 @@ public class OrderItem
     /// the total price of object
     /// </summary>
     public double TotalPrice { get; set; }
+    /// <summary>
+    /// prints the objects values
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return Descriptions.Description(this);
