@@ -29,7 +29,6 @@ internal class Cart : ICart
                     if (doProduct.ID == item.ProductID && BO.Validation.InStock(doProduct.InStock))
                     {
                         exist = true;
-                        /*down*/
                     }
                 }
                 if (!exist)

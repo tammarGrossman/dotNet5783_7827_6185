@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BO
 {
@@ -12,19 +8,19 @@ namespace BO
     /// </summary>
     static class Descriptions
     {
-       public static string Description<T>(T t)
+        public static string Description<T>(T t)
         {
             string str = "";
-            foreach (PropertyInfo item in t.GetType().GetProperties())
+            foreach (var property in t.GetType().GetProperties())
             {
-                if (!(item.GetValue(t, null) is string) && item.GetValue(t, null) is IEnumerable<T>)
+                if (!(property.GetValue(t, null) is IEnumerable<Object>))
+                    str += "\n" + property.Name + ":" + property.GetValue(t, null) + "\n";
+                else
                 {
-                    foreach (var item2 in (IEnumerable<T>)item.GetValue(t, null))
-                        str += item2.ToString();
+                    str += "\n" + property.Name + ":\n";
+                    foreach (var item in (IEnumerable<object>)property.GetValue(t, null))
+                        str += item;
                 }
-                str += "\n" + item.Name
-
-                    + ": " + item.GetValue(t, null);
             }
             return str;
         }
