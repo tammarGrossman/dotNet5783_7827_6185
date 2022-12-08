@@ -14,7 +14,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
+        <Grid Name="UpGrid" Height="auto" Grid.Row="2" Width="auto">
+            <Button Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" x:Name="addNewProduct"/>
             <Grid.ColumnDefinitions>
 
 
@@ -22,7 +23,7 @@
                 <!--<Label Grid.Column="0"></Label>
                     <ComboBox Name="CategorySelector" HorizontalAlignment= "Stretch"VerticalAlignment="Stretch"Grid.Column="1" />-->
               
-                    <ColumnDefinition Width="21*"/>
+                <ColumnDefinition Width="21*"/>
                 <ColumnDefinition Width="77*"/>
                 <ColumnDefinition Width="323*"/>
             </Grid.ColumnDefinitions >

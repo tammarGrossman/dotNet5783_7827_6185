@@ -17,18 +17,28 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for ProductList.xaml
+    /// Interaction logic for AddProductWindow.xaml
     /// </summary>
-    public partial class ProductListWindow : Window
+    public partial class AddProductWindow : Window
     {
         IBl bl = new Bl();
-        public ProductListWindow()
+
+        public AddProductWindow()
         {
             InitializeComponent();
-            ProductListView.ItmesSource = bl.Product.GetAll();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
-        private void addNewProduct_Click(object sender, RoutedEventArgs e) => new AddProductWindow().Show();
 
+        private void submitProduct_Click(object sender, RoutedEventArgs e)
+        {
+            BO.Product p=new BO.Product();
+            //למלא פרטים מהטופס
+            p.ID = this.id.Text;
+            p.Name= this.name.Text;
+            p.Price = this.price.Text;
+            p.Category_ = (this.CategorySelector.SelectedValue);//להמיר אינם
+            p.InStock = int.Parse(this.inStock.Text);
+            bl.Product.Add(p);
+        }
     }
 }
