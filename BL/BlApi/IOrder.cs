@@ -9,7 +9,7 @@ public interface IOrder
     /// get all orders
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderForList> GetAll();
+    public IEnumerable<OrderForList?> GetAll();
     /// <summary>
     /// get uniqe order
     /// </summary>

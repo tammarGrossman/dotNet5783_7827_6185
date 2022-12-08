@@ -14,27 +14,27 @@ public struct Order
     /// <summary>
     /// the name of customer
     /// </summary>
-    public string CustomerName { get; set; }
+    public string? CustomerName { get; set; }
     /// <summary>
     /// the email of customer
     /// </summary>
-    public string CustomerEmail { get; set; }
+    public string? CustomerEmail { get; set; }
     /// <summary>
     /// the adress of customer
     /// </summary>
-    public string CustomerAdress { get; set; }
+    public string? CustomerAdress { get; set; }
     /// <summary>
     /// the order date 
     /// </summary>
-    public DateTime OrderDate { get; set; }
+    public DateTime? OrderDate { get; set; }
     /// <summary>
     /// the ship date 
     /// </summary>
-    public DateTime ShipDate { get; set; }
+    public DateTime? ShipDate { get; set; }
     /// <summary>
     /// the delivery date 
     /// </summary>
-    public DateTime DeliveryDate { get; set; }
+    public DateTime? DeliveryDate { get; set; }
     /// <summary>
     /// print object details
     /// </summary>

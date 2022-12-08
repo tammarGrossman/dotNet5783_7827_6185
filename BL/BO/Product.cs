@@ -13,7 +13,7 @@ public class Product
     /// <summary>
     /// the name of Product
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
     /// <summary>
     /// the price of Product
     /// </summary>
@@ -21,7 +21,7 @@ public class Product
     /// <summary>
     /// the category of Product
     /// </summary>
-    public Category Category_ { get; set; }
+    public Category? Category_ { get; set; }
     /// <summary>
     /// if the product is in stock
     /// </summary>

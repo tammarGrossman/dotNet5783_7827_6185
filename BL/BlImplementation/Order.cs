@@ -9,7 +9,7 @@ internal class Order : IOrder
     ///  a function to get all orders
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BO.OrderForList> GetAll()
+    public IEnumerable<BO.OrderForList?> GetAll()
     {
         int amountOfProInOrd = 0;
         double totalPriceInOrd = 0;
@@ -207,17 +207,17 @@ internal class Order : IOrder
                 if (item.DeliveryDate > DateTime.MinValue)
                 {
                     orderTracking.Status = BO.OrderStatus.received;
-                    orderTracking.Tracking.Add(new Tuple<DateTime, string>(item.DeliveryDate, "Order delivered"));
+                    orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(item.DeliveryDate, "Order delivered"));
                 }
                 else if (item.ShipDate > DateTime.MinValue)
                 {
                     orderTracking.Status = BO.OrderStatus.sent;
-                    orderTracking.Tracking.Add(new Tuple<DateTime, string>(item.ShipDate, "Order Sent"));
+                    orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(item.ShipDate, "Order Sent"));
                 }
                 else
                 {
                     orderTracking.Status = BO.OrderStatus.ordered;
-                    orderTracking.Tracking.Add(new Tuple<DateTime,string>(item.OrderDate.Date, "Order recieved"));
+                    orderTracking.Tracking.Add(new Tuple<DateTime?,string?>(item.OrderDate, "Order recieved"));
                 }
             }
         }

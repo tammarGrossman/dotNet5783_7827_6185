@@ -12,7 +12,7 @@ internal class Product : IProduct
     /// a function to get all products
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BO.ProductForList> GetAll()
+    public IEnumerable<BO.ProductForList?> GetAll()
     {
         List<BO.ProductForList> products = new List<BO.ProductForList>();
         foreach (var item in dal.Product.GetAll())

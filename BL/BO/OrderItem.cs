@@ -13,7 +13,7 @@ public class OrderItem
     /// <summary>
     /// the name of object
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
     /// <summary>
     /// the product id of object
     /// </summary>

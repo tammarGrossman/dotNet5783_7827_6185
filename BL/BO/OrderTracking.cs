@@ -12,17 +12,17 @@ public class OrderTracking
     /// <summary>
     /// status of Order
     /// </summary>
-    public OrderStatus Status { get; set; }
+    public OrderStatus? Status { get; set; }
     /// <summary>
     /// list of tuple date time and status of the state of order
     /// </summary>
-    public List<Tuple<DateTime, string>> Tracking { get; set; }
+    public List<Tuple<DateTime?, string?>> Tracking { get; set; }
     /// <summary>
     /// consructor
     /// </summary>
     public OrderTracking()
     {
-        Tracking = new List<Tuple<DateTime, string>>();
+        Tracking = new List<Tuple<DateTime?, string?>>();
     }
     /// <summary>
     /// the function prints object values

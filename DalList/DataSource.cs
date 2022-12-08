@@ -5,9 +5,9 @@ static internal class DataSource
 {
     static readonly Random rand;// random
     static bool start = false;//start project
-    internal static List<Order> Orders=new List<Order>();
-    internal static List<OrderItem> OrderItems=new List<OrderItem>();
-    internal static List<Product> Products=new List<Product>();
+    internal static List<Order?> Orders=new List<Order?>();
+    internal static List<OrderItem?> OrderItems=new List<OrderItem?>();
+    internal static List<Product?> Products=new List<Product?>();
     static DataSource()
     {
         rand = new Random();

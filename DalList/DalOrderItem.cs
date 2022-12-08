@@ -148,7 +148,7 @@ internal  class DalOrderItem : IOrderItem
     /// <param name="oIID"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<OrderItem> GetProductsInOrder(int oID)
+    public IEnumerable<OrderItem?> GetProductsInOrder(int oID)
     {
         List<OrderItem> newOrderItems=new List<OrderItem>();
         OrderItem oI = new OrderItem();

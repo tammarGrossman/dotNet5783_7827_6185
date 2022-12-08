@@ -107,10 +107,10 @@ internal class DalOrder : IOrder
     /// get all objects
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Order> GetAll()
+    public IEnumerable<Order?> GetAll(/*Func<T?, bool>?null)*/)
     {
-        List<Order> newOrders = new List<Order>();
-        Order o = new Order();
+        List<Order?> newOrders = new List<Order?>();
+        Order? o = new Order?();
         foreach (Order item in DataSource.Orders)
         {
             o.ID = item.ID;

@@ -34,6 +34,6 @@ namespace DalApi
         ///  the get all objects function
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<T> GetAll();
+        public IEnumerable<T?> GetAll(/*Func<T?,bool>??null*/);
     }
 }
