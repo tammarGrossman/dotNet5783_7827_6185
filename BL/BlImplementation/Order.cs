@@ -13,11 +13,11 @@ internal class Order : IOrder
     {
         int amountOfProInOrd = 0;
         double totalPriceInOrd = 0;
-        List<BO.OrderForList> orders = new List<BO.OrderForList>();
+        List<BO.OrderForList?> orders = new List<BO.OrderForList?>();
         foreach (DO.Order item in dal.Order.GetAll())
         {
             BO.OrderForList order = new BO.OrderForList();
-            IEnumerable<DO.OrderItem> proInOr = dal.OrderItem.GetProductsInOrder(order.ID);
+            IEnumerable<DO.OrderItem?> proInOr = dal.OrderItem.GetProductsInOrder(order.ID);
             foreach (DO.OrderItem item2 in proInOr)
             {
                 amountOfProInOrd += item2.Amount;
@@ -207,17 +207,17 @@ internal class Order : IOrder
                 if (item.DeliveryDate > DateTime.MinValue)
                 {
                     orderTracking.Status = BO.OrderStatus.received;
-                    orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(item.DeliveryDate, "Order delivered"));
+                    orderTracking.Tracking.Add(new Tuple<DateTime, string>(item.DeliveryDate, "Order delivered"));
                 }
                 else if (item.ShipDate > DateTime.MinValue)
                 {
                     orderTracking.Status = BO.OrderStatus.sent;
-                    orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(item.ShipDate, "Order Sent"));
+                    orderTracking.Tracking.Add(new Tuple<DateTime, string>(item.ShipDate, "Order Sent"));
                 }
                 else
                 {
                     orderTracking.Status = BO.OrderStatus.ordered;
-                    orderTracking.Tracking.Add(new Tuple<DateTime?,string?>(item.OrderDate, "Order recieved"));
+                    orderTracking.Tracking.Add(new Tuple<DateTime,string>(item.OrderDate, "Order recieved"));
                 }
             }
         }

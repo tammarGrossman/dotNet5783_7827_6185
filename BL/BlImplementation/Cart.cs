@@ -33,7 +33,7 @@ internal class Cart : ICart
                 }
                 if (!exist)
                 {
-                    IEnumerable<DO.Product> products = dal.Product.GetAll();
+                    IEnumerable<DO.Product?> products = dal.Product.GetAll();
                     foreach (var product in products)
                     {
                         if (product.ID == id && product.InStock > 0)

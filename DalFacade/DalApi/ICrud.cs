@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DalApi
 {
-    public interface ICrud<T>
+    public interface ICrud<T>where T:struct
     {
         /// <summary>
         /// the get object function
@@ -34,6 +35,7 @@ namespace DalApi
         ///  the get all objects function
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<T?> GetAll(/*Func<T?,bool>??null*/);
+        public IEnumerable<T?> GetAll(Func<T?, bool>? Condition=null);
+        public T GetByCon(Func<T?,bool>? Condition=null);
     }
 }

@@ -2,7 +2,9 @@
 using DO;
 namespace Dal;
 using DalApi;
-internal class DalOrder : IOrder
+using System.Security.Cryptography;
+
+internal class DalOrder :IOrder
 {
     /// <summary>
     /// add object
@@ -16,7 +18,7 @@ internal class DalOrder : IOrder
         o.ID = i;
         foreach (var item in DataSource.Orders)
         {
-            if (o.ID == item.ID)
+            if (o.ID == item?.ID)
                 throw new Duplication("this order is already exist");
         }
         DataSource.Orders.Add(o);
@@ -30,11 +32,15 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception"></exception>
     public Order Get(int id)
     {
-        foreach (Order item in DataSource.Orders)
+        //return from order in DataSource.Orders
+        //       where (order?.ID==id)
+        //       select order;
+        //throw new NotExist("not exists");
+        foreach (Order? item in DataSource.Orders)
         {
-            if (item.ID == id)
+            if (item?.ID == id)
             { //FIND
-                return item;
+                return item??throw new NotExist("not exists");
             }
         }
         throw new NotExist("not exists");
@@ -107,23 +113,55 @@ internal class DalOrder : IOrder
     /// get all objects
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Order?> GetAll(/*Func<T?, bool>?null)*/)
+    public IEnumerable<Order?> GetAll(Func<Order?, bool> ?Condition= null)
     {
+        Order o = new Order();
+
         List<Order?> newOrders = new List<Order?>();
-        Order? o = new Order?();
-        foreach (Order item in DataSource.Orders)
-        {
-            o.ID = item.ID;
-            o.CustomerName = item.CustomerName;
-            o.CustomerEmail = item.CustomerEmail;
-            o.CustomerAdress = item.CustomerAdress;
-            o.OrderDate = item.OrderDate;
-            o.ShipDate = item.ShipDate;
-            o.DeliveryDate = item.DeliveryDate;
-            newOrders.Add(o);
+       
+            foreach (Order? item in DataSource.Orders)
+            {
+            if (Condition == null)
+            {
+                o.ID = (item?.ID) ?? 0;
+                o.CustomerName = (item?.CustomerName);
+                o.CustomerEmail = item?.CustomerEmail;
+                o.CustomerAdress = item?.CustomerAdress;
+                o.OrderDate = item?.OrderDate;
+                o.ShipDate = item?.ShipDate;
+                o.DeliveryDate = item?.DeliveryDate;
+                newOrders.Add(o);
+            }
+            else
+            {
+                if(Condition(item))
+                {
+                    o.ID = (item?.ID) ?? 0;
+                    o.CustomerName = (item?.CustomerName);
+                    o.CustomerEmail = item?.CustomerEmail;
+                    o.CustomerAdress = item?.CustomerAdress;
+                    o.OrderDate = item?.OrderDate;
+                    o.ShipDate = item?.ShipDate;
+                    o.DeliveryDate = item?.DeliveryDate;
+                    newOrders.Add(o);
+                }
+            }
+            }
+            if (DataSource.Orders.Count() == 0)
+                Console.WriteLine("there is no orders");
+            return newOrders;
         }
-        if (DataSource.Orders.Count() == 0)
-            Console.WriteLine("there is no orders");
-        return newOrders;
+    public Order GetByCon(Func<Order?, bool>? Condition = null)
+    {
+        //return from order in DataSource.Orders
+        //       where Condition(order)
+        //       select order??throw new NotExist("not exists");
+        foreach (Order? item in DataSource.Orders)
+        {
+            if(Condition(item))
+                return item?? throw new NotExist("not exists");
+        }
+        throw new NotExist("not exists");
     }
 }
+

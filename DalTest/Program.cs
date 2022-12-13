@@ -6,6 +6,7 @@ namespace DalTest
 {
     public class Program
     {
+        //תתקשרי הביתה טוב?
         static IDal dalList=new Dallist();
         /// <summary>
         /// the product case
@@ -49,7 +50,7 @@ namespace DalTest
                     break;
                 case 2://get all product
                     {
-                        foreach (Product item in dalList.Product.GetAll())
+                        foreach (var item in dalList.Product.GetAll())
                         {
                             Console.WriteLine(item);
                         }
@@ -228,7 +229,7 @@ namespace DalTest
                     break;
                 case 2://get all order item
                     {
-                        foreach (OrderItem item in dalList.OrderItem.GetAll())
+                        foreach (var item in dalList.OrderItem.GetAll())
                         {
                             Console.WriteLine(item);
                         }

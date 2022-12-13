@@ -2,7 +2,6 @@
 using DO;
 namespace Dal;
 internal class DalProduct :IProduct
-
 {
     /// <summary>
     /// add object
@@ -16,7 +15,6 @@ internal class DalProduct :IProduct
           {
                 if (item.ID == p.ID)
                     throw new Duplication("this product is already exist");
-
         }
         DataSource.Products.Add(p);
             return p.ID;
@@ -97,22 +95,38 @@ internal class DalProduct :IProduct
     /// get all objects
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Product> GetAll()
+    public IEnumerable<Product?> GetAll(Func<Product?,bool>? Condition=null)
     {
-        List<Product> newProducts = new List<Product>();
+        List<Product?> newProducts = new List<Product?>();
         Product p = new Product();
-        foreach (Product item in DataSource.Products)
+        foreach (Product? item in DataSource.Products)
         {
-
-               p.ID = item.ID;
-               p.Name = item.Name;
-               p.Category_ = item.Category_;
-               p.Price = item.Price;
-               p.InStock = item.InStock;
-               newProducts.Add(p);
+            if (Condition == null||(Condition!=null && Condition(item)))
+            {
+                p.ID = (item?.ID)??0;
+                p.Name = item?.Name;
+                p.Category_ = item?.Category_;
+                p.Price = (item?.Price) ?? 0;
+                p.InStock = (item?.InStock)??0;
+                newProducts.Add(p);
+            }
         }
         if(DataSource.Products.Count()==0)
             Console.WriteLine("there is no products");
         return newProducts;
+    }
+    public Product GetByCon(Func<Product?, bool>? Condition = null)
+     {
+        //return from product in DataSource.Products
+        //       where Condition(product)
+        //       select product;
+        //throw new NotExist("not exists");
+        foreach (Product? item in DataSource.Products)
+        {
+            if (Condition(item))
+                return item ?? throw new NotExist("not exists");
+        }
+        throw new NotExist("not exists");
+
     }
 }

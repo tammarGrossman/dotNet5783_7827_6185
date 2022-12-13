@@ -14,7 +14,7 @@ internal class Product : IProduct
     /// <returns></returns>
     public IEnumerable<BO.ProductForList?> GetAll()
     {
-        List<BO.ProductForList> products = new List<BO.ProductForList>();
+        List<BO.ProductForList?> products = new List<BO.ProductForList?>();
         foreach (var item in dal.Product.GetAll())
         {
             BO.ProductForList product = new BO.ProductForList();
@@ -123,8 +123,8 @@ internal class Product : IProduct
         try
         {
             bool existInOrder = false;
-            IEnumerable<DO.Order> orders = dal.Order.GetAll();
-            List<DO.OrderItem> orderItems;
+            IEnumerable<DO.Order?> orders = dal.Order.GetAll();
+            List<DO.OrderItem?> orderItems;
             foreach (DO.Order order in orders)
             {
                 foreach (DO.OrderItem orderItem in dal.OrderItem.GetProductsInOrder(order.ID))
