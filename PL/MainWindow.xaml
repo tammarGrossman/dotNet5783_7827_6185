@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="ProductViewList" Click="ProductViewList_Click">HHH</Button>
+        <Button x:Name="ProductViewList" Click="ProductViewList_Click">להצגת מוצרים</Button>
     </Grid>
 </Window>

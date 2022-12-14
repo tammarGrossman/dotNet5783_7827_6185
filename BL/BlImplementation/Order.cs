@@ -216,17 +216,17 @@ internal class Order : IOrder
                 if (item?.DeliveryDate > DateTime.MinValue)
                 {
                     orderTracking.Status = BO.OrderStatus.received;
-                    //orderTracking.Tracking.Add(new Tuple<DateTime, string>((item?.DeliveryDate), "Order delivered"));
+                   // orderTracking.Tracking.Add(new Tuple<DateTime, string>((item?.DeliveryDate), "Order delivered"));
                 }
                 else if (item?.ShipDate > DateTime.MinValue)
                 {
                     orderTracking.Status = BO.OrderStatus.sent;
-                    //orderTracking.Tracking.Add(new Tuple<DateTime, string>((item?.ShipDate), "Order Sent"));
+                 //   orderTracking.Tracking.Add(new Tuple<DateTime, string>((item?.ShipDate), "Order Sent"));
                 }
                 else
                 {
                     orderTracking.Status = BO.OrderStatus.ordered;
-                    //orderTracking.Tracking.Add(new Tuple<DateTime,string>(((item?.OrderDate)??DateTime.MinValue), "Order recieved"));
+                 //   orderTracking.Tracking.Add(new Tuple<DateTime,string>((((item?.OrderDate)??"01/01/0001")), "Order recieved"));
                 }
             }
         }

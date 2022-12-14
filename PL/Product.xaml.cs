@@ -20,10 +20,10 @@ namespace PL
         InitializeComponent();
         CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         CategorySelector.SelectedItem = (p.Category_).ToString();
-        id = (p.ID).ToString();
-        name = p.Name;
-        price = (p.Price).ToString();
-        inStock = (p.InStock).ToString();
+        id.Text =(p.ID).ToString();
+        name.Text = p.Name;
+        price.Text = (p.Price).ToString();
+        inStock.Text = (p.InStock).ToString();
     }
     private void submitProduct_Click(object sender, RoutedEventArgs e)
     {
@@ -34,7 +34,20 @@ namespace PL
         p.Price =Convert.ToDouble(price.Text);
         p.Category_ = (BO.Category)Enum.Parse(typeof(BO.Category),(CategorySelector.SelectedValue).ToString());//להמיר אינם
         p.InStock = int.Parse(inStock.Text);
-        bl.Product.Add(p);
+            try
+            {
+                bl.Product.Add(p);
+                MessageBox.Show("the product added succesfully");
+                
+            }
+            catch (Exception ex)
+            {
+                //  MessageBox.Show(ex.Message);
+                throw new Exception(ex.Message);
+            }
+            
+            
+
     }
 }
 }
