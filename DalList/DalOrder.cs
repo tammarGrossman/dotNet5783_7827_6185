@@ -4,7 +4,7 @@ namespace Dal;
 using DalApi;
 using System.Security.Cryptography;
 
-internal class DalOrder :IOrder
+internal class DalOrder : IOrder
 {
     /// <summary>
     /// add object
@@ -12,7 +12,7 @@ internal class DalOrder :IOrder
     /// <param name="o"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public  int Add(Order o)
+    public int Add(Order o)
     {
         int i = DataSource.Config.LastOrder;
         o.ID = i;
@@ -40,7 +40,7 @@ internal class DalOrder :IOrder
         {
             if (item?.ID == id)
             { //FIND
-                return item??throw new NotExist("not exists");
+                return item ?? throw new NotExist("not exists");
             }
         }
         throw new NotExist("not exists");
@@ -54,20 +54,20 @@ internal class DalOrder :IOrder
     public void Delete(int id)
     {
         int exist = 0;
-        Order order=new Order();
-        foreach(Order item in DataSource.Orders)
+        Order order = new Order();
+        foreach (Order item in DataSource.Orders)
         {
             if (item.ID == id)//FIND
             {
 
                 exist = 1;
                 order.ID = item.ID;
-                order.OrderDate=item.OrderDate;
-                order.ShipDate=item.ShipDate;
+                order.OrderDate = item.OrderDate;
+                order.ShipDate = item.ShipDate;
                 order.CustomerEmail = item.CustomerEmail;
                 order.CustomerName = item.CustomerName;
-                order.CustomerAdress = item.CustomerAdress; 
-                order.DeliveryDate = item.DeliveryDate; 
+                order.CustomerAdress = item.CustomerAdress;
+                order.DeliveryDate = item.DeliveryDate;
 
             }
         }
@@ -85,24 +85,24 @@ internal class DalOrder :IOrder
     public void Update(Order o)
     {
         Order order = new Order();
-        bool exist=false;
-    foreach (Order item in DataSource.Orders)
-    {
-        if (item.ID == o.ID)//FIND
+        bool exist = false;
+        foreach (Order item in DataSource.Orders)
         {
-            exist = true;
-            order.ID = item.ID;
-            order.OrderDate = item.OrderDate;
-            order.ShipDate = item.ShipDate;
-            order.CustomerEmail = item.CustomerEmail;
-            order.CustomerName = item.CustomerName;
-            order.CustomerAdress = item.CustomerAdress;
-            order.DeliveryDate = item.DeliveryDate;
+            if (item.ID == o.ID)//FIND
+            {
+                exist = true;
+                order.ID = item.ID;
+                order.OrderDate = item.OrderDate;
+                order.ShipDate = item.ShipDate;
+                order.CustomerEmail = item.CustomerEmail;
+                order.CustomerName = item.CustomerName;
+                order.CustomerAdress = item.CustomerAdress;
+                order.DeliveryDate = item.DeliveryDate;
 
             }
-    }
-        if(!exist)
-         throw new NotExist("not exists");
+        }
+        if (!exist)
+            throw new NotExist("not exists");
         else
         {
             DataSource.Orders.Remove(order);
@@ -113,14 +113,14 @@ internal class DalOrder :IOrder
     /// get all objects
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Order?> GetAll(Func<Order?, bool> ?Condition= null)
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? Condition = null)
     {
         Order o = new Order();
 
         List<Order?> newOrders = new List<Order?>();
-       
-            foreach (Order? item in DataSource.Orders)
-            {
+
+        foreach (Order? item in DataSource.Orders)
+        {
             if (Condition == null)
             {
                 o.ID = (item?.ID) ?? 0;
@@ -134,7 +134,7 @@ internal class DalOrder :IOrder
             }
             else
             {
-                if(Condition(item))
+                if (Condition(item))
                 {
                     o.ID = (item?.ID) ?? 0;
                     o.CustomerName = (item?.CustomerName);
@@ -146,11 +146,11 @@ internal class DalOrder :IOrder
                     newOrders.Add(o);
                 }
             }
-            }
-            if (DataSource.Orders.Count() == 0)
-                Console.WriteLine("there is no orders");
-            return newOrders;
         }
+        if (DataSource.Orders.Count() == 0)
+            Console.WriteLine("there is no orders");
+        return newOrders;
+    }
     public Order GetByCon(Func<Order?, bool>? Condition = null)
     {
         //return from order in DataSource.Orders
@@ -158,10 +158,9 @@ internal class DalOrder :IOrder
         //       select order??throw new NotExist("not exists");
         foreach (Order? item in DataSource.Orders)
         {
-            if(Condition(item))
-                return item?? throw new NotExist("not exists");
+            if (Condition(item))
+                return item ?? throw new NotExist("not exists");
         }
         throw new NotExist("not exists");
     }
 }
-

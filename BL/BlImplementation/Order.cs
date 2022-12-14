@@ -11,25 +11,34 @@ internal class Order : IOrder
     /// <returns></returns>
     public IEnumerable<BO.OrderForList?> GetAll()
     {
+        int countOrders = 0;
         int amountOfProInOrd = 0;
         double totalPriceInOrd = 0;
+        IEnumerable<DO.OrderItem?> proInOr;
         List<BO.OrderForList?> orders = new List<BO.OrderForList?>();
-        foreach (DO.Order item in dal.Order.GetAll())
+        foreach (DO.Order? item in dal.Order.GetAll())
         {
             BO.OrderForList order = new BO.OrderForList();
-            IEnumerable<DO.OrderItem?> proInOr = dal.OrderItem.GetProductsInOrder(order.ID);
-            foreach (DO.OrderItem item2 in proInOr)
+            try
             {
-                amountOfProInOrd += item2.Amount;
-                totalPriceInOrd += item2.Price * item2.Amount;
+                proInOr = dal.OrderItem.GetProductsInOrder((item?.ID) ?? 0);
+                countOrders++;
+                foreach (DO.OrderItem? item2 in proInOr)
+                {
+                    amountOfProInOrd += (item2?.Amount) ?? 0;
+                    totalPriceInOrd += (item2?.Price) ?? 0 * (item2?.Amount) ?? 0;
+                }
             }
-            order.ID = item.ID;
-            order.CustomerName = item.CustomerName;
-            order.Status = TrackOrder(item.ID).Status;
+            catch(Exception ex) { }
+            order.ID = (item?.ID)??0;
+            order.CustomerName = item?.CustomerName;
+            order.Status = TrackOrder((item?.ID)??0).Status;
             order.TotalPrice = totalPriceInOrd;
             order.AmountOfItems = amountOfProInOrd;
             orders.Add(order);
         }
+        if (countOrders == 0)
+            throw new NotExist("there is no products in all orders");
         return orders;
     }
     /// <summary>
@@ -51,11 +60,11 @@ internal class Order : IOrder
                 BO.OrderItem BlorderItem = new BO.OrderItem();
                 foreach (var item in dal.OrderItem.GetProductsInOrder(id))
                 {
-                    BlorderItem.ID = item.OrderItemID;
-                    BlorderItem.Name = dal.Product.Get(item.ProductID).Name;
-                    BlorderItem.ProductID = item.ProductID;
-                    BlorderItem.Price = item.Price;
-                    BlorderItem.Amount = item.Amount;
+                    BlorderItem.ID = (item?.OrderItemID)??0;
+                    BlorderItem.Name = dal.Product.Get((item?.ProductID)??0).Name;
+                    BlorderItem.ProductID = (item?.ProductID)??0;
+                    BlorderItem.Price =(item?.Price)??0;
+                    BlorderItem.Amount = (item?.Amount)??0;
                     BlOrder.Items.Add(BlorderItem);
                     totalPrice += BlorderItem.Price * BlorderItem.Amount;
                 }
@@ -161,11 +170,11 @@ internal class Order : IOrder
                 dal.Order.Update(DOorder);
                 foreach (var item in dal.OrderItem.GetProductsInOrder(id))
                 {
-                    BlorderItem.ID = item.OrderItemID;
-                    BlorderItem.Name = dal.Product.Get(item.ProductID).Name;
-                    BlorderItem.ProductID = item.ProductID;
-                    BlorderItem.Price = item.Price;
-                    BlorderItem.Amount = item.Amount;
+                    BlorderItem.ID = (item?.OrderItemID)??0;
+                    BlorderItem.Name = dal.Product.Get((item?.ProductID)??0).Name;
+                    BlorderItem.ProductID = (item?.ProductID)??0;
+                    BlorderItem.Price = (item?.Price)??0;
+                    BlorderItem.Amount = (item?.Amount)??0;
                     BlorderItem.TotalPrice = BlorderItem.Price * BlorderItem.Amount;
                     blOrder.Items.Add(BlorderItem);
                     totalPrice += BlorderItem.Price * BlorderItem.Amount;
@@ -198,26 +207,26 @@ internal class Order : IOrder
     {
         BO.OrderTracking orderTracking = new BO.OrderTracking();
         bool exist = false;
-        foreach (DO.Order item in dal.Order.GetAll())
+        foreach (DO.Order? item in dal.Order.GetAll())
         {
-            if (item.ID == id)
+            if (item?.ID == id)
             {
                 exist = true;
-                orderTracking.ID = item.ID;
-                if (item.DeliveryDate > DateTime.MinValue)
+                orderTracking.ID = (item?.ID)??0;
+                if (item?.DeliveryDate > DateTime.MinValue)
                 {
                     orderTracking.Status = BO.OrderStatus.received;
-                    orderTracking.Tracking.Add(new Tuple<DateTime, string>(item.DeliveryDate, "Order delivered"));
+                    //orderTracking.Tracking.Add(new Tuple<DateTime, string>((item?.DeliveryDate), "Order delivered"));
                 }
-                else if (item.ShipDate > DateTime.MinValue)
+                else if (item?.ShipDate > DateTime.MinValue)
                 {
                     orderTracking.Status = BO.OrderStatus.sent;
-                    orderTracking.Tracking.Add(new Tuple<DateTime, string>(item.ShipDate, "Order Sent"));
+                    //orderTracking.Tracking.Add(new Tuple<DateTime, string>((item?.ShipDate), "Order Sent"));
                 }
                 else
                 {
                     orderTracking.Status = BO.OrderStatus.ordered;
-                    orderTracking.Tracking.Add(new Tuple<DateTime,string>(item.OrderDate, "Order recieved"));
+                    //orderTracking.Tracking.Add(new Tuple<DateTime,string>(((item?.OrderDate)??DateTime.MinValue), "Order recieved"));
                 }
             }
         }

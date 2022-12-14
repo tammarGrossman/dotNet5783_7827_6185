@@ -2,7 +2,6 @@
 using BlApi;
 using Dal;
 using static BO.Exceptions;
-
 namespace BlImplementation;
 
 internal class Product : IProduct
@@ -18,10 +17,10 @@ internal class Product : IProduct
         foreach (var item in dal.Product.GetAll())
         {
             BO.ProductForList product = new BO.ProductForList();
-            product.Name = item.Name;
-            product.Price = item.Price;
-            product.Category_ = (BO.Category)item.Category_;
-            product.ID = item.ID;
+            product.Name = item?.Name;
+            product.Price = (item?.Price) ?? 0  ;
+            product.Category_ = (BO.Category)item?.Category_;
+            product.ID = (item?.ID)??0;
             products.Add(product);
         }
         return products;

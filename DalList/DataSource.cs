@@ -76,7 +76,7 @@ static internal class DataSource
     /// </summary>
 private static void createOrderItem()
 {
-        int iOrder = 1;
+        int iOrder = 0;
         int iProduct = 1;
         OrderItem oI = new OrderItem();
         for (int i = 0; i < 40 ; i++)
@@ -84,7 +84,7 @@ private static void createOrderItem()
             if (iProduct == 11)
                 iProduct = 1;
             if(iOrder==20)
-                iOrder = 1;
+                iOrder = 0;
             oI.OrderItemID = Config.LastOrderItem;
             oI.ProductID = (iProduct++) * 1000000;
             oI.OrderID = iOrder++;
@@ -99,7 +99,7 @@ private static void createOrderItem()
         private static int lastOrderItem=0;
         static Config()
         {
-            start = true;
+           start = true;
         }
         /// <summary>
         /// get the last key of order

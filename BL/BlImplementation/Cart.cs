@@ -36,14 +36,14 @@ internal class Cart : ICart
                     IEnumerable<DO.Product?> products = dal.Product.GetAll();
                     foreach (var product in products)
                     {
-                        if (product.ID == id && product.InStock > 0)
+                        if ((product?.ID) == id && (product?.InStock) > 0)
                         {
                             pExist = true;
                             BOorderItem.ID = idOrderItem++;//check what is the id
-                            BOorderItem.ProductID = product.ID;
-                            BOorderItem.Name = product.Name;
-                            BOorderItem.Price = product.Price;
-                            BOorderItem.TotalPrice = BOorderItem.Price;
+                            BOorderItem.ProductID = (product?.ID)??0;
+                            BOorderItem.Name = product?.Name;
+                            BOorderItem.Price = (product?.Price)??0;
+                            BOorderItem.TotalPrice =BOorderItem.Price;
                             BOorderItem.Amount = 1;
                         }
                     }
@@ -51,9 +51,9 @@ internal class Cart : ICart
                         throw new NotFound("the product does not exist");
                 }
                 c.Items.Add(BOorderItem);
-                foreach (BO.OrderItem item in c.Items)
+                foreach (BO.OrderItem? item in c.Items)
                 {
-                    totalPrice += item.TotalPrice;
+                    totalPrice += (item?.TotalPrice)??0;
                 }
                 c.TotalPrice = totalPrice;
             }

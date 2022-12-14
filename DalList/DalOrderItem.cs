@@ -73,7 +73,6 @@ internal  class DalOrderItem : IOrderItem
     /// <returns></returns>
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?,bool>? Condition=null)
     {
-        int i = 0;
         List<OrderItem?> newOrderItems = new List<OrderItem?>();
         OrderItem oI = new OrderItem();
         foreach (OrderItem item in DataSource.OrderItems)

@@ -22,7 +22,6 @@ namespace PL
     public partial class AddProductWindow : Window
     {
         IBl bl = new Bl();
-
         public AddProductWindow()
         {
             InitializeComponent();
@@ -31,13 +30,13 @@ namespace PL
 
         private void submitProduct_Click(object sender, RoutedEventArgs e)
         {
-            BO.Product p=new BO.Product();
+            BO.Product p = new BO.Product();
             //למלא פרטים מהטופס
-            p.ID = this.id.Text;
-            p.Name= this.name.Text;
-            p.Price = this.price.Text;
-            p.Category_ = (this.CategorySelector.SelectedValue);//להמיר אינם
-            p.InStock = int.Parse(this.inStock.Text);
+            p.ID = Convert.ToInt32(id.Text);
+            p.Name = name.Text;
+            p.Price = Convert.ToDouble(price.Text);
+          //  p.Category_ = (CategorySelector.SelectedValue);//להמיר אינם
+            p.InStock = int.Parse(inStock.Text);
             bl.Product.Add(p);
         }
     }
