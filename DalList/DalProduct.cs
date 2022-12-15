@@ -11,9 +11,9 @@ internal class DalProduct :IProduct
     /// <exception cref="Exception"></exception>
     public int Add(Product p)
     {
-        foreach (Product item in DataSource.Products)
+        foreach (Product? item in DataSource.Products)
           {
-                if (item.ID == p.ID)
+                if (item?.ID == p.ID)
                     throw new Duplication("this product is already exist");
         }
         DataSource.Products.Add(p);
@@ -27,10 +27,10 @@ internal class DalProduct :IProduct
     /// <exception cref="Exception"></exception>
     public Product Get(int id)
     {
-        foreach (Product item in DataSource.Products)
+        foreach (Product? item in DataSource.Products)
         {
-            if (item.ID == id)//FIND
-                return item;
+            if (item?.ID == id)//FIND
+                return item ?? throw new NotExist("not exists");
         }
         throw new NotExist("not exists");
     }
@@ -44,16 +44,16 @@ internal class DalProduct :IProduct
     {
         int exist = 0;
         Product product = new Product();
-        foreach (Product item in DataSource.Products)
+        foreach (Product? item in DataSource.Products)
         {
-            if (item.ID == id)
+            if (item?.ID == id)
             { //FIND
                 exist = 1;
-                product.Name = item.Name;
-                product.ID = item.ID;
-                product.Price=item.Price;
-                product.InStock = item.InStock;
-                product.Category_ = item.Category_;
+                product.Name = item?.Name;
+                product.ID = (item?.ID) ?? 0;
+                product.Price=(item?.Price) ?? 0;
+                product.InStock = (item?.InStock) ?? 0;
+                product.Category_ = item?.Category_;
             }
         }
         if(exist==0)
@@ -71,16 +71,16 @@ internal class DalProduct :IProduct
     {
         Product product = new Product();
         bool exist = false;
-        foreach (Product item in DataSource.Products)
+        foreach (Product? item in DataSource.Products)
         {
-            if (item.ID == p.ID && !exist)//FIND
+            if (item?.ID == p.ID && !exist)//FIND
             {
                 exist = true;
-                product.Name = item.Name;
-                product.ID = item.ID;
-                product.Price = item.Price;
-                product.InStock = item.InStock;
-                product.Category_ = item.Category_;
+                product.Name = item?.Name;
+                product.ID = (item?.ID) ?? 0;
+                product.Price = (item?.Price) ?? 0;
+                product.InStock = (item?.InStock) ?? 0;
+                product.Category_ = item?.Category_;
             }
         }
         if (!exist)

@@ -32,10 +32,6 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception"></exception>
     public Order Get(int id)
     {
-        //return from order in DataSource.Orders
-        //       where (order?.ID==id)
-        //       select order;
-        //throw new NotExist("not exists");
         foreach (Order? item in DataSource.Orders)
         {
             if (item?.ID == id)
@@ -55,19 +51,19 @@ internal class DalOrder : IOrder
     {
         int exist = 0;
         Order order = new Order();
-        foreach (Order item in DataSource.Orders)
+        foreach (Order? item in DataSource.Orders)
         {
-            if (item.ID == id)//FIND
+            if (item?.ID == id)//FIND
             {
 
                 exist = 1;
-                order.ID = item.ID;
-                order.OrderDate = item.OrderDate;
-                order.ShipDate = item.ShipDate;
-                order.CustomerEmail = item.CustomerEmail;
-                order.CustomerName = item.CustomerName;
-                order.CustomerAdress = item.CustomerAdress;
-                order.DeliveryDate = item.DeliveryDate;
+                order.ID = (item?.ID)??0;
+                order.OrderDate = item?.OrderDate;
+                order.ShipDate = item?.ShipDate;
+                order.CustomerEmail = item?.CustomerEmail;
+                order.CustomerName = item?.CustomerName;
+                order.CustomerAdress = item?.CustomerAdress;
+                order.DeliveryDate = item?.DeliveryDate;
 
             }
         }
@@ -86,18 +82,18 @@ internal class DalOrder : IOrder
     {
         Order order = new Order();
         bool exist = false;
-        foreach (Order item in DataSource.Orders)
+        foreach (Order? item in DataSource.Orders)
         {
-            if (item.ID == o.ID)//FIND
+            if (item?.ID == o.ID)//FIND
             {
                 exist = true;
-                order.ID = item.ID;
-                order.OrderDate = item.OrderDate;
-                order.ShipDate = item.ShipDate;
-                order.CustomerEmail = item.CustomerEmail;
-                order.CustomerName = item.CustomerName;
-                order.CustomerAdress = item.CustomerAdress;
-                order.DeliveryDate = item.DeliveryDate;
+                order.ID = (item?.ID)??0;
+                order.OrderDate = item?.OrderDate;
+                order.ShipDate = item?.ShipDate;
+                order.CustomerEmail = item?.CustomerEmail;
+                order.CustomerName = item?.CustomerName;
+                order.CustomerAdress = item?.CustomerAdress;
+                order.DeliveryDate = item?.DeliveryDate;
 
             }
         }

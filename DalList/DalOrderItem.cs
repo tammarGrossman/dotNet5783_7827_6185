@@ -31,15 +31,10 @@ internal  class DalOrderItem : IOrderItem
     /// <exception cref="Exception"></exception>
     public OrderItem Get(int id)
     {
-        //DataSource.OrderItems.FirstOrDefault();
-        //return from orderItem in DataSource.OrderItems
-        //       where (orderItem?.OrderItemID==id)
-        //       select orderItem;
-        //throw new NotExist("not exists");
-        foreach (OrderItem item in DataSource.OrderItems)
+        foreach (OrderItem? item in DataSource.OrderItems)
         {
-            if (item.OrderItemID == id)//FIND
-                return item;
+            if (((item?.OrderItemID)??0) == id)//FIND
+                return item ?? throw new NotExist("not exists");
         }
         throw new NotExist("not exists");
     }
@@ -75,15 +70,15 @@ internal  class DalOrderItem : IOrderItem
     {
         List<OrderItem?> newOrderItems = new List<OrderItem?>();
         OrderItem oI = new OrderItem();
-        foreach (OrderItem item in DataSource.OrderItems)
+        foreach (OrderItem? item in DataSource.OrderItems)
         {
-            oI.OrderItemID = item.OrderItemID;
-            oI.ProductID = item.ProductID;
-            oI.OrderID = item.OrderID;
-            oI.Price = item.Price;
-            oI.Amount = item.Amount;
+            oI.OrderItemID = (item?.OrderItemID) ?? 0;
+            oI.ProductID = (item?.ProductID)??0;
+            oI.OrderID = (item?.OrderID)??0;
+            oI.Price = (item?.Price)??0;
+            oI.Amount = (item?.Amount)??0;
             newOrderItems.Add(oI);
-        }        
+        }
         if(DataSource.OrderItems.Count() == 0)
             Console.WriteLine("there is no item in the order");
         return newOrderItems;
@@ -99,18 +94,16 @@ internal  class DalOrderItem : IOrderItem
     {
         OrderItem orderItem = new OrderItem();
         int exist = 0;
-        foreach (OrderItem item in DataSource.OrderItems)
+        foreach (OrderItem? item in DataSource.OrderItems)
         {
-            if (item.OrderItemID == id)//FIND
+            if (item?.OrderItemID == id)//FIND
             {
                 exist = 1;
-                DalProduct dp = new DalProduct();
-                Product p = dp.Get(item.ProductID);
-                orderItem.OrderItemID=item.OrderItemID;
-                orderItem.ProductID = item.ProductID;
-                orderItem.OrderID = item.OrderID;
-                orderItem.Price = item.Price;
-                orderItem.Amount = item.Amount;
+                orderItem.OrderItemID=(item?.OrderItemID)??0;
+                orderItem.ProductID = (item?.ProductID)??0;
+                orderItem.OrderID = (item?.OrderID) ?? 0;
+                orderItem.Price = (item?.Price)??0;
+                orderItem.Amount = (item?.Amount)??0;
             }
         }
         if (exist == 0)
@@ -128,19 +121,19 @@ internal  class DalOrderItem : IOrderItem
     {
         OrderItem orderItem = new OrderItem();
         bool exist = false;
-        foreach (OrderItem item in DataSource.OrderItems)
+        foreach (OrderItem? item in DataSource.OrderItems)
         {
-            if (item.OrderItemID == oI.OrderItemID)
+            if (item?.OrderItemID == oI.OrderItemID)
             { //FIND
                 exist = true;
                 DalProduct dp = new DalProduct();
                 Product p = dp.Get(oI.ProductID);
                 p.InStock -= oI.Amount;
-                orderItem.OrderItemID = item.OrderItemID;
-                orderItem.ProductID = item.ProductID;
-                orderItem.OrderID = item.OrderID;
-                orderItem.Price = item.Price;
-                orderItem.Amount = item.Amount;
+                orderItem.OrderItemID = (item?.OrderItemID)??0;
+                orderItem.ProductID =( item?.ProductID) ?? 0;
+                orderItem.OrderID = (item?.OrderID) ?? 0;
+                orderItem.Price = (item?.Price) ?? 0;
+                orderItem.Amount = (item?.Amount) ?? 0;
             }
         }
         if(!exist)
@@ -163,16 +156,16 @@ internal  class DalOrderItem : IOrderItem
         List<OrderItem?> newOrderItems=new List<OrderItem?>();
         OrderItem oI = new OrderItem();
         int i = 0;
-        foreach (OrderItem item in DataSource.OrderItems)
+        foreach (OrderItem? item in DataSource.OrderItems)
             {
-            if (item.OrderID == oID)
+            if (item?.OrderID == oID)
             { //FIND
                 i++;
-                oI.OrderItemID = item.OrderItemID;
-                oI.ProductID = item.ProductID;
-                oI.OrderID = item.OrderID;
-                oI.Price = item.Price;
-                oI.Amount = item.Amount;
+                oI.OrderItemID = (item?.OrderItemID) ?? 0;
+                oI.ProductID = (item?.ProductID) ?? 0;
+                oI.OrderID = (item?.OrderID) ?? 0;
+                oI.Price = (item?.Price) ?? 0;
+                oI.Amount = (item?.Amount) ?? 0;
                 newOrderItems.Add(oI);
             }
         }

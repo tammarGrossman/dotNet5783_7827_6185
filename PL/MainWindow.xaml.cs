@@ -22,12 +22,19 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        IBl BL = new Bl();
+        /// <summary>
+        /// open the main window
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// open window to show product and more action
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProductViewList_Click(object sender, RoutedEventArgs e)=>new ProductListWindow().Show();
 
         

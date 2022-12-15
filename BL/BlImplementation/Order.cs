@@ -29,10 +29,10 @@ internal class Order : IOrder
                     totalPriceInOrd += (item2?.Price) ?? 0 * (item2?.Amount) ?? 0;
                 }
             }
-            catch(Exception ex) { }
-            order.ID = (item?.ID)??0;
+            catch (Exception ex) { }
+            order.ID = (item?.ID) ?? 0;
             order.CustomerName = item?.CustomerName;
-            order.Status = TrackOrder((item?.ID)??0).Status;
+            order.Status = TrackOrder((item?.ID) ?? 0).Status;
             order.TotalPrice = totalPriceInOrd;
             order.AmountOfItems = amountOfProInOrd;
             orders.Add(order);
@@ -52,7 +52,7 @@ internal class Order : IOrder
     {
         try
         {
-            if (BO.Validation.ID( id ))
+            if (BO.Validation.ID(id))
             {
                 double totalPrice = 0;
                 BO.Order BlOrder = new BO.Order();
@@ -60,11 +60,11 @@ internal class Order : IOrder
                 BO.OrderItem BlorderItem = new BO.OrderItem();
                 foreach (var item in dal.OrderItem.GetProductsInOrder(id))
                 {
-                    BlorderItem.ID = (item?.OrderItemID)??0;
-                    BlorderItem.Name = dal.Product.Get((item?.ProductID)??0).Name;
-                    BlorderItem.ProductID = (item?.ProductID)??0;
-                    BlorderItem.Price =(item?.Price)??0;
-                    BlorderItem.Amount = (item?.Amount)??0;
+                    BlorderItem.ID = (item?.OrderItemID) ?? 0;
+                    BlorderItem.Name = dal.Product.Get((item?.ProductID) ?? 0).Name;
+                    BlorderItem.ProductID = (item?.ProductID) ?? 0;
+                    BlorderItem.Price = (item?.Price) ?? 0;
+                    BlorderItem.Amount = (item?.Amount) ?? 0;
                     BlOrder.Items.Add(BlorderItem);
                     totalPrice += BlorderItem.Price * BlorderItem.Amount;
                 }
@@ -135,7 +135,7 @@ internal class Order : IOrder
                 blOrder.Status = BO.OrderStatus.sent;
                 return blOrder;
             }
-             throw new NotLegal("this is not a legal value of order");
+            throw new NotLegal("this is not a legal value of order");
         }
         catch (Exception ex)
         {
@@ -170,11 +170,11 @@ internal class Order : IOrder
                 dal.Order.Update(DOorder);
                 foreach (var item in dal.OrderItem.GetProductsInOrder(id))
                 {
-                    BlorderItem.ID = (item?.OrderItemID)??0;
-                    BlorderItem.Name = dal.Product.Get((item?.ProductID)??0).Name;
-                    BlorderItem.ProductID = (item?.ProductID)??0;
-                    BlorderItem.Price = (item?.Price)??0;
-                    BlorderItem.Amount = (item?.Amount)??0;
+                    BlorderItem.ID = (item?.OrderItemID) ?? 0;
+                    BlorderItem.Name = dal.Product.Get((item?.ProductID) ?? 0).Name;
+                    BlorderItem.ProductID = (item?.ProductID) ?? 0;
+                    BlorderItem.Price = (item?.Price) ?? 0;
+                    BlorderItem.Amount = (item?.Amount) ?? 0;
                     BlorderItem.TotalPrice = BlorderItem.Price * BlorderItem.Amount;
                     blOrder.Items.Add(BlorderItem);
                     totalPrice += BlorderItem.Price * BlorderItem.Amount;
@@ -205,31 +205,36 @@ internal class Order : IOrder
     /// <exception cref="NotExist"></exception>
     public BO.OrderTracking TrackOrder(int id)
     {
+        DO.Order order = new DO.Order();
         BO.OrderTracking orderTracking = new BO.OrderTracking();
+        
         bool exist = false;
-        foreach (DO.Order? item in dal.Order.GetAll())
+        try
         {
-            if (item?.ID == id)
-            {
+           order = dal.Order.Get(id);
+            if (order.ID != 0)
                 exist = true;
-                orderTracking.ID = (item?.ID)??0;
-                if (item?.DeliveryDate > DateTime.MinValue)
-                {
-                    orderTracking.Status = BO.OrderStatus.received;
-                   // orderTracking.Tracking.Add(new Tuple<DateTime, string>((item?.DeliveryDate), "Order delivered"));
-                }
-                else if (item?.ShipDate > DateTime.MinValue)
-                {
-                    orderTracking.Status = BO.OrderStatus.sent;
-                 //   orderTracking.Tracking.Add(new Tuple<DateTime, string>((item?.ShipDate), "Order Sent"));
-                }
-                else
-                {
-                    orderTracking.Status = BO.OrderStatus.ordered;
-                 //   orderTracking.Tracking.Add(new Tuple<DateTime,string>((((item?.OrderDate)??"01/01/0001")), "Order recieved"));
-                }
+            orderTracking.ID = (order.ID);
+            if (order.DeliveryDate != null)
+            {
+                orderTracking.Status = BO.OrderStatus.received;
+                orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.OrderDate, "Order delivered"));
+            }
+            else if (order.ShipDate > DateTime.MinValue)
+            {
+                orderTracking.Status = BO.OrderStatus.sent;
+                orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.ShipDate, "Order Sent"));
+            }
+            else
+            {
+                orderTracking.Status = BO.OrderStatus.ordered;
+                orderTracking.Tracking.Add(new Tuple<DateTime?,string?>(order.OrderDate, "Order recieved"));
             }
         }
+        catch (Exception ex)
+        {
+            throw new NotExist(ex.Message);
+        }      
         if (!exist)
             throw new NotExist("the order does not exist");
         return orderTracking;

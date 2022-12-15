@@ -8,7 +8,7 @@
         Title="ProductList" Height="450" Width="800">
     <Grid Name="MainGrid">
         <!--d:ItemsSource="{d:SampleData ItemCount=5}"-->
-        <ListView Grid.Row="1"  x:Name="ProductListView">
+        <ListView Grid.Row="1"  x:Name="ProductListView" SelectionChanged="ProductListView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -16,7 +16,7 @@
             </ListView.View>
         </ListView>
         <Grid Name="UpGrid" Height="auto" Grid.Row="2" Width="auto">
-           
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="379*"/>
                 <ColumnDefinition Width="21*"/>
@@ -24,11 +24,9 @@
                 <ColumnDefinition Width="323*"/>
             </Grid.ColumnDefinitions >
             <Label Grid.Column="0">סינון לפי קטגוריה</Label>
-            <ComboBox x:Name="CategorySelector" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,10,10" SelectionChanged="CategorySelector_SelectionChanged"/>
+            <ComboBox x:Name="CategorySelector" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,10,10" SelectionChanged="CategorySelector_SelectionChanged" Text="choose category"/>
             <Button Content="Add new Product" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" Margin="5" Padding="5" x:Name="addNewProduct" Click="addNewProduct_Click"/>
         </Grid>
-
-
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>

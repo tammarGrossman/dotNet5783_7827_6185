@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using BlImplementation;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,34 +13,53 @@ namespace PL
     public partial class ProductListWindow : Window
     {
         IBl bl = new Bl();
+        /// <summary>
+        /// show all products
+        /// </summary>
         public ProductListWindow()
         {
             InitializeComponent();
             ProductListView.ItemsSource = bl.Product.GetAll();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            foreach (var item in ProductListView.ItemsSource)
-            {
-                var but = new Button();
-                but.Name = "BtnUpdate";
-                but.Content = "update";
-                //if (item is Product)
-                //    but.Click += new Product(((BO.Product)item) ?? null).Show();
-            }
         }
+        /// <summary>
+        /// case of filter products by category
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CategorySelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            var cat = ((ComboBox)sender).SelectedValue;
-            //ProductListView.ItemsSource = bl.Product.GetAll(x=>x.Category_==cat.ToString());
+           
+            var cat = (BO.Category)((ComboBox)sender).SelectedItem;
+            ProductListView.ItemsSource = bl.Product.GetAll(x => x?.Category_ == cat);
         }
+        /// <summary>
+        /// open window to add product
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addNewProduct_Click(object sender, RoutedEventArgs e)
         {
             new Product().ShowDialog();
             ProductListView.ItemsSource = bl.Product.GetAll();
         }
-        private void btnUpadate_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// open window to update product
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ProductListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            new Product();
+            var lv = sender as ListView;
+            BO.ProductForList pl = (BO.ProductForList)lv.SelectedItem;
+            if (ProductListView.ItemsSource != null&& pl!=null) 
+            {               
+                int id = pl.ID;
+                BO.Product p = bl.Product.Get(id);
+                new Product(p).ShowDialog();
+                ProductListView.ItemsSource = bl.Product.GetAll();
+            }
         }
     }    
 }
- 
+

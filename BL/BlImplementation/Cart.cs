@@ -132,6 +132,8 @@ internal class Cart : ICart
         DO.Order newOrder = new DO.Order();
         DO.Product pro = new DO.Product();
         newOrder.OrderDate = DateTime.Now;
+        newOrder.ShipDate = null;
+        newOrder.DeliveryDate = null;
         newOrder.CustomerName = c.CustomerName;
         newOrder.CustomerAdress = c.CustomerAdress;
         newOrder.CustomerEmail = c.CustomerEmail;

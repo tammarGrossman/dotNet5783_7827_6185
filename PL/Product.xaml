@@ -8,7 +8,7 @@
         Title="Product" Height="450" Width="640">
     <Grid >
         <Button Content="submit product"  HorizontalAlignment="Left" Margin="295,320,0,0" Padding="5" VerticalAlignment="Top" x:Name="submitProduct" Click="submitProduct_Click"/>
-        <ComboBox HorizontalAlignment="Left" Margin="311,217,0,0" VerticalAlignment="Top" Width="120" x:Name="CategorySelector"/>
+        <ComboBox HorizontalAlignment="Left" Margin="311,217,0,0" VerticalAlignment="Top" Width="120" x:Name="CategorySelector"  />
         <Label Content="in stock" HorizontalAlignment="Left" Margin="219,161,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="311,174,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" x:Name="inStock"/>
         <Label Content="id" HorizontalAlignment="Left" Margin="219,104,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.064,0.9"/>
