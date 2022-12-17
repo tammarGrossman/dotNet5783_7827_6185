@@ -1,12 +1,13 @@
 ﻿
 using BlApi;
-using Dal;
+
 using static BO.Exceptions;
 namespace BlImplementation;
 
 internal class Product : IProduct
 {
-    DalApi.IDal dal = new Dallist();
+
+    DalApi.IDal? dal = DalApi.Factory.Get();
     /// <summary>
     /// a function to get all products
     /// </summary>
@@ -125,10 +126,10 @@ internal class Product : IProduct
         try
         {
             bool existInOrder = false;
-            IEnumerable<DO.Order?> orders = dal.Order.GetAll();
+            IEnumerable<DO.Order?> orders = dal?.Order.GetAll();
             foreach (DO.Order? order in orders)
             {
-                foreach (DO.OrderItem? orderItem in dal.OrderItem.GetProductsInOrder((order?.ID)??0))
+                foreach (DO.OrderItem? orderItem in dal?.OrderItem.GetProductsInOrder((order?.ID)??0))
                 {
                     if (orderItem?.ProductID == id)
                     {
@@ -137,7 +138,7 @@ internal class Product : IProduct
                 }
             }
             if (!existInOrder)
-                dal.Product.Delete(id);
+                dal?.Product.Delete(id);
             else
                 throw new BO.Exceptions.NotExist("there is such a product in other orders");
         }
@@ -164,7 +165,7 @@ internal class Product : IProduct
                 doProduct.Price = p.Price;
                 doProduct.Category_ = (DO.Category)p.Category_;
                 doProduct.InStock = p.InStock;
-                dal.Product.Update(doProduct);
+                dal?.Product.Update(doProduct);
             }
             else
                 throw new BO.Exceptions.NotLegal("this is not legal details of id and name of product");

@@ -1,6 +1,7 @@
 ﻿using DalApi;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
@@ -8,8 +9,11 @@ using System.Threading.Tasks;
 
 namespace Dal
 {
-    sealed public class Dallist : IDal
+    sealed internal class Dallist : IDal
     {
+        public static IDal Instance { get; } = new Dallist();
+        private Dallist() { }
+            
         /// <summary>
         /// the order interface
         /// </summary>

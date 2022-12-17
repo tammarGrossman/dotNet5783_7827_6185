@@ -42,8 +42,14 @@ public class Duplication:Exception
         id = id_;
         name = name_;
     }
+   
     public override string ToString()
     {
         return $"{name} id {id} already exist";
     }
+}
+public class DalConfigException : Exception
+{
+    public DalConfigException(string msg) : base(msg) { }
+    public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
 }

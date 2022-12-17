@@ -1,5 +1,4 @@
-﻿using BlApi;
-using BlImplementation;
+﻿
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,7 +10,7 @@ namespace PL
     /// </summary>
     public partial class ProductListWindow : Window
     {
-        IBl bl = new Bl();
+        BlApi.IBl? bl = BlApi.Factory.Get();
         /// <summary>
         /// show all products
         /// </summary>

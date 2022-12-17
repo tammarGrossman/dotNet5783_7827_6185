@@ -50,8 +50,6 @@ public class Exceptions
     /// </summary>
     public class Duplication:Exception
     {
-        int id;
-        string name;
         public Duplication() : base() {}
         public Duplication( string message) : base(message) {}                  
         public Duplication( string message, Exception innerException) : base(message, innerException) {}

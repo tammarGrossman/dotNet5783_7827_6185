@@ -1,6 +1,5 @@
-﻿using BlApi;
-using BlImplementation;
-using DO;
+﻿
+
 using System;
 using System.Windows;
 namespace PL
@@ -10,7 +9,7 @@ namespace PL
     /// </summary>
     public partial class ProductWindow : Window
     {
-        IBl bl = new Bl();
+        BlApi.IBl? bl = BlApi.Factory.Get();
         private static bool update = false;
         private static bool add = false;
 

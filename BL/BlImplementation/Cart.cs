@@ -1,11 +1,11 @@
 ﻿
 using BlApi;
-using static BO.Exceptions;
 namespace BlImplementation;
 internal class Cart : ICart
 {
     static int idOrderItem = 0;
-    DalApi.IDal dal = new Dal.Dallist();
+
+    static DalApi.IDal? dal = DalApi.Factory.Get();
     /// <summary>
     /// a function to add product to cart
     /// </summary>
@@ -88,7 +88,7 @@ internal class Cart : ICart
                 {
                     if (item.ProductID == id)
                     {
-                        pInStock = dal.Product.Get(item.ProductID).InStock;
+                        pInStock = (dal?.Product.Get(item.ProductID).InStock)??0;
                         exist = true;
                         newQuantity = item.Amount + quantity;
                         if (newQuantity < 0)
@@ -141,7 +141,7 @@ internal class Cart : ICart
         {
             newOrder.ShipDate = DateTime.MinValue;
             newOrder.DeliveryDate = DateTime.MinValue;
-            newOrderID = dal.Order.Add(newOrder);
+            newOrderID = (dal?.Order.Add(newOrder))??0;
             foreach (var item in c.Items)
             {
                 newOrderItem.OrderID = newOrderID;
@@ -168,7 +168,7 @@ internal class Cart : ICart
                 }
                 catch (DO.NotExist ex)
                 {
-                    throw new BO.Exceptions.NotExist("there is not such a product");
+                    throw new BO.Exceptions.NotExist(ex.Message,ex);
                 }
                 try
                 {

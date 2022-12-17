@@ -3,7 +3,7 @@
 
 namespace BlImplementation
 {
-    sealed public class Bl : IBl
+    sealed internal class Bl : IBl
     {
         /// <summary>
         /// create order product and cart interface

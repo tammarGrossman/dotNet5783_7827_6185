@@ -1,10 +1,10 @@
 ﻿
 using BlApi;
-using static BO.Exceptions;
 namespace BlImplementation;
 internal class Order : IOrder
 {
-    DalApi.IDal dal = new Dal.Dallist();
+
+    DalApi.IDal? dal = DalApi.Factory.Get();
     /// <summary>
     ///  a function to get all orders
     /// </summary>

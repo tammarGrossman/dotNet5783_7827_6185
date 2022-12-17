@@ -1,9 +1,6 @@
-﻿
-using BlApi;
-using BlImplementation;
+﻿#nullable disable
+
 using BO;
-using Dal;
-using DalApi;
 namespace BlTest
 {
     internal class Program
@@ -11,8 +8,10 @@ namespace BlTest
         /// <summary>
         /// this variables are to action the functions of bl and dal 
         /// </summary>
-        static IBl bl = new Bl();
-        static IDal dal = new Dallist();
+
+       static DalApi.IDal? dal = DalApi.Factory.Get();
+       static BlApi.IBl? bl = BlApi.Factory.Get();
+
         /// <summary>
         /// the product case
         /// </summary>
@@ -43,7 +42,7 @@ namespace BlTest
                         p.Category_ = (Category)Enum.Parse(typeof(Category), Console.ReadLine());
                         Console.WriteLine("enter product in stock:");
                         p.InStock = int.Parse(Console.ReadLine());
-                        bl.Product.Add(p);
+                        bl?.Product.Add(p);
                     }
                     break;
                 case 2://get product
@@ -51,7 +50,7 @@ namespace BlTest
                         int id;
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine(bl.Product.Get(id));
+                        Console.WriteLine(bl?.Product.Get(id));
                     }
                     break;
                 case 3://get product in cart by id
@@ -59,12 +58,12 @@ namespace BlTest
                         int id;
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine(bl.Product.Get(id,c));
+                        Console.WriteLine(bl?.Product.Get(id,c));
                     }
                     break;
                 case 4://get all product
                     {
-                        foreach (var item in bl.Product.GetAll())
+                        foreach (var item in (bl?.Product.GetAll()))
                         {
                             Console.WriteLine(item);
                         }
@@ -75,7 +74,7 @@ namespace BlTest
                         int id;
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine(dal.Product.Get(id));
+                        Console.WriteLine(dal?.Product.Get(id));
                         Product p = new Product();
                         Console.WriteLine("enter product ID:");
                         p.ID = int.Parse(Console.ReadLine());
@@ -87,7 +86,7 @@ namespace BlTest
                         p.Category_ = (Category)Enum.Parse(typeof(Category), Console.ReadLine());
                         Console.WriteLine("enter product in stock:");
                         p.InStock = int.Parse(Console.ReadLine());
-                        bl.Product.Update(p);
+                        bl?.Product.Update(p);
                     }
                     break;
                 case 6://delete product
@@ -95,7 +94,7 @@ namespace BlTest
                         int id;
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        bl.Product.Delete(id);
+                        bl?.Product.Delete(id);
                     }
                     break;
 
@@ -110,7 +109,7 @@ namespace BlTest
         }
         static void OrderCase()
         {
-            DateTime deliveryD, orderD, shipD;
+         
             int action, id;
             bool res;
             Console.WriteLine("enter 1 to get  order by id");
@@ -125,13 +124,13 @@ namespace BlTest
                     {
                         Console.WriteLine("enter order ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine(bl.Order.Get(id));
+                        Console.WriteLine(bl?.Order.Get(id));
                     }
                     break;
 
                 case 2:  //get all order
                     {
-                        foreach (var item in bl.Order.GetAll())
+                        foreach (var item in bl?.Order.GetAll())
                         {
                             Console.WriteLine(item);
                         }
@@ -141,7 +140,7 @@ namespace BlTest
                     {
                         Console.WriteLine("enter order ID:");
                         res = int.TryParse(Console.ReadLine(), out id);                       
-                        bl.Order.UpdateSend(id);
+                        bl?.Order.UpdateSend(id);
                     }
                     break;
 
@@ -149,7 +148,7 @@ namespace BlTest
                     {
                         Console.WriteLine("enter order ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        bl.Order.UpdateSupply(id);
+                        bl?.Order.UpdateSupply(id);
                     }
                     break;
                 case 5://track order
@@ -183,7 +182,7 @@ namespace BlTest
                         int id;
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        bl.Cart.Add(c,id);
+                        bl?.Cart.Add(c,id);
                     }
                     break;
                 case 2://update product in cart
@@ -193,12 +192,12 @@ namespace BlTest
                         res = int.TryParse(Console.ReadLine(), out id);
                         Console.WriteLine("enter product amount:");
                         res = int.TryParse(Console.ReadLine(), out amount);
-                        bl.Cart.Update(c,id,amount);
+                        bl?.Cart.Update(c,id,amount);
                     }
                     break;
                 case 3://confirm order
                     {
-                        bl.Cart.OrderConfirmation(c);
+                        bl?.Cart.OrderConfirmation(c);
                     }
                     break;
                 default://press again product
