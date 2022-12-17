@@ -1,0 +1,23 @@
+﻿<Window x:Class="PL.ProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="Product" Height="450" Width="640">
+    <Grid >
+        <Button Content="submit product"  HorizontalAlignment="Left" Margin="295,320,0,0" Padding="5" VerticalAlignment="Top" x:Name="submitProduct" Click="submitProduct_Click"/>
+        <ComboBox HorizontalAlignment="Left" Margin="311,206,0,0" VerticalAlignment="Top" Width="120" x:Name="CategorySelector" Height="26"  />
+        <Label Content="in stock" HorizontalAlignment="Left" Margin="219,169,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="311,169,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" x:Name="inStock" Height="26" Padding="5"/>
+        <Label Content="id" HorizontalAlignment="Left" Margin="219,91,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.064,0.9"/>
+        <TextBox HorizontalAlignment="Left" Margin="311,130,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" x:Name="name" Height="26"/>
+        <Label Content="name" HorizontalAlignment="Left" Margin="219,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.548,-1.063"/>
+        <TextBox HorizontalAlignment="Left" Margin="311,91,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="26" x:Name="id"/>
+        <Label Content="category" HorizontalAlignment="Left" Margin="219,206,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.445,0.443"/>
+        <TextBox HorizontalAlignment="Left" Margin="311,245,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" x:Name="price" Height="26"/>
+        <Label Content="price" HorizontalAlignment="Left" Margin="219,245,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

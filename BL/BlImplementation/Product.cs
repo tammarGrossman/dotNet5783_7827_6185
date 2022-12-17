@@ -16,7 +16,6 @@ internal class Product : IProduct
         List<BO.ProductForList?> products = new List<BO.ProductForList?>();
         foreach (DO.Product? item in dal.Product.GetAll())
         {
-           
             {
                 BO.ProductForList product = new BO.ProductForList();
                 product.Name = item?.Name;
@@ -48,9 +47,9 @@ internal class Product : IProduct
             BlProduct.InStock = DOProduct.InStock;
             return BlProduct;
         }
-        catch (Exception ex)
+        catch (DO.NotExist ex)
         {
-            throw new NotExist(ex.Message);
+            throw new BO.Exceptions.NotExist(ex.Message,ex);
         }
     }
     /// <summary>
@@ -86,13 +85,13 @@ internal class Product : IProduct
                 else
                     throw new NotLegal("this is not legal id of product");
             }
-            catch (Exception ex)
+            catch (DO.NotExist ex)
             {
-                throw new NotExist(ex.Message);
+                throw new BO.Exceptions.NotExist(ex.Message,ex);
             }
         }
         else
-            throw new NotExist("there is no product in cart");
+            throw new BO.Exceptions.NotExist("there is no product in cart");
     }
     /// <summary>
     /// a function to add a product
@@ -114,7 +113,7 @@ internal class Product : IProduct
             return dal.Product.Add(doProduct);
         }
         else
-            throw new NotLegal("this is not legal id and name of product");
+            throw new BO.Exceptions.NotLegal("there is one or more not legal details of product");
     }
     /// <summary>
     /// a function to delete a product
@@ -127,7 +126,6 @@ internal class Product : IProduct
         {
             bool existInOrder = false;
             IEnumerable<DO.Order?> orders = dal.Order.GetAll();
-            //List<DO.OrderItem?> orderItems;
             foreach (DO.Order? order in orders)
             {
                 foreach (DO.OrderItem? orderItem in dal.OrderItem.GetProductsInOrder((order?.ID)??0))
@@ -141,11 +139,11 @@ internal class Product : IProduct
             if (!existInOrder)
                 dal.Product.Delete(id);
             else
-                throw new NotExist("there is such a product in other orders");
+                throw new BO.Exceptions.NotExist("there is such a product in other orders");
         }
-        catch (Exception ex)
+        catch (DO.NotExist ex)
         {
-            throw new NotExist(ex.Message);
+            throw new BO.Exceptions.NotExist(ex.Message,ex);
         }
     }
     /// <summary>
@@ -169,13 +167,11 @@ internal class Product : IProduct
                 dal.Product.Update(doProduct);
             }
             else
-                throw new NotLegal("this is not legal details of id and name of product");
+                throw new BO.Exceptions.NotLegal("this is not legal details of id and name of product");
         }
-        catch (Exception ex)
+        catch (DO.NotExist ex)
         {
-            throw new NotExist(ex.Message);
+            throw new BO.Exceptions.NotExist(ex.Message,ex);
         }
     }
 }
-//----------------------------
-//|| (cond!=null && dal.Product.GetByCon(item=>item?.Category_==)

@@ -39,7 +39,7 @@ internal class Cart : ICart
                         if ((product?.ID) == id && (product?.InStock) > 0)
                         {
                             pExist = true;
-                            BOorderItem.ID = idOrderItem++;//check what is the id
+                            BOorderItem.ID = idOrderItem++;
                             BOorderItem.ProductID = (product?.ID)??0;
                             BOorderItem.Name = product?.Name;
                             BOorderItem.Price = (product?.Price)??0;
@@ -48,7 +48,7 @@ internal class Cart : ICart
                         }
                     }
                     if (!pExist)
-                        throw new NotFound("the product does not exist");
+                        throw new BO.Exceptions.NotExist($"the product id {id} does not exist");
                 }
                 c.Items.Add(BOorderItem);
                 foreach (BO.OrderItem? item in c.Items)
@@ -57,13 +57,13 @@ internal class Cart : ICart
                 }
                 c.TotalPrice = totalPrice;
             }
-            catch (Exception ex)
+            catch (DO.NotExist ex)
             {
-                throw new NotExist(ex.Message);
+                throw new BO.Exceptions.NotExist(ex.Message,ex);
             }
         }
         else
-            throw new NotLegal("one or more of the details of the cart is not legal");
+            throw new BO.Exceptions.NotLegal("this is not legal details");
     }
 
     /// <summary>
@@ -92,9 +92,9 @@ internal class Cart : ICart
                         exist = true;
                         newQuantity = item.Amount + quantity;
                         if (newQuantity < 0)
-                            throw new NotLegal("your cart does not contain this amount of this item");
+                            throw new BO.Exceptions.NotLegal("your cart does not contain this amount of this item");
                         else if (newQuantity > pInStock)
-                            throw new NotLegal("there is not enough amount of this item in the store");
+                            throw new BO.Exceptions.NotLegal("there is not enough amount of this item in the store");
                         else
                         {
                             item.Amount = newQuantity;
@@ -103,7 +103,7 @@ internal class Cart : ICart
                     }
                 }
                 if (!exist)
-                    throw new NotExist("the product item does not exist in the cart");
+                    throw new BO.Exceptions.NotExist("the product item does not exist in the cart");
                 foreach (var item in c.Items)
                 {
                     totalPrice += item.TotalPrice;
@@ -111,12 +111,12 @@ internal class Cart : ICart
                 c.TotalPrice = totalPrice;
                 return c;
             }
-            catch (Exception ex)
+            catch (DO.NotExist ex)
             {
-                throw new NotExist(ex.Message);
+                throw new BO.Exceptions.NotExist(ex.Message,ex);
             }
         else
-            throw new NotLegal("this is not legal details");
+            throw new BO.Exceptions.NotLegal("this is not legal details");
     }
     /// <summary>
     ///  a function to submit cart to order
@@ -158,29 +158,29 @@ internal class Cart : ICart
                         {
                             dal.Product.Update(pro);
                         }
-                        catch (Exception ex)
+                        catch (DO.NotExist ex)
                         {
-                            throw new NotExist(ex.Message);
+                            throw new BO.Exceptions.NotExist(ex.Message,ex);
                         }
                     }
                     else
-                        throw new NotExist("there is no quantity from this product");
+                        throw new BO.Exceptions.NotExist("there is no quantity from this product");
                 }
-                catch (Exception ex)
+                catch (DO.NotExist ex)
                 {
-                    throw new NotExist("there is not such a product");
+                    throw new BO.Exceptions.NotExist("there is not such a product");
                 }
                 try
                 {
                     dal.OrderItem.Add(newOrderItem);
                 }
-                catch (Exception ex)
+                catch (DO.Duplication ex)
                 {
-                    throw new Duplication(ex.Message);
+                    throw new BO.Exceptions.Duplication(ex.Message,ex);
                 }
             }
         }
         else
-            throw new NotLegal("this is not legal customer details");
+            throw new BO.Exceptions.NotLegal("this is not legal customer details");
     }
 }

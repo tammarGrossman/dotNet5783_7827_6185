@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="ProductList" Height="450" Width="800">
     <Grid Name="MainGrid">
-        <!--d:ItemsSource="{d:SampleData ItemCount=5}"-->
         <ListView Grid.Row="1"  x:Name="ProductListView" SelectionChanged="ProductListView_SelectionChanged">
             <ListView.View>
                 <GridView>

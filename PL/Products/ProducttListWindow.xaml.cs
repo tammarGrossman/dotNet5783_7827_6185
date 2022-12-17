@@ -1,7 +1,6 @@
 ﻿using BlApi;
 using BlImplementation;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -27,11 +26,14 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CategorySelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void CategorySelector_SelectionChanged(object sender,SelectionChangedEventArgs e)
         {
-           
+          
             var cat = (BO.Category)((ComboBox)sender).SelectedItem;
-            ProductListView.ItemsSource = bl.Product.GetAll(x => x?.Category_ == cat);
+            if (cat.ToString() != "None")
+                ProductListView.ItemsSource = bl.Product.GetAll(x => x?.Category_ == cat);
+            else
+                ProductListView.ItemsSource = bl.Product.GetAll();
         }
         /// <summary>
         /// open window to add product
@@ -40,7 +42,7 @@ namespace PL
         /// <param name="e"></param>
         private void addNewProduct_Click(object sender, RoutedEventArgs e)
         {
-            new Product().ShowDialog();
+            new ProductWindow().ShowDialog();
             ProductListView.ItemsSource = bl.Product.GetAll();
         }
         /// <summary>
@@ -55,11 +57,17 @@ namespace PL
             if (ProductListView.ItemsSource != null&& pl!=null) 
             {               
                 int id = pl.ID;
-                BO.Product p = bl.Product.Get(id);
-                new Product(p).ShowDialog();
-                ProductListView.ItemsSource = bl.Product.GetAll();
+                try
+                {
+                    BO.Product p = bl.Product.Get(id);
+                    new ProductWindow(p).ShowDialog();
+                    ProductListView.ItemsSource = bl.Product.GetAll();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }    
 }
-

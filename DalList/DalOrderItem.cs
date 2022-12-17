@@ -16,7 +16,7 @@ internal  class DalOrderItem : IOrderItem
         foreach (var item in DataSource.OrderItems)
         {
             if (oI.OrderItemID == item?.OrderItemID)
-                throw new Duplication("this order item is already exist");
+                throw new Duplication(oI.OrderItemID,"order item");
         }
             DataSource.OrderItems.Add(oI);
             DalProduct dp = new DalProduct();
@@ -34,9 +34,9 @@ internal  class DalOrderItem : IOrderItem
         foreach (OrderItem? item in DataSource.OrderItems)
         {
             if (((item?.OrderItemID)??0) == id)//FIND
-                return item ?? throw new NotExist("not exists");
+                return item ?? throw new NotExist(id,"order item");
         }
-        throw new NotExist("not exists");
+        throw new NotExist(id, "order item");
     }
     /// <summary>
     /// get object by ids
@@ -52,15 +52,15 @@ internal  class DalOrderItem : IOrderItem
                 if (Condition == null)
                 {
                     if (item?.ProductID == pId && item?.OrderID == oId)//FIND
-                        return item ?? throw new NotExist("not exists");
+                        return item ?? throw new NotExist((item?.OrderItemID)??0,"order item");
                 }
                 else
                 {
                     if (Condition(item))//FIND
-                        return item ?? throw new NotExist("not exists");
+                        return item ?? throw new NotExist((item?.OrderItemID) ?? 0, "order item");
                 }
             }
-        throw new NotExist("not exists");
+        throw new NotExist(0,"order item");
     }
     /// <summary>
     /// get all objects
@@ -107,7 +107,7 @@ internal  class DalOrderItem : IOrderItem
             }
         }
         if (exist == 0)
-            throw new NotExist("not exists");
+            throw new NotExist(id,"order item");
         else
             DataSource.OrderItems.Remove(orderItem);
 
@@ -137,7 +137,7 @@ internal  class DalOrderItem : IOrderItem
             }
         }
         if(!exist)
-        throw new NotExist("not exists");
+        throw new NotExist(oI.OrderItemID,"order item");
         else
         {
             DataSource.OrderItems.Remove(orderItem);
@@ -172,19 +172,15 @@ internal  class DalOrderItem : IOrderItem
         if (i != 0)
             return newOrderItems;
         else
-            throw new NotExist("no products in the order");
+            throw new NotExist(oID,"order item");
     }
     public OrderItem GetByCon(Func<OrderItem?, bool>? Condition = null)
     {
-        //return from orderItem in DataSource.OrderItems
-        //       where Condition(orderItem)
-        //       select orderItem;
-        //throw new NotExist("not exists");
         foreach (OrderItem? item in DataSource.OrderItems)
         {
             if (Condition(item))
-                return item ?? throw new NotExist("not exists");
+                return item ?? throw new NotExist((item?.OrderItemID) ?? 0, "order item");
         }
-        throw new NotExist("not exists");
+        throw new NotExist(0,"order item");
     }
 }

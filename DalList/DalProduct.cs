@@ -14,7 +14,7 @@ internal class DalProduct :IProduct
         foreach (Product? item in DataSource.Products)
           {
                 if (item?.ID == p.ID)
-                    throw new Duplication("this product is already exist");
+                    throw new Duplication(p.ID,"product");
         }
         DataSource.Products.Add(p);
             return p.ID;
@@ -30,9 +30,9 @@ internal class DalProduct :IProduct
         foreach (Product? item in DataSource.Products)
         {
             if (item?.ID == id)//FIND
-                return item ?? throw new NotExist("not exists");
+                return item ?? throw new NotExist(id, "product");
         }
-        throw new NotExist("not exists");
+        throw new NotExist(id, "product");
     }
     /// <summary>
     /// delete object
@@ -57,7 +57,7 @@ internal class DalProduct :IProduct
             }
         }
         if(exist==0)
-           throw new Exception("not exists");
+           throw new NotExist(id, "product");
         else
             DataSource.Products.Remove(product);
 
@@ -84,7 +84,7 @@ internal class DalProduct :IProduct
             }
         }
         if (!exist)
-            throw new NotExist("not exists");
+            throw new NotExist(p.ID, "product");
         else
         {
             DataSource.Products.Remove(product);
@@ -117,16 +117,13 @@ internal class DalProduct :IProduct
     }
     public Product GetByCon(Func<Product?, bool>? Condition = null)
      {
-        //return from product in DataSource.Products
-        //       where Condition(product)
-        //       select product;
-        //throw new NotExist("not exists");
+        
         foreach (Product? item in DataSource.Products)
         {
             if (Condition(item))
-                return item ?? throw new NotExist("not exists");
+                return item ?? throw new NotExist((item?.ID)??0,"product");
         }
-        throw new NotExist("not exists");
+        throw new NotExist(0,"product");
 
     }
 }

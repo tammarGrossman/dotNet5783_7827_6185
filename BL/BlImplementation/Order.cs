@@ -29,7 +29,10 @@ internal class Order : IOrder
                     totalPriceInOrd += (item2?.Price) ?? 0 * (item2?.Amount) ?? 0;
                 }
             }
-            catch (Exception ex) { }
+            catch (DO.NotExist ex) 
+            {
+                throw new BO.Exceptions.NotExist(ex.Message, ex);
+            }
             order.ID = (item?.ID) ?? 0;
             order.CustomerName = item?.CustomerName;
             order.Status = TrackOrder((item?.ID) ?? 0).Status;
@@ -38,7 +41,7 @@ internal class Order : IOrder
             orders.Add(order);
         }
         if (countOrders == 0)
-            throw new NotExist("there is no products in all orders");
+            throw new BO.Exceptions.NotExist("there is no products in all orders");
         return orders;
     }
     /// <summary>
@@ -80,11 +83,11 @@ internal class Order : IOrder
                 return BlOrder;
             }
             else
-                throw new NotLegal("this is not a legal details of order");
+                throw new BO.Exceptions.NotLegal("this is not a legal details of order");
         }
-        catch (Exception ex)
+        catch (DO.NotExist ex)
         {
-            throw new BO.Exceptions.NotExist(ex.Message);
+            throw new BO.Exceptions.NotExist(ex.Message,ex);
         }
     }
     /// <summary>
@@ -135,11 +138,11 @@ internal class Order : IOrder
                 blOrder.Status = BO.OrderStatus.sent;
                 return blOrder;
             }
-            throw new NotLegal("this is not a legal value of order");
+            throw new BO.Exceptions.NotLegal("this is not a legal value of order");
         }
-        catch (Exception ex)
+        catch (DO.NotExist ex)
         {
-            throw new BO.Exceptions.NotExist(ex.Message);
+            throw new BO.Exceptions.NotExist(ex.Message, ex);
         }
     }
     /// <summary>
@@ -190,11 +193,11 @@ internal class Order : IOrder
                 blOrder.Status = BO.OrderStatus.received;
                 return blOrder;
             }
-            throw new NotLegal("this is not legal details of order");
+            throw new BO.Exceptions.NotLegal("this is not legal details of order");
         }
-        catch (Exception ex)
+        catch (DO.NotExist ex)
         {
-            throw new NotExist(ex.Message);
+            throw new BO.Exceptions.NotExist(ex.Message, ex);
         }
     }
     /// <summary>
@@ -231,12 +234,12 @@ internal class Order : IOrder
                 orderTracking.Tracking.Add(new Tuple<DateTime?,string?>(order.OrderDate, "Order recieved"));
             }
         }
-        catch (Exception ex)
+        catch (DO.NotExist ex)
         {
-            throw new NotExist(ex.Message);
+            throw new BO.Exceptions.NotExist(ex.Message, ex);
         }      
         if (!exist)
-            throw new NotExist("the order does not exist");
+            throw new BO.Exceptions.NotExist("the order does not exist");
         return orderTracking;
     }
 }

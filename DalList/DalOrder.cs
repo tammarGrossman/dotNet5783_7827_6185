@@ -3,7 +3,6 @@ using DO;
 namespace Dal;
 using DalApi;
 using System.Security.Cryptography;
-
 internal class DalOrder : IOrder
 {
     /// <summary>
@@ -19,7 +18,7 @@ internal class DalOrder : IOrder
         foreach (var item in DataSource.Orders)
         {
             if (o.ID == item?.ID)
-                throw new Duplication("this order is already exist");
+                throw new Duplication(o.ID,"order");
         }
         DataSource.Orders.Add(o);
         return i;
@@ -36,10 +35,10 @@ internal class DalOrder : IOrder
         {
             if (item?.ID == id)
             { //FIND
-                return item ?? throw new NotExist("not exists");
+                return item ?? throw new NotExist(id,"order");
             }
         }
-        throw new NotExist("not exists");
+        throw new NotExist(id, "order");
     }
     /// <summary>
     /// delete object
@@ -68,7 +67,7 @@ internal class DalOrder : IOrder
             }
         }
         if (exist == 0)
-            throw new NotExist("not exists");
+            throw new NotExist(id, "order");
         else
             DataSource.Orders.Remove(order);
 
@@ -98,7 +97,7 @@ internal class DalOrder : IOrder
             }
         }
         if (!exist)
-            throw new NotExist("not exists");
+            throw new NotExist(o.ID, "order");
         else
         {
             DataSource.Orders.Remove(order);
@@ -149,14 +148,11 @@ internal class DalOrder : IOrder
     }
     public Order GetByCon(Func<Order?, bool>? Condition = null)
     {
-        //return from order in DataSource.Orders
-        //       where Condition(order)
-        //       select order??throw new NotExist("not exists");
         foreach (Order? item in DataSource.Orders)
         {
             if (Condition(item))
-                return item ?? throw new NotExist("not exists");
+                return item ?? throw new NotExist((item?.ID)??0, "order");
         }
-        throw new NotExist("not exists");
+        throw new NotExist(0, "order");
     }
 }

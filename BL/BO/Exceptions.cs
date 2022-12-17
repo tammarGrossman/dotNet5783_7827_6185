@@ -7,27 +7,74 @@ public class Exceptions
     /// </summary>
     public class NotFound:Exception
     {
-       public NotFound(string message) : base(message) { }
+        int id;
+        string name;
+       public NotFound(int id_,string name_):base()
+        {
+            id=id_;
+            name=name_;
+        }
+        public NotFound(int id_, string name_, string message) : base(message)
+        {
+            id = id_;
+            name = name_;
+        }
+        public NotFound(int id_, string name_, string message, Exception innerException) : base(message,innerException)
+        {
+            id = id_;
+            name = name_;
+        }
+        public override string ToString()
+        {
+            return base.ToString()+ "name:" + name+" id:" +id+"Not Found";
+        }
     }
     /// <summary>
     /// exception when objects are not exist
     /// </summary>
     public class NotExist : Exception
     {
-        public NotExist(string message) : base(message) { }
+        public NotExist(string message) : base(message) 
+        { 
+        }
+        public NotExist(string message,Exception innerException) : base(message, innerException)
+        {
+        }
+        public override string ToString()
+        {
+            return base.ToString()+ "Not Exist";
+        }
     }
     /// <summary>
     /// exception when objects are  duplicate
     /// </summary>
     public class Duplication:Exception
     {
-       public Duplication(string message) : base(message) { }
+        int id;
+        string name;
+        public Duplication() : base() {}
+        public Duplication( string message) : base(message) {}                  
+        public Duplication( string message, Exception innerException) : base(message, innerException) {}
+        
+          
+        
+        public override string ToString()
+        {
+            return base.ToString() + "already exist";
+        }
     }
     /// <summary>
     /// exception when objects are not legal
     /// </summary>
     public class NotLegal : Exception
     {
-        public NotLegal(string message) : base(message) { }
+  
+        public NotLegal(string message="details") : base(message)
+        {
+        }
+        public override string ToString()
+        {
+            return base.ToString() + "Not Legal";
+        }
     }
 }
