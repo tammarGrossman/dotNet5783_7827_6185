@@ -178,7 +178,8 @@ internal  class DalOrderItem : IOrderItem
     {
         foreach (OrderItem? item in DataSource.orderItems)
         {
-            if (Condition(item))
+            if(Condition!=null)
+             if (Condition(item))
                 return item ?? throw new NotExist((item?.OrderItemID) ?? 0, "order item");
         }
         throw new NotExist(0,"order item");

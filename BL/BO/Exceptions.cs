@@ -75,6 +75,9 @@ public class Exceptions
             return base.ToString() + "Not Legal";
         }
     }
+    /// <summary>
+    /// exception when cannot connect to db
+    /// </summary>
     public class DBConnectionFailed : Exception
     {
 
@@ -84,6 +87,21 @@ public class Exceptions
         public override string ToString()
         {
             return base.ToString() + "DBConnectionFailed";
+        }
+    }
+    /// <summary>
+    /// exception when there is a missing input value
+    /// </summary>
+    public class MissingInputValue : Exception
+    {
+        string property;
+        public MissingInputValue(string property_ ) : base()
+        {
+            this.property = property_;
+        }
+        public override string ToString()
+        {
+            return base.ToString() + $"the {property} input missing value";
         }
     }
 }

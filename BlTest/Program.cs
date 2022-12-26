@@ -1,5 +1,4 @@
-﻿#nullable disable
-
+﻿
 using BO;
 namespace BlTest
 {
@@ -33,15 +32,15 @@ namespace BlTest
                     {
                         Product p = new Product();
                         Console.WriteLine("enter product ID:");
-                        p.ID = int.Parse(Console.ReadLine());
+                        p.ID = int.Parse(Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("id"));
                         Console.WriteLine("enter product name:");
-                        p.Name = Console.ReadLine();
+                        p.Name = Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("name");
                         Console.WriteLine("enter product price:");
-                        p.Price = int.Parse(Console.ReadLine());
+                        p.Price = int.Parse(Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("price"));
                         Console.WriteLine("enter product category:");
-                        p.Category_ = (Category)Enum.Parse(typeof(Category), Console.ReadLine());
+                        p.Category_ = (Category)Enum.Parse(typeof(Category), Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("category"));
                         Console.WriteLine("enter product in stock:");
-                        p.InStock = int.Parse(Console.ReadLine());
+                        p.InStock = int.Parse(Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("inStock"));
                         bl?.Product.Add(p);
                     }
                     break;
@@ -63,7 +62,7 @@ namespace BlTest
                     break;
                 case 4://get all product
                     {
-                        foreach (var item in (bl?.Product.GetAll()))
+                        foreach (var item in (bl?.Product.GetAll()) ?? throw new BO.Exceptions.DBConnectionFailed())
                         {
                             Console.WriteLine(item);
                         }
@@ -73,19 +72,19 @@ namespace BlTest
                     {
                         int id;
                         Console.WriteLine("enter product ID:");
-                        res = int.TryParse(Console.ReadLine(), out id);
+                        res = int.TryParse(Console.ReadLine() , out id);
                         Console.WriteLine(dal?.Product.Get(id));
                         Product p = new Product();
                         Console.WriteLine("enter product ID:");
-                        p.ID = int.Parse(Console.ReadLine());
+                        p.ID = int.Parse(Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("id"));
                         Console.WriteLine("enter product name:");
-                        p.Name = Console.ReadLine();
+                        p.Name = Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("name");
                         Console.WriteLine("enter product price:");
-                        p.Price = int.Parse(Console.ReadLine());
+                        p.Price = int.Parse(Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("price"));
                         Console.WriteLine("enter product category:");
-                        p.Category_ = (Category)Enum.Parse(typeof(Category), Console.ReadLine());
+                        p.Category_ = (Category)Enum.Parse(typeof(Category), Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("category"));
                         Console.WriteLine("enter product in stock:");
-                        p.InStock = int.Parse(Console.ReadLine());
+                        p.InStock = int.Parse(Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("inStock"));
                         bl?.Product.Update(p);
                     }
                     break;
@@ -130,7 +129,7 @@ namespace BlTest
 
                 case 2:  //get all order
                     {
-                        foreach (var item in bl?.Order.GetAll())
+                        foreach (var item in bl?.Order.GetAll() ?? throw new BO.Exceptions.DBConnectionFailed())
                         {
                             Console.WriteLine(item);
                         }
@@ -155,7 +154,7 @@ namespace BlTest
                     {
                         Console.WriteLine("enter order ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine(bl.Order.TrackOrder(id));
+                        Console.WriteLine(bl?.Order.TrackOrder(id));
                     }
                     break;
                 default://press again order

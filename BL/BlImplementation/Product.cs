@@ -15,14 +15,15 @@ internal class Product : IProduct
     public IEnumerable<BO.ProductForList?> GetAll(Func<BO.ProductForList?, bool> cond = null)
     {
         List<BO.ProductForList?> products = new List<BO.ProductForList?>();
-        foreach (DO.Product? item in dal.Product.GetAll())
+        foreach (DO.Product? item in dal?.Product.GetAll() ?? throw new BO.Exceptions.DBConnectionFailed())
         {
             {
                 BO.ProductForList product = new BO.ProductForList();
                 product.Name = item?.Name;
                 product.Price = (item?.Price) ?? 0;
-                product.Category_ = (BO.Category)item?.Category_;
+                product.Category_ = (BO.Category?)item?.Category_;
                 product.ID = (item?.ID) ?? 0;
+
                 if((cond != null&& cond(product))||cond==null)
                   products.Add(product);
             }
@@ -40,19 +41,21 @@ internal class Product : IProduct
         try
         {
             BO.Product BlProduct = new BO.Product();
-            DO.Product DOProduct = dal.Product.Get(id);
+            DO.Product DOProduct = dal?.Product.Get(id) ?? throw new BO.Exceptions.DBConnectionFailed();
             BlProduct.Name = DOProduct.Name;
             BlProduct.ID = DOProduct.ID;
             BlProduct.Price = DOProduct.Price;
-            BlProduct.Category_ = (BO.Category)DOProduct.Category_;
+            BlProduct.Category_ = (BO.Category?)DOProduct.Category_;
             BlProduct.InStock = DOProduct.InStock;
             return BlProduct;
         }
+
         catch (DO.NotExist ex)
         {
             throw new BO.Exceptions.NotExist(ex.Message,ex);
         }
     }
+
     /// <summary>
     /// a function to get a product in cart
     /// </summary>
@@ -65,35 +68,42 @@ internal class Product : IProduct
     {
         if (c != null)
         {
+
             try
             {
                 if (BO.Validation.ID( id ))
                 {
-                    DO.Product DalProduct = dal.Product.Get(id);
+                    DO.Product DalProduct = dal?.Product.Get(id) ?? throw new BO.Exceptions.DBConnectionFailed("");
                     BO.ProductItem BlProductItem = new BO.ProductItem();
                     BlProductItem.ID = DalProduct.ID;
                     BlProductItem.Name = DalProduct.Name;
                     BlProductItem.Price = DalProduct.Price;
-                    BlProductItem.Category_ = (BO.Category)DalProduct.Category_;
+                    BlProductItem.Category_ = (BO.Category?)DalProduct.Category_;
                     BlProductItem.InStock = DalProduct.InStock;
+
                     foreach (var item in c.Items)
                     {
-                        if (item.ProductID == id)
+                        if (item?.ProductID == id)
                             BlProductItem.Amount = item.Amount;
                     }
+
                     return BlProductItem;
                 }
+
                 else
                     throw new NotLegal("this is not legal id of product");
             }
+
             catch (DO.NotExist ex)
             {
                 throw new BO.Exceptions.NotExist(ex.Message,ex);
             }
         }
+
         else
             throw new BO.Exceptions.NotExist("there is no product in cart");
     }
+
     /// <summary>
     /// a function to add a product
     /// </summary>
@@ -104,18 +114,20 @@ internal class Product : IProduct
     {
         DO.Product doProduct = new DO.Product();
 
-        if (BO.Validation.ID(p.ID) && BO.Validation.NameAdress(p.Name) && BO.Validation.Price(p.Price) && BO.Validation.InStock(p.InStock))
+        if (BO.Validation.ID(p.ID) && BO.Validation.NameAdress(p.Name ?? "") && BO.Validation.Price(p.Price) && BO.Validation.InStock(p.InStock))
         {
             doProduct.ID = p.ID;
             doProduct.Name = p.Name;
             doProduct.Price = p.Price;
-            doProduct.Category_ = (DO.Category)p.Category_;
+            doProduct.Category_ = (DO.Category?)p.Category_;
             doProduct.InStock = p.InStock;
-            return dal.Product.Add(doProduct);
+            return dal?.Product.Add(doProduct) ?? throw new BO.Exceptions.DBConnectionFailed();
         }
+
         else
             throw new BO.Exceptions.NotLegal("there is one or more not legal details of product");
     }
+
     /// <summary>
     /// a function to delete a product
     /// </summary>
@@ -126,10 +138,11 @@ internal class Product : IProduct
         try
         {
             bool existInOrder = false;
-            IEnumerable<DO.Order?> orders = dal?.Order.GetAll();
+            IEnumerable<DO.Order?> orders = dal?.Order.GetAll() ?? throw new BO.Exceptions.DBConnectionFailed();
+
             foreach (DO.Order? order in orders)
             {
-                foreach (DO.OrderItem? orderItem in dal?.OrderItem.GetProductsInOrder((order?.ID)??0))
+                foreach (DO.OrderItem? orderItem in dal?.OrderItem.GetProductsInOrder((order?.ID)??0) ?? throw new BO.Exceptions.DBConnectionFailed())
                 {
                     if (orderItem?.ProductID == id)
                     {
@@ -137,9 +150,11 @@ internal class Product : IProduct
                     }
                 }
             }
+
             if (!existInOrder)
                 dal?.Product.Delete(id);
             else
+
                 throw new BO.Exceptions.NotExist("there is such a product in other orders");
         }
         catch (DO.NotExist ex)
@@ -147,6 +162,7 @@ internal class Product : IProduct
             throw new BO.Exceptions.NotExist(ex.Message,ex);
         }
     }
+
     /// <summary>
     /// a function to update a product
     /// </summary>
@@ -158,18 +174,20 @@ internal class Product : IProduct
         try
         {
             DO.Product doProduct = new DO.Product();
-            if (BO.Validation.ID(p.ID)  && BO.Validation.NameAdress(p.Name) && BO.Validation.Price(p.Price) && BO.Validation.InStock(p.InStock))
+            if (BO.Validation.ID(p.ID)  && BO.Validation.NameAdress(p.Name ?? "") && BO.Validation.Price(p.Price) && BO.Validation.InStock(p.InStock))
             {
                 doProduct.ID = p.ID;
                 doProduct.Name = p.Name;
                 doProduct.Price = p.Price;
-                doProduct.Category_ = (DO.Category)p.Category_;
+                doProduct.Category_ = (DO.Category?)p.Category_;
                 doProduct.InStock = p.InStock;
                 dal?.Product.Update(doProduct);
             }
+
             else
                 throw new BO.Exceptions.NotLegal("this is not legal details of id and name of product");
         }
+
         catch (DO.NotExist ex)
         {
             throw new BO.Exceptions.NotExist(ex.Message,ex);
