@@ -6,7 +6,7 @@ namespace DalTest
 {
     public class Program
     {
-        static DalApi.IDal ? dal = DalApi.Factory.Get();
+        static DalApi.IDal? dal = DalApi.Factory.Get();
         /// <summary>
         /// the product case
         /// </summary>

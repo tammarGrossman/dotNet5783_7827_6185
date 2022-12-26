@@ -5,9 +5,9 @@ static internal class DataSource
 {
     static readonly Random rand;// random
     static bool start = false;//start project
-    internal static List<Order?> Orders=new List<Order?>();
-    internal static List<OrderItem?> OrderItems=new List<OrderItem?>();
-    internal static List<Product?> Products=new List<Product?>();
+    internal static List<Order?> orders=new List<Order?>();
+    internal static List<OrderItem?> orderItems=new List<OrderItem?>();
+    internal static List<Product?> products=new List<Product?>();
     static DataSource()
     {
         rand = new Random();
@@ -29,7 +29,7 @@ static internal class DataSource
         string[] customersEmails = new string[] { "j123@gmail.com", "r1s@gmail.com" ,"y23d@gmail.com", "bb@gmail.com" ,"dd123@gmail.com", "g3@gmail.com" ,"als123@gmail.com" ,"mc@gmail.com" ,"sh44@gmail.com" ,"df666@gmail.com" ,"sh9898@gmail.com" ,"ala123@gmail.com" ,"ney232@gmail.com" ,"ni2003@gmail.com", "zp67@gmail.com" ,"tt54@gmail.com", "ut6@gmail.com" ,"th9009@gmail.com" ,"kj09@gmail.com" ,"opopo@gmail.com" };
         string[] customersAdresses = new string[] { "pinkas 10", "zfat 12", "tveria 10", "chevron 12", "herzog 9", "hertzel 5", "radzemin 7", "perel 22", "awlochamim 7", "rambam 5", "sokolov 25", "walfson 12", "kaplan 8", "anilevith 10", "jerusalem 55", "gotliv 14", "rozovski 10", "daniel 2", "moaliver 5", "bagno 20"};
         Order order = new Order();
-        Orders.Add(order);
+        orders.Add(order);
         Order o=new Order();
         for (int i = 1; i < 20 ; i++)
         {
@@ -50,7 +50,7 @@ static internal class DataSource
            o.CustomerAdress = customersAdresses[i];
            o.CustomerEmail = customersEmails[i];
            o.CustomerName = customersNames[i];
-           Orders.Add(o);
+           orders.Add(o);
         }
     }
     /// <summary>
@@ -68,7 +68,7 @@ static internal class DataSource
             p.Price = rand.Next(20, 201);
             p.InStock = rand.Next(0, 50);
             p.Category_ = (Category)Enum.ToObject(typeof(Category), categories[i - 1]);
-            Products.Add(p);
+            products.Add(p);
         }
     }
     /// <summary>
@@ -90,7 +90,7 @@ private static void createOrderItem()
             oI.OrderID = iOrder++;
             oI.Price = rand.Next(50, 201);
             oI.Amount = rand.Next(20, 51);
-            OrderItems.Add(oI);
+            orderItems.Add(oI);
         }
 }
     static internal class Config

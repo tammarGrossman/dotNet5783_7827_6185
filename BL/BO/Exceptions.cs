@@ -75,4 +75,15 @@ public class Exceptions
             return base.ToString() + "Not Legal";
         }
     }
+    public class DBConnectionFailed : Exception
+    {
+
+        public DBConnectionFailed(string message = "cannot connected to db") : base(message)
+        {
+        }
+        public override string ToString()
+        {
+            return base.ToString() + "DBConnectionFailed";
+        }
+    }
 }

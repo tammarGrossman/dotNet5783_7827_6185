@@ -13,12 +13,12 @@ internal  class DalOrderItem : IOrderItem
     {
         int i = DataSource.Config.LastOrderItem;
         oI.OrderItemID = i;
-        foreach (var item in DataSource.OrderItems)
+        foreach (var item in DataSource.orderItems)
         {
             if (oI.OrderItemID == item?.OrderItemID)
                 throw new Duplication(oI.OrderItemID,"order item");
         }
-            DataSource.OrderItems.Add(oI);
+            DataSource.orderItems.Add(oI);
             DalProduct dp = new DalProduct();
             Product p = dp.Get(oI.ProductID);
             return i;
@@ -31,7 +31,7 @@ internal  class DalOrderItem : IOrderItem
     /// <exception cref="Exception"></exception>
     public OrderItem Get(int id)
     {
-        foreach (OrderItem? item in DataSource.OrderItems)
+        foreach (OrderItem? item in DataSource.orderItems)
         {
             if (((item?.OrderItemID)??0) == id)//FIND
                 return item ?? throw new NotExist(id,"order item");
@@ -47,7 +47,7 @@ internal  class DalOrderItem : IOrderItem
     /// <exception cref="Exception"></exception>
     public OrderItem GetOrderItemByIDS(int pId, int oId, Func<OrderItem?, bool>? Condition = null)
     {
-            foreach (OrderItem? item in DataSource.OrderItems)
+            foreach (OrderItem? item in DataSource.orderItems)
             {
                 if (Condition == null)
                 {
@@ -70,7 +70,7 @@ internal  class DalOrderItem : IOrderItem
     {
         List<OrderItem?> newOrderItems = new List<OrderItem?>();
         OrderItem oI = new OrderItem();
-        foreach (OrderItem? item in DataSource.OrderItems)
+        foreach (OrderItem? item in DataSource.orderItems)
         {
             oI.OrderItemID = (item?.OrderItemID) ?? 0;
             oI.ProductID = (item?.ProductID)??0;
@@ -79,7 +79,7 @@ internal  class DalOrderItem : IOrderItem
             oI.Amount = (item?.Amount)??0;
             newOrderItems.Add(oI);
         }
-        if(DataSource.OrderItems.Count() == 0)
+        if(DataSource.orderItems.Count() == 0)
             Console.WriteLine("there is no item in the order");
         return newOrderItems;
     }
@@ -94,7 +94,7 @@ internal  class DalOrderItem : IOrderItem
     {
         OrderItem orderItem = new OrderItem();
         int exist = 0;
-        foreach (OrderItem? item in DataSource.OrderItems)
+        foreach (OrderItem? item in DataSource.orderItems)
         {
             if (item?.OrderItemID == id)//FIND
             {
@@ -109,7 +109,7 @@ internal  class DalOrderItem : IOrderItem
         if (exist == 0)
             throw new NotExist(id,"order item");
         else
-            DataSource.OrderItems.Remove(orderItem);
+            DataSource.orderItems.Remove(orderItem);
 
     }
     /// <summary>
@@ -121,7 +121,7 @@ internal  class DalOrderItem : IOrderItem
     {
         OrderItem orderItem = new OrderItem();
         bool exist = false;
-        foreach (OrderItem? item in DataSource.OrderItems)
+        foreach (OrderItem? item in DataSource.orderItems)
         {
             if (item?.OrderItemID == oI.OrderItemID)
             { //FIND
@@ -140,8 +140,8 @@ internal  class DalOrderItem : IOrderItem
         throw new NotExist(oI.OrderItemID,"order item");
         else
         {
-            DataSource.OrderItems.Remove(orderItem);
-            DataSource.OrderItems.Add(oI);
+            DataSource.orderItems.Remove(orderItem);
+            DataSource.orderItems.Add(oI);
 
         }
     }
@@ -156,7 +156,7 @@ internal  class DalOrderItem : IOrderItem
         List<OrderItem?> newOrderItems=new List<OrderItem?>();
         OrderItem oI = new OrderItem();
         int i = 0;
-        foreach (OrderItem? item in DataSource.OrderItems)
+        foreach (OrderItem? item in DataSource.orderItems)
             {
             if (item?.OrderID == oID)
             { //FIND
@@ -176,7 +176,7 @@ internal  class DalOrderItem : IOrderItem
     }
     public OrderItem GetByCon(Func<OrderItem?, bool>? Condition = null)
     {
-        foreach (OrderItem? item in DataSource.OrderItems)
+        foreach (OrderItem? item in DataSource.orderItems)
         {
             if (Condition(item))
                 return item ?? throw new NotExist((item?.OrderItemID) ?? 0, "order item");

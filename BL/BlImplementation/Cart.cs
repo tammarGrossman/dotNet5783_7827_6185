@@ -47,6 +47,7 @@ internal class Cart : ICart
                             BOorderItem.Amount = 1;
                         }
                     }
+
                     if (!pExist)
                         throw new BO.Exceptions.NotExist($"the product id {id} does not exist");
                 }
