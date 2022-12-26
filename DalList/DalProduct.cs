@@ -16,9 +16,11 @@ internal class DalProduct :IProduct
                 if (item?.ID == p.ID)
                     throw new Duplication(p.ID,"product");
         }
+
         DataSource.products.Add(p);
             return p.ID;
     }
+
     /// <summary>
     /// get object
     /// </summary>
@@ -32,8 +34,10 @@ internal class DalProduct :IProduct
             if (item?.ID == id)//FIND
                 return item ?? throw new NotExist(id, "product");
         }
+
         throw new NotExist(id, "product");
     }
+
     /// <summary>
     /// delete object
     /// </summary>
@@ -44,6 +48,7 @@ internal class DalProduct :IProduct
     {
         int exist = 0;
         Product product = new Product();
+
         foreach (Product? item in DataSource.products)
         {
             if (item?.ID == id)
@@ -56,12 +61,14 @@ internal class DalProduct :IProduct
                 product.Category_ = item?.Category_;
             }
         }
+
         if(exist==0)
            throw new NotExist(id, "product");
         else
             DataSource.products.Remove(product);
 
     }
+
     /// <summary>
     /// update object
     /// </summary>
@@ -71,6 +78,7 @@ internal class DalProduct :IProduct
     {
         Product product = new Product();
         bool exist = false;
+
         foreach (Product? item in DataSource.products)
         {
             if (item?.ID == p.ID && !exist)//FIND
@@ -83,6 +91,7 @@ internal class DalProduct :IProduct
                 product.Category_ = item?.Category_;
             }
         }
+
         if (!exist)
             throw new NotExist(p.ID, "product");
         else
@@ -91,6 +100,7 @@ internal class DalProduct :IProduct
             DataSource.products.Add(p);
         }
     }
+
     /// <summary>
     /// get all objects
     /// </summary>
@@ -99,6 +109,7 @@ internal class DalProduct :IProduct
     {
         List<Product?> newProducts = new List<Product?>();
         Product p = new Product();
+
         foreach (Product? item in DataSource.products)
         {
             if (Condition == null||(Condition!=null && Condition(item)))
@@ -111,6 +122,7 @@ internal class DalProduct :IProduct
                 newProducts.Add(p);
             }
         }
+
         if(DataSource.products.Count()==0)
             Console.WriteLine("there is no products");
         return newProducts;
@@ -120,9 +132,10 @@ internal class DalProduct :IProduct
         
         foreach (Product? item in DataSource.products)
         {
-            if (Condition(item))
+            if (Condition != null && Condition(item))
                 return item ?? throw new NotExist((item?.ID)??0,"product");
         }
+
         throw new NotExist(0,"product");
 
     }

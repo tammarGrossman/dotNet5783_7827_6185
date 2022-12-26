@@ -61,6 +61,7 @@ static internal class DataSource
         string[] productsNames = new string[] { "shirt", "skirt", "tights", "bottle", "shoes", "dumbbells", "mat", "rubberBand", "ball", "socks" };
         int[] categories = new int[] { 2, 1, 1, 4, 3, 4, 4, 4, 4, 2 };
         Product p = new Product();
+
         for (int i = 1; i < 11; i++)
         {
             p.ID = i * 1000000;
@@ -71,6 +72,7 @@ static internal class DataSource
             products.Add(p);
         }
     }
+
     /// <summary>
     /// initilize order items
     /// </summary>
@@ -79,6 +81,7 @@ private static void createOrderItem()
         int iOrder = 0;
         int iProduct = 1;
         OrderItem oI = new OrderItem();
+
         for (int i = 0; i < 40 ; i++)
         {
             if (iProduct == 11)

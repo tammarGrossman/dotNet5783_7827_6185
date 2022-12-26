@@ -15,14 +15,17 @@ internal class DalOrder : IOrder
     {
         int i = DataSource.Config.LastOrder;
         o.ID = i;
+
         foreach (var item in DataSource.orders)
         {
             if (o.ID == item?.ID)
                 throw new Duplication(o.ID,"order");
         }
+
         DataSource.orders.Add(o);
         return i;
     }
+
     /// <summary>
     /// get object
     /// </summary>
@@ -40,6 +43,7 @@ internal class DalOrder : IOrder
         }
         throw new NotExist(id, "order");
     }
+
     /// <summary>
     /// delete object
     /// </summary>
@@ -50,6 +54,7 @@ internal class DalOrder : IOrder
     {
         int exist = 0;
         Order order = new Order();
+
         foreach (Order? item in DataSource.orders)
         {
             if (item?.ID == id)//FIND
@@ -66,12 +71,14 @@ internal class DalOrder : IOrder
 
             }
         }
+
         if (exist == 0)
             throw new NotExist(id, "order");
         else
             DataSource.orders.Remove(order);
 
     }
+
     /// <summary>
     /// update object
     /// </summary>
@@ -81,6 +88,7 @@ internal class DalOrder : IOrder
     {
         Order order = new Order();
         bool exist = false;
+
         foreach (Order? item in DataSource.orders)
         {
             if (item?.ID == o.ID)//FIND
@@ -96,6 +104,7 @@ internal class DalOrder : IOrder
 
             }
         }
+        
         if (!exist)
             throw new NotExist(o.ID, "order");
         else
@@ -104,6 +113,7 @@ internal class DalOrder : IOrder
             DataSource.orders.Add(o);
         }
     }
+
     /// <summary>
     /// get all objects
     /// </summary>
@@ -142,6 +152,7 @@ internal class DalOrder : IOrder
                 }
             }
         }
+
         if (DataSource.orders.Count() == 0)
             Console.WriteLine("there is no orders");
         return newOrders;
@@ -150,9 +161,10 @@ internal class DalOrder : IOrder
     {
         foreach (Order? item in DataSource.orders)
         {
-            if (Condition(item))
+            if (Condition!=null && Condition(item))
                 return item ?? throw new NotExist((item?.ID)??0, "order");
         }
+
         throw new NotExist(0, "order");
     }
 }
