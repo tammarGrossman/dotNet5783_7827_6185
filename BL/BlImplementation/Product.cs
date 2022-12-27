@@ -12,10 +12,10 @@ internal class Product : IProduct
     /// a function to get all products
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BO.ProductForList?> GetAll(Func<BO.ProductForList?, bool> cond = null)
+    public IEnumerable<BO.ProductForList?> GetAll(Func<BO.ProductForList?, bool>? cond = null)
     {
         List<BO.ProductForList?> products = new List<BO.ProductForList?>();
-        foreach (DO.Product? item in dal?.Product.GetAll() ?? throw new BO.Exceptions.DBConnectionFailed())
+        foreach (DO.Product? item in dal!.Product.GetAll())
         {
             {
                 BO.ProductForList product = new BO.ProductForList();
@@ -41,7 +41,7 @@ internal class Product : IProduct
         try
         {
             BO.Product BlProduct = new BO.Product();
-            DO.Product DOProduct = dal?.Product.Get(id) ?? throw new BO.Exceptions.DBConnectionFailed();
+            DO.Product DOProduct = dal!.Product.Get(id);
             BlProduct.Name = DOProduct.Name;
             BlProduct.ID = DOProduct.ID;
             BlProduct.Price = DOProduct.Price;
@@ -73,7 +73,7 @@ internal class Product : IProduct
             {
                 if (BO.Validation.ID( id ))
                 {
-                    DO.Product DalProduct = dal?.Product.Get(id) ?? throw new BO.Exceptions.DBConnectionFailed("");
+                    DO.Product DalProduct = dal!.Product.Get(id);
                     BO.ProductItem BlProductItem = new BO.ProductItem();
                     BlProductItem.ID = DalProduct.ID;
                     BlProductItem.Name = DalProduct.Name;
@@ -121,7 +121,7 @@ internal class Product : IProduct
             doProduct.Price = p.Price;
             doProduct.Category_ = (DO.Category?)p.Category_;
             doProduct.InStock = p.InStock;
-            return dal?.Product.Add(doProduct) ?? throw new BO.Exceptions.DBConnectionFailed();
+            return dal!.Product.Add(doProduct) ;
         }
 
         else
@@ -138,11 +138,11 @@ internal class Product : IProduct
         try
         {
             bool existInOrder = false;
-            IEnumerable<DO.Order?> orders = dal?.Order.GetAll() ?? throw new BO.Exceptions.DBConnectionFailed();
+            IEnumerable<DO.Order?> orders = dal!.Order.GetAll();
 
             foreach (DO.Order? order in orders)
             {
-                foreach (DO.OrderItem? orderItem in dal?.OrderItem.GetProductsInOrder((order?.ID)??0) ?? throw new BO.Exceptions.DBConnectionFailed())
+                foreach (DO.OrderItem? orderItem in dal!.OrderItem.GetProductsInOrder((order?.ID)??0))
                 {
                     if (orderItem?.ProductID == id)
                     {
@@ -152,7 +152,7 @@ internal class Product : IProduct
             }
 
             if (!existInOrder)
-                dal?.Product.Delete(id);
+                dal!.Product.Delete(id);
             else
 
                 throw new BO.Exceptions.NotExist("there is such a product in other orders");
@@ -181,7 +181,7 @@ internal class Product : IProduct
                 doProduct.Price = p.Price;
                 doProduct.Category_ = (DO.Category?)p.Category_;
                 doProduct.InStock = p.InStock;
-                dal?.Product.Update(doProduct);
+                dal!.Product.Update(doProduct);
             }
 
             else

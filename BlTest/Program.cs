@@ -41,7 +41,7 @@ namespace BlTest
                         p.Category_ = (Category)Enum.Parse(typeof(Category), Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("category"));
                         Console.WriteLine("enter product in stock:");
                         p.InStock = int.Parse(Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("inStock"));
-                        bl?.Product.Add(p);
+                        bl!.Product.Add(p);
                     }
                     break;
                 case 2://get product
@@ -57,12 +57,12 @@ namespace BlTest
                         int id;
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine(bl?.Product.Get(id,c));
+                        Console.WriteLine(bl!.Product.Get(id,c));
                     }
                     break;
                 case 4://get all product
                     {
-                        foreach (var item in (bl?.Product.GetAll()) ?? throw new BO.Exceptions.DBConnectionFailed())
+                        foreach (var item in (bl!.Product.GetAll()))
                         {
                             Console.WriteLine(item);
                         }
@@ -73,7 +73,7 @@ namespace BlTest
                         int id;
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine() , out id);
-                        Console.WriteLine(dal?.Product.Get(id));
+                        Console.WriteLine(dal!.Product.Get(id));
                         Product p = new Product();
                         Console.WriteLine("enter product ID:");
                         p.ID = int.Parse(Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("id"));
@@ -85,7 +85,7 @@ namespace BlTest
                         p.Category_ = (Category)Enum.Parse(typeof(Category), Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("category"));
                         Console.WriteLine("enter product in stock:");
                         p.InStock = int.Parse(Console.ReadLine() ?? throw new BO.Exceptions.MissingInputValue("inStock"));
-                        bl?.Product.Update(p);
+                        bl!.Product.Update(p);
                     }
                     break;
                 case 6://delete product
@@ -93,7 +93,7 @@ namespace BlTest
                         int id;
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        bl?.Product.Delete(id);
+                        bl!.Product.Delete(id);
                     }
                     break;
 
@@ -123,13 +123,13 @@ namespace BlTest
                     {
                         Console.WriteLine("enter order ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine(bl?.Order.Get(id));
+                        Console.WriteLine(bl!.Order.Get(id));
                     }
                     break;
 
                 case 2:  //get all order
                     {
-                        foreach (var item in bl?.Order.GetAll() ?? throw new BO.Exceptions.DBConnectionFailed())
+                        foreach (var item in bl!.Order.GetAll() )
                         {
                             Console.WriteLine(item);
                         }
@@ -139,7 +139,7 @@ namespace BlTest
                     {
                         Console.WriteLine("enter order ID:");
                         res = int.TryParse(Console.ReadLine(), out id);                       
-                        bl?.Order.UpdateSend(id);
+                        bl!.Order.UpdateSend(id);
                     }
                     break;
 
@@ -147,14 +147,14 @@ namespace BlTest
                     {
                         Console.WriteLine("enter order ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        bl?.Order.UpdateSupply(id);
+                        bl!.Order.UpdateSupply(id);
                     }
                     break;
                 case 5://track order
                     {
                         Console.WriteLine("enter order ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine(bl?.Order.TrackOrder(id));
+                        Console.WriteLine(bl!.Order.TrackOrder(id));
                     }
                     break;
                 default://press again order
@@ -181,7 +181,7 @@ namespace BlTest
                         int id;
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        bl?.Cart.Add(c,id);
+                        bl!.Cart.Add(c,id);
                     }
                     break;
                 case 2://update product in cart
@@ -191,12 +191,12 @@ namespace BlTest
                         res = int.TryParse(Console.ReadLine(), out id);
                         Console.WriteLine("enter product amount:");
                         res = int.TryParse(Console.ReadLine(), out amount);
-                        bl?.Cart.Update(c,id,amount);
+                        bl!.Cart.Update(c,id,amount);
                     }
                     break;
                 case 3://confirm order
                     {
-                        bl?.Cart.OrderConfirmation(c);
+                        bl!.Cart.OrderConfirmation(c);
                     }
                     break;
                 default://press again product

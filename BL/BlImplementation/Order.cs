@@ -16,7 +16,7 @@ internal class Order : IOrder
         IEnumerable<DO.OrderItem?> proInOr;
         List<BO.OrderForList?> orders = new List<BO.OrderForList?>();
 
-        foreach (DO.Order? item in dal?.Order.GetAll() ?? throw new BO.Exceptions.DBConnectionFailed())
+        foreach (DO.Order? item in dal!.Order.GetAll() )
         {
             BO.OrderForList order = new BO.OrderForList();
 
@@ -68,7 +68,7 @@ internal class Order : IOrder
             {
                 double totalPrice = 0;
                 BO.Order BlOrder = new BO.Order();
-                DO.Order DalOrder = dal?.Order.Get(id) ?? throw new BO.Exceptions.DBConnectionFailed();
+                DO.Order DalOrder = dal!.Order.Get(id);
                 BO.OrderItem BlorderItem = new BO.OrderItem();
 
                 foreach (var item in dal.OrderItem.GetProductsInOrder(id))
@@ -116,7 +116,7 @@ internal class Order : IOrder
         try
         {
             double totalPrice = 0;
-            DO.Order dalOrder = dal?.Order.Get(id) ?? throw new BO.Exceptions.DBConnectionFailed();
+            DO.Order dalOrder = dal!.Order.Get(id);
             BO.Order blOrder = new BO.Order();
             BO.OrderItem BlorderItem = new BO.OrderItem();
             DO.Order DOorder = new DO.Order();
@@ -177,7 +177,7 @@ internal class Order : IOrder
         try
         {
             double totalPrice = 0;
-            DO.Order dalOrder = dal?.Order.Get(id) ?? throw new BO.Exceptions.DBConnectionFailed();
+            DO.Order dalOrder = dal!.Order.Get(id);
             BO.Order blOrder = new BO.Order();
             BO.OrderItem BlorderItem = new BO.OrderItem();
             DO.Order DOorder = new DO.Order();
@@ -240,7 +240,7 @@ internal class Order : IOrder
 
         try
         {
-           order = dal?.Order.Get(id) ?? throw new BO.Exceptions.DBConnectionFailed();
+           order = dal!.Order.Get(id);
 
             if (order.ID != 0)
                 exist = true;

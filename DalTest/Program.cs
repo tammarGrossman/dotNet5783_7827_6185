@@ -36,7 +36,7 @@ namespace DalTest
                         p.Category_ = (Category)Enum.Parse(typeof(Category), Console.ReadLine() ?? throw new DO.MissingInputValue("category"));
                         Console.WriteLine("enter product in stock:");
                         p.InStock = int.Parse(Console.ReadLine() ?? throw new DO.MissingInputValue("in stock"));
-                        dal?.Product.Add(p);
+                        dal!.Product.Add(p);
                     }
                     break;
                 case 1://get product
@@ -44,12 +44,12 @@ namespace DalTest
                         int id;
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine(dal?.Product.Get(id));
+                        Console.WriteLine(dal!.Product.Get(id));
                     }
                     break;
                 case 2://get all product
                     {
-                        foreach (var item in dal?.Product.GetAll() ?? throw new DO.DBConnectionFailed("")  )
+                        foreach (var item in dal!.Product.GetAll())
                         {
                             Console.WriteLine(item);
                         }
@@ -61,7 +61,7 @@ namespace DalTest
                         int id;
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine(dal?.Product.Get(id));
+                        Console.WriteLine(dal!.Product.Get(id));
                         Product p = new Product();
                         Console.WriteLine("enter product ID:");
                         p.ID = int.Parse(Console.ReadLine() ?? throw new DO.MissingInputValue("id"));
@@ -73,7 +73,7 @@ namespace DalTest
                         p.Category_ = (Category)Enum.Parse(typeof(Category), Console.ReadLine() ?? throw new DO.MissingInputValue("category"));
                         Console.WriteLine("enter product in stock:");
                         p.InStock = int.Parse(Console.ReadLine() ?? throw new DO.MissingInputValue("in stock"));
-                        dal?.Product.Update(p);
+                        dal!.Product.Update(p);
                         break;
                     }
                 case 4://delete product
@@ -81,7 +81,7 @@ namespace DalTest
                         int id;
                         Console.WriteLine("enter product ID:");
                         res = int.TryParse(Console.ReadLine(),out id);
-                        dal?.Product.Delete(id);
+                        dal!.Product.Delete(id);
                     }
                     break;
 
@@ -129,20 +129,20 @@ namespace DalTest
                         o.OrderDate = orderD;
                         o.ShipDate= shipD;
                         o.DeliveryDate= deliveryD;
-                        dal?.Order.Add(o);
+                        dal!.Order.Add(o);
                     }
                     break;
                 case 1://get order
                     {
                         Console.WriteLine("enter order ID:");
                         res = int.TryParse(Console.ReadLine(),out id);
-                        Console.WriteLine(dal?.Order.Get(id));
+                        Console.WriteLine(dal!.Order.Get(id));
                     }
                     break;
                   
                 case 2:  //get all order
                     {
-                        foreach (Order? item in dal?.Order.GetAll()?? throw new DO.DBConnectionFailed(""))
+                        foreach (Order? item in dal!.Order.GetAll())
                         {
                             Console.WriteLine(item);
                         }
@@ -153,7 +153,7 @@ namespace DalTest
                         Order o = new Order();
                         Console.WriteLine("enter order ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine(dal?.Order.Get(id));
+                        Console.WriteLine(dal!.Order.Get(id));
                         o.ID = id;
                         Console.WriteLine("enter customer name:");
                         o.CustomerName = Console.ReadLine();
@@ -170,7 +170,7 @@ namespace DalTest
                         o.OrderDate = orderD;
                         o.ShipDate = shipD;
                         o.DeliveryDate = deliveryD;
-                        dal?.Order.Update(o);
+                        dal!.Order.Update(o);
                     }
                     break;
 
@@ -178,7 +178,7 @@ namespace DalTest
                     {
                         Console.WriteLine("enter order ID:");
                         res = int.TryParse(Console.ReadLine(),out id);
-                        dal?.Order.Delete(id);
+                        dal!.Order.Delete(id);
                     }
                     break;
                 default://press again order
@@ -218,19 +218,19 @@ namespace DalTest
                         oI.Price = int.Parse(Console.ReadLine() ?? throw new DO.MissingInputValue("price"));
                         Console.WriteLine("enter product amount:");
                         oI.Amount = int.Parse(Console.ReadLine() ?? throw new DO.MissingInputValue("amount"));
-                        dal?.OrderItem.Add(oI);
+                        dal!.OrderItem.Add(oI);
                     }
                     break;
                 case 1://get order item
                     {
                         Console.WriteLine("enter order item ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine(dal?.OrderItem.Get(id));
+                        Console.WriteLine(dal!.OrderItem.Get(id));
                     }
                     break;
                 case 2://get all order item
                     {
-                        foreach (var item in dal?.OrderItem.GetAll() ?? throw new DO.DBConnectionFailed(""))
+                        foreach (var item in dal!.OrderItem.GetAll())
                         {
                             Console.WriteLine(item);
                         }
@@ -242,7 +242,7 @@ namespace DalTest
                         OrderItem oI = new OrderItem();
                         Console.WriteLine("enter order item ID:");
                         res = int.TryParse(Console.ReadLine(), out id);
-                        Console.WriteLine(dal?.OrderItem.Get(id));
+                        Console.WriteLine(dal!.OrderItem.Get(id));
                         oI.OrderItemID = id;
                         Console.WriteLine("enter product ID:");
                         oI.ProductID = int.Parse(Console.ReadLine() ?? throw new DO.MissingInputValue("product id"));
@@ -252,21 +252,21 @@ namespace DalTest
                         oI.Price = int.Parse(Console.ReadLine() ?? throw new DO.MissingInputValue("price"));
                         Console.WriteLine("enter product amount:");
                         oI.Amount = int.Parse(Console.ReadLine() ?? throw new DO.MissingInputValue("amount"));
-                        dal?.OrderItem.Update(oI);                      
+                        dal!.OrderItem.Update(oI);                      
                     }
                     break;
                 case 4://delete order item
                     {
                         Console.WriteLine("enter order item ID:");
                         res = int.TryParse(Console.ReadLine(),out id);
-                        dal?.OrderItem.Delete(id);                       
+                        dal!.OrderItem.Delete(id);                       
                     }
                     break;
                 case 5://products in order 
                     {
                         Console.WriteLine("enter order id:");
                         res = int.TryParse(Console.ReadLine(),out id);
-                        foreach (OrderItem? item in dal?.OrderItem.GetProductsInOrder(id) ?? throw new DO.DBConnectionFailed(""))
+                        foreach (OrderItem? item in dal!.OrderItem.GetProductsInOrder(id))
                         {
                             if (item?.OrderItemID != 0)
                                 Console.WriteLine(item);
@@ -281,7 +281,7 @@ namespace DalTest
                         res = int.TryParse(Console.ReadLine(),out id);
                         Console.WriteLine("enter product id:");
                         res = int.TryParse(Console.ReadLine(),out idP);
-                        Console.WriteLine(dal?.OrderItem.GetOrderItemByIDS(idP, id));
+                        Console.WriteLine(dal!.OrderItem.GetOrderItemByIDS(idP, id));
                     }
                     break;
                 default://press again order item

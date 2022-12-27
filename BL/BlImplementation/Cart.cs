@@ -23,7 +23,7 @@ internal class Cart : ICart
                 double totalPrice = 0;
                 bool exist = false, pExist = false;
                 BO.OrderItem BOorderItem = new BO.OrderItem();
-                DO.Product doProduct = dal?.Product.Get(id) ?? throw new BO.Exceptions.DBConnectionFailed();
+                DO.Product doProduct = dal!.Product.Get(id);
 
                 foreach (var item in c.Items)
                 {
@@ -98,7 +98,7 @@ internal class Cart : ICart
                 {
                     if (item?.ProductID == id)
                     {
-                        pInStock = (dal?.Product.Get(item.ProductID).InStock)??0;
+                        pInStock = dal!.Product.Get(item.ProductID).InStock;
                         exist = true;
                         newQuantity = item.Amount + quantity;
 
@@ -161,7 +161,7 @@ internal class Cart : ICart
         {
             newOrder.ShipDate = DateTime.MinValue;
             newOrder.DeliveryDate = DateTime.MinValue;
-            newOrderID = (dal?.Order.Add(newOrder))??0;
+            newOrderID = dal!.Order.Add(newOrder);
 
             foreach (var item in c.Items)
             {
@@ -172,7 +172,7 @@ internal class Cart : ICart
 
                 try
                 {
-                    pro = dal?.Product.Get(newOrderItem.ProductID) ?? throw new BO.Exceptions.DBConnectionFailed();
+                    pro = dal!.Product.Get(newOrderItem.ProductID);
                     if (BO.Validation.InStock(pro.InStock) && pro.InStock >= newOrderItem.Amount)
                     {
                         pro.InStock -= newOrderItem.Amount;

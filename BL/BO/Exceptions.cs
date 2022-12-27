@@ -75,20 +75,7 @@ public class Exceptions
             return base.ToString() + "Not Legal";
         }
     }
-    /// <summary>
-    /// exception when cannot connect to db
-    /// </summary>
-    public class DBConnectionFailed : Exception
-    {
-
-        public DBConnectionFailed(string message = "cannot connected to db") : base(message)
-        {
-        }
-        public override string ToString()
-        {
-            return base.ToString() + "DBConnectionFailed";
-        }
-    }
+   
     /// <summary>
     /// exception when there is a missing input value
     /// </summary>
