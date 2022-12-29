@@ -9,12 +9,14 @@ namespace DalApi
         /// <param name="pId"></param>
         /// <param name="oId"></param>
         /// <returns></returns>
-        public OrderItem GetOrderItemByIDS(int pId, int oId, Func<OrderItem?, bool>? Condition = null);
+        public OrderItem GetOrderItemByIDS(int pId, int oId);
         /// <summary>
-        /// get all products in order
+        /// get products in order
         /// </summary>
         /// <param name="oID"></param>
+        /// <param name="Condition"></param>
         /// <returns></returns>
-        public IEnumerable<OrderItem?> GetProductsInOrder(int oID,Func<OrderItem?,bool>? Condition=null);
+        public IEnumerable<OrderItem?> GetProductsInOrder(int oID, Func<OrderItem?, bool>? Condition = null);
+
     }
 }

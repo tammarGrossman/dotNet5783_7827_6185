@@ -23,5 +23,8 @@ namespace PL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ProductViewList_Click(object sender, RoutedEventArgs e)=>new ProductListWindow().Show();
+
+        private void managerWindowBut_Click(object sender, RoutedEventArgs e) => new ManagerWindow().Show();
+       
     }
 }

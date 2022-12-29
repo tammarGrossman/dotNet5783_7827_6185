@@ -51,23 +51,9 @@ internal class DalOrderItem : IOrderItem
     /// <param name="oId"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public OrderItem GetOrderItemByIDS(int pId, int oId, Func<OrderItem?, bool>? Condition = null)
+    public OrderItem GetOrderItemByIDS(int pId, int oId)
     {
-        foreach (OrderItem? item in DataSource.orderItems)
-        {
-            if (Condition == null)
-            {
-                if (item?.ProductID == pId && item?.OrderID == oId)//FIND
-                    return item ?? throw new NotExist((item?.OrderItemID) ?? 0, "order item");
-            }
-            else
-            {
-                if (Condition(item))//FIND
-                    return item ?? throw new NotExist((item?.OrderItemID) ?? 0, "order item");
-            }
-        }
-
-        throw new NotExist(0, "order item");
+        return DataSource.orderItems.FirstOrDefault(orderItem => orderItem?.OrderID == oId && orderItem?.ProductID == pId) ?? throw new NotExist(0,"order item"); ;
     }
     /// <summary>
     /// get all objects
@@ -114,6 +100,18 @@ internal class DalOrderItem : IOrderItem
         DataSource.orderItems.Add(oI);
 
     }
+/// <summary>
+/// get object by condition
+/// </summary>
+/// <param name="Condition"></param>
+/// <returns></returns>
+/// <exception cref="NotExist"></exception>
+    public OrderItem GetByCon(Func<OrderItem?, bool>? Condition )
+    {
+        return DataSource.orderItems.Find(x => Condition!(x)) ??
+         throw new NotExist(0, "order item");
+       
+    }
 
     /// <summary>
     /// get objects in order
@@ -145,11 +143,5 @@ internal class DalOrderItem : IOrderItem
             return newOrderItems;
         else
             throw new NotExist(oID, "order item");
-    }
-    public OrderItem GetByCon(Func<OrderItem?, bool>? Condition )
-    {
-        return DataSource.orderItems.Find(x => Condition!(x)) ??
-         throw new NotExist(0, "order item");
-       
     }
 }

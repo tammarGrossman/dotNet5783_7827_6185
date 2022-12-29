@@ -26,6 +26,13 @@
             <ComboBox x:Name="CategorySelector" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,10,10" SelectionChanged="CategorySelector_SelectionChanged" Text="choose category"/>
             <Button Content="Add new Product" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" Margin="5" Padding="5" x:Name="addNewProduct" Click="addNewProduct_Click"/>
         </Grid>
+        <ListView Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
