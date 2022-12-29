@@ -10,6 +10,7 @@ internal class Order : IOrder
     /// <returns></returns>
     public IEnumerable<BO.OrderForList?> GetAll()
     {
+
         int countOrders = 0;
         int amountOfProInOrd = 0;
         double totalPriceInOrd = 0;

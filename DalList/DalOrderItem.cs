@@ -1,7 +1,7 @@
 ﻿using DO;
 namespace Dal;
 using DalApi;
-internal  class DalOrderItem : IOrderItem
+internal class DalOrderItem : IOrderItem
 {
     /// <summary>
     /// add object
@@ -14,16 +14,11 @@ internal  class DalOrderItem : IOrderItem
         int i = DataSource.Config.LastOrderItem;
         oI.OrderItemID = i;
 
-        foreach (var item in DataSource.orderItems)
-        {
-            if (oI.OrderItemID == item?.OrderItemID)
-                throw new Duplication(oI.OrderItemID,"order item");
-        }
+        if (OrderItemExist(oI.OrderItemID))
+            throw new Duplication(oI.OrderItemID, "order item");
 
-            DataSource.orderItems.Add(oI);
-            DalProduct dp = new DalProduct();
-            Product p = dp.Get(oI.ProductID);
-            return i;
+        DataSource.orderItems.Add(oI);
+        return i;
     }
 
     /// <summary>
@@ -34,13 +29,19 @@ internal  class DalOrderItem : IOrderItem
     /// <exception cref="Exception"></exception>
     public OrderItem Get(int id)
     {
-        foreach (OrderItem? item in DataSource.orderItems)
-        {
-            if (((item?.OrderItemID)??0) == id)//FIND
-                return item ?? throw new NotExist(id,"order item");
-        }
-
+        if (OrderItemExist(id))//found
+            DataSource.orderItems.Find(orderI => orderI?.OrderItemID == id);
         throw new NotExist(id, "order item");
+    }
+
+    /// <summary>
+    /// function that check if the order item exist 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    private bool OrderItemExist(int id)
+    {
+        return DataSource.orderItems.Any(orderI => orderI?.OrderItemID == id);
     }
 
     /// <summary>
@@ -52,44 +53,36 @@ internal  class DalOrderItem : IOrderItem
     /// <exception cref="Exception"></exception>
     public OrderItem GetOrderItemByIDS(int pId, int oId, Func<OrderItem?, bool>? Condition = null)
     {
-            foreach (OrderItem? item in DataSource.orderItems)
+        foreach (OrderItem? item in DataSource.orderItems)
+        {
+            if (Condition == null)
             {
-                if (Condition == null)
-                {
-                    if (item?.ProductID == pId && item?.OrderID == oId)//FIND
-                        return item ?? throw new NotExist((item?.OrderItemID)??0,"order item");
-                }
-                else
-                {
-                    if (Condition(item))//FIND
-                        return item ?? throw new NotExist((item?.OrderItemID) ?? 0, "order item");
-                }
+                if (item?.ProductID == pId && item?.OrderID == oId)//FIND
+                    return item ?? throw new NotExist((item?.OrderItemID) ?? 0, "order item");
             }
+            else
+            {
+                if (Condition(item))//FIND
+                    return item ?? throw new NotExist((item?.OrderItemID) ?? 0, "order item");
+            }
+        }
 
-        throw new NotExist(0,"order item");
+        throw new NotExist(0, "order item");
     }
     /// <summary>
     /// get all objects
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?,bool>? Condition=null)
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? Condition = null)
     {
-        List<OrderItem?> newOrderItems = new List<OrderItem?>();
-        OrderItem oI = new OrderItem();
 
-        foreach (OrderItem? item in DataSource.orderItems)
-        {
-            oI.OrderItemID = (item?.OrderItemID) ?? 0;
-            oI.ProductID = (item?.ProductID)??0;
-            oI.OrderID = (item?.OrderID)??0;
-            oI.Price = (item?.Price)??0;
-            oI.Amount = (item?.Amount)??0;
-            newOrderItems.Add(oI);
-        }
+        if (Condition != null)
+            return from orderItem in DataSource.orderItems
+                   where Condition(orderItem)
+                   select orderItem;
 
-        if(DataSource.orderItems.Count() == 0)
-            Console.WriteLine("there is no item in the order");
-        return newOrderItems;
+        return from orderItem in DataSource.orderItems
+               select orderItem; ;
     }
 
     /// <summary>
@@ -101,27 +94,10 @@ internal  class DalOrderItem : IOrderItem
 
     public void Delete(int id)
     {
-        OrderItem orderItem = new OrderItem();
-        int exist = 0;
+        int count = DataSource.orderItems.RemoveAll(orderItem => orderItem?.OrderItemID == id);
 
-        foreach (OrderItem? item in DataSource.orderItems)
-        {
-            if (item?.OrderItemID == id)//FIND
-            {
-                exist = 1;
-                orderItem.OrderItemID=(item?.OrderItemID)??0;
-                orderItem.ProductID = (item?.ProductID)??0;
-                orderItem.OrderID = (item?.OrderID) ?? 0;
-                orderItem.Price = (item?.Price)??0;
-                orderItem.Amount = (item?.Amount)??0;
-            }
-        }
-
-        if (exist == 0)
-            throw new NotExist(id,"order item");
-        else
-            DataSource.orderItems.Remove(orderItem);
-
+        if (count == 0)
+            throw new NotExist(id, "order item");
     }
 
     /// <summary>
@@ -131,33 +107,12 @@ internal  class DalOrderItem : IOrderItem
     /// <exception cref="Exception"></exception>
     public void Update(OrderItem oI)
     {
-        OrderItem orderItem = new OrderItem();
-        bool exist = false;
+        int count = DataSource.orderItems.RemoveAll(OrderItem => OrderItem?.OrderItemID == oI.OrderItemID);
+        if (count == 0)
+            throw new NotExist(oI.OrderItemID, "order item");
 
-        foreach (OrderItem? item in DataSource.orderItems)
-        {
-            if (item?.OrderItemID == oI.OrderItemID)
-            { //FIND
-                exist = true;
-                DalProduct dp = new DalProduct();
-                Product p = dp.Get(oI.ProductID);
-                p.InStock -= oI.Amount;
-                orderItem.OrderItemID = (item?.OrderItemID)??0;
-                orderItem.ProductID =( item?.ProductID) ?? 0;
-                orderItem.OrderID = (item?.OrderID) ?? 0;
-                orderItem.Price = (item?.Price) ?? 0;
-                orderItem.Amount = (item?.Amount) ?? 0;
-            }
-        }
+        DataSource.orderItems.Add(oI);
 
-        if(!exist)
-        throw new NotExist(oI.OrderItemID,"order item");
-        else
-        {
-            DataSource.orderItems.Remove(orderItem);
-            DataSource.orderItems.Add(oI);
-
-        }
     }
 
     /// <summary>
@@ -168,12 +123,12 @@ internal  class DalOrderItem : IOrderItem
     /// <exception cref="Exception"></exception>
     public IEnumerable<OrderItem?> GetProductsInOrder(int oID, Func<OrderItem?, bool>? Condition = null)
     {
-        List<OrderItem?> newOrderItems=new List<OrderItem?>();
+        List<OrderItem?> newOrderItems = new List<OrderItem?>();
         OrderItem oI = new OrderItem();
         int i = 0;
 
         foreach (OrderItem? item in DataSource.orderItems)
-            {
+        {
             if (item?.OrderID == oID)
             { //FIND
                 i++;
@@ -189,16 +144,12 @@ internal  class DalOrderItem : IOrderItem
         if (i != 0)
             return newOrderItems;
         else
-            throw new NotExist(oID,"order item");
+            throw new NotExist(oID, "order item");
     }
-    public OrderItem GetByCon(Func<OrderItem?, bool>? Condition = null)
+    public OrderItem GetByCon(Func<OrderItem?, bool>? Condition )
     {
-        foreach (OrderItem? item in DataSource.orderItems)
-        {
-            if (Condition != null && Condition(item))
-                return item ?? throw new NotExist((item?.OrderItemID) ?? 0, "order item");
-        }
-
-        throw new NotExist(0,"order item");
+        return DataSource.orderItems.Find(x => Condition!(x)) ??
+         throw new NotExist(0, "order item");
+       
     }
 }

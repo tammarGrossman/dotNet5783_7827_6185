@@ -14,22 +14,19 @@ internal class Product : IProduct
     /// <returns></returns>
     public IEnumerable<BO.ProductForList?> GetAll(Func<BO.ProductForList?, bool>? cond = null)
     {
-        List<BO.ProductForList?> products = new List<BO.ProductForList?>();
-        foreach (DO.Product? item in dal!.Product.GetAll())
-        {
-            {
-                BO.ProductForList product = new BO.ProductForList();
-                product.Name = item?.Name;
-                product.Price = (item?.Price) ?? 0;
-                product.Category_ = (BO.Category?)item?.Category_;
-                product.ID = (item?.ID) ?? 0;
+        IEnumerable<BO.ProductForList> list;
+        list = from DO.Product doProduct in dal!.Product.GetAll()
+               select new BO.ProductForList()
+               {
+                   ID = doProduct.ID,
+                   Name = doProduct.Name,
+                   Price = doProduct.Price,
+                   Category_ = (BO.Category?)doProduct.Category_,
+               };
 
-                if((cond != null&& cond(product))||cond==null)
-                  products.Add(product);
-            }
-        }
-        return products;
+        return cond is null ? list : list.Where(cond);
     }
+
     /// <summary>
     /// a function to get product
     /// </summary>
@@ -52,7 +49,7 @@ internal class Product : IProduct
 
         catch (DO.NotExist ex)
         {
-            throw new BO.Exceptions.NotExist(ex.Message,ex);
+            throw new BO.Exceptions.NotExist(ex.Message, ex);
         }
     }
 
@@ -71,7 +68,7 @@ internal class Product : IProduct
 
             try
             {
-                if (BO.Validation.ID( id ))
+                if (BO.Validation.ID(id))
                 {
                     DO.Product DalProduct = dal!.Product.Get(id);
                     BO.ProductItem BlProductItem = new BO.ProductItem();
@@ -96,7 +93,7 @@ internal class Product : IProduct
 
             catch (DO.NotExist ex)
             {
-                throw new BO.Exceptions.NotExist(ex.Message,ex);
+                throw new BO.Exceptions.NotExist(ex.Message, ex);
             }
         }
 
@@ -121,7 +118,7 @@ internal class Product : IProduct
             doProduct.Price = p.Price;
             doProduct.Category_ = (DO.Category?)p.Category_;
             doProduct.InStock = p.InStock;
-            return dal!.Product.Add(doProduct) ;
+            return dal!.Product.Add(doProduct);
         }
 
         else
@@ -142,7 +139,7 @@ internal class Product : IProduct
 
             foreach (DO.Order? order in orders)
             {
-                foreach (DO.OrderItem? orderItem in dal!.OrderItem.GetProductsInOrder((order?.ID)??0))
+                foreach (DO.OrderItem? orderItem in dal!.OrderItem.GetProductsInOrder((order?.ID) ?? 0))
                 {
                     if (orderItem?.ProductID == id)
                     {
@@ -159,7 +156,7 @@ internal class Product : IProduct
         }
         catch (DO.NotExist ex)
         {
-            throw new BO.Exceptions.NotExist(ex.Message,ex);
+            throw new BO.Exceptions.NotExist(ex.Message, ex);
         }
     }
 
@@ -174,7 +171,7 @@ internal class Product : IProduct
         try
         {
             DO.Product doProduct = new DO.Product();
-            if (BO.Validation.ID(p.ID)  && BO.Validation.NameAdress(p.Name ?? "") && BO.Validation.Price(p.Price) && BO.Validation.InStock(p.InStock))
+            if (BO.Validation.ID(p.ID) && BO.Validation.NameAdress(p.Name ?? "") && BO.Validation.Price(p.Price) && BO.Validation.InStock(p.InStock))
             {
                 doProduct.ID = p.ID;
                 doProduct.Name = p.Name;
@@ -190,7 +187,7 @@ internal class Product : IProduct
 
         catch (DO.NotExist ex)
         {
-            throw new BO.Exceptions.NotExist(ex.Message,ex);
+            throw new BO.Exceptions.NotExist(ex.Message, ex);
         }
     }
 }

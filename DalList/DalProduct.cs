@@ -1,7 +1,7 @@
 ﻿using DalApi;
 using DO;
 namespace Dal;
-internal class DalProduct :IProduct
+internal class DalProduct : IProduct
 {
     /// <summary>
     /// add object
@@ -11,14 +11,11 @@ internal class DalProduct :IProduct
     /// <exception cref="Exception"></exception>
     public int Add(Product p)
     {
-        foreach (Product? item in DataSource.products)
-          {
-                if (item?.ID == p.ID)
-                    throw new Duplication(p.ID,"product");
-        }
+        if (productExist(p.ID))
+            throw new Duplication(p.ID, "product");
 
         DataSource.products.Add(p);
-            return p.ID;
+        return p.ID;
     }
 
     /// <summary>
@@ -29,13 +26,20 @@ internal class DalProduct :IProduct
     /// <exception cref="Exception"></exception>
     public Product Get(int id)
     {
-        foreach (Product? item in DataSource.products)
-        {
-            if (item?.ID == id)//FIND
-                return item ?? throw new NotExist(id, "product");
-        }
 
+        if (productExist(id))//found
+            DataSource.products.Find(product => product?.ID == id);
         throw new NotExist(id, "product");
+    }
+
+    /// <summary>
+    /// function that check if the order item exist 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    private bool productExist(int id)
+    {
+        return DataSource.products.Any(product => product?.ID == id);
     }
 
     /// <summary>
@@ -46,27 +50,10 @@ internal class DalProduct :IProduct
     /// <exception cref="Exception"></exception>
     public void Delete(int id)
     {
-        int exist = 0;
-        Product product = new Product();
+        int count = DataSource.products.RemoveAll(product => product?.ID == id);
 
-        foreach (Product? item in DataSource.products)
-        {
-            if (item?.ID == id)
-            { //FIND
-                exist = 1;
-                product.Name = item?.Name;
-                product.ID = (item?.ID) ?? 0;
-                product.Price=(item?.Price) ?? 0;
-                product.InStock = (item?.InStock) ?? 0;
-                product.Category_ = item?.Category_;
-            }
-        }
-
-        if(exist==0)
-           throw new NotExist(id, "product");
-        else
-            DataSource.products.Remove(product);
-
+        if (count == 0)
+            throw new NotExist(id, "product");
     }
 
     /// <summary>
@@ -76,67 +63,32 @@ internal class DalProduct :IProduct
     /// <exception cref="Exception"></exception>
     public void Update(Product p)
     {
-        Product product = new Product();
-        bool exist = false;
-
-        foreach (Product? item in DataSource.products)
-        {
-            if (item?.ID == p.ID && !exist)//FIND
-            {
-                exist = true;
-                product.Name = item?.Name;
-                product.ID = (item?.ID) ?? 0;
-                product.Price = (item?.Price) ?? 0;
-                product.InStock = (item?.InStock) ?? 0;
-                product.Category_ = item?.Category_;
-            }
-        }
-
-        if (!exist)
+        int count = DataSource.products.RemoveAll(product => product?.ID == p.ID);
+        if (count == 0)
             throw new NotExist(p.ID, "product");
-        else
-        {
-            DataSource.products.Remove(product);
-            DataSource.products.Add(p);
-        }
+
+        DataSource.products.Add(p);
+
     }
 
     /// <summary>
     /// get all objects
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Product?> GetAll(Func<Product?,bool>? Condition=null)
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? Condition = null)
     {
-        List<Product?> newProducts = new List<Product?>();
-        Product p = new Product();
+        if (Condition != null)
+            return from product in DataSource.products
+                   where Condition(product)
+                   select product;
 
-        foreach (Product? item in DataSource.products)
-        {
-            if (Condition == null||(Condition!=null && Condition(item)))
-            {
-                p.ID = (item?.ID)??0;
-                p.Name = item?.Name;
-                p.Category_ = item?.Category_;
-                p.Price = (item?.Price) ?? 0;
-                p.InStock = (item?.InStock)??0;
-                newProducts.Add(p);
-            }
-        }
-
-        if(DataSource.products.Count()==0)
-            Console.WriteLine("there is no products");
-        return newProducts;
+        return from product in DataSource.products
+               select product; ;
     }
-    public Product GetByCon(Func<Product?, bool>? Condition = null)
-     {
-        
-        foreach (Product? item in DataSource.products)
-        {
-            if (Condition != null && Condition(item))
-                return item ?? throw new NotExist((item?.ID)??0,"product");
-        }
-
-        throw new NotExist(0,"product");
+    public Product GetByCon(Func<Product?, bool>? Condition )
+    {
+        return DataSource.products.Find(x => Condition!(x)) ??
+        throw  new NotExist(0, "product"); ;
 
     }
 }
