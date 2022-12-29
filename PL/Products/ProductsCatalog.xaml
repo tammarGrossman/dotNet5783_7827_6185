@@ -16,6 +16,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button  x:Name="orderSubmit" Content="אישור הזמנה" HorizontalAlignment="Left" Margin="281,344,0,0" VerticalAlignment="Top" Click="orderSubmit_Click"/>
 
     </Grid>
 </Window>

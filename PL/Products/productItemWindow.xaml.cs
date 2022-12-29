@@ -12,16 +12,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL
+namespace PL.Products
 {
     /// <summary>
-    /// Interaction logic for Cart.xaml
+    /// Interaction logic for productItemWindow.xaml
     /// </summary>
-    public partial class Cart : Window
+    public partial class productItemWindow : Window
     {
-        public Cart()
+        BlApi.IBl? bl = BlApi.Factory.Get();
+
+        public productItemWindow()
         {
             InitializeComponent();
         }
+
+       
+
+
+
     }
 }

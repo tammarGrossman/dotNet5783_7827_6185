@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL
+namespace PL.Orders
 {
     /// <summary>
-    /// Interaction logic for OrderList.xaml
+    /// Interaction logic for TrackOrderWindow.xaml
     /// </summary>
-    public partial class OrderList : Window
+    public partial class TrackOrderWindow : Window
     {
-        public OrderList()
+        public TrackOrderWindow()
         {
             InitializeComponent();
         }

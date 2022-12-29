@@ -32,5 +32,8 @@ namespace PL.Products
         {
 
         }
+
+        private void orderSubmit_Click(object sender, RoutedEventArgs e) => new Carts.CartWindow().Show();
+        
     }
 }

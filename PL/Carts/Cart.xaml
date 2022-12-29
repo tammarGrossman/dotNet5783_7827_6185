@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="Cart" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Margin="0,0,0,-6">
+      
     </Grid>
 </Window>

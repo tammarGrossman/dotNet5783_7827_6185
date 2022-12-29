@@ -24,6 +24,20 @@ internal class Cart : ICart
                 bool exist = false, pExist = false;
                 BO.OrderItem BOorderItem = new BO.OrderItem();
                 DO.Product doProduct = dal!.Product.Get(id);
+                //int index = c.Items.FindIndex(x => x?.ProductID == id);
+                //if (index == -1)
+                //{
+                   
+
+                //}
+                //else
+                //{
+                //    if (BO.Validation.InStock(doProduct.InStock))
+                //    {
+
+                //    }
+
+                //}
 
                 foreach (var item in c.Items)
                 {
@@ -42,10 +56,10 @@ internal class Cart : ICart
                         {
                             pExist = true;
                             BOorderItem.ID = idOrderItem++;
-                            BOorderItem.ProductID = (product?.ID)??0;
+                            BOorderItem.ProductID = (product?.ID) ?? 0;
                             BOorderItem.Name = product?.Name;
-                            BOorderItem.Price = (product?.Price)??0;
-                            BOorderItem.TotalPrice =BOorderItem.Price;
+                            BOorderItem.Price = (product?.Price) ?? 0;
+                            BOorderItem.TotalPrice = BOorderItem.Price;
                             BOorderItem.Amount = 1;
                         }
                     }
@@ -58,17 +72,17 @@ internal class Cart : ICart
 
                 foreach (BO.OrderItem? item in c.Items)
                 {
-                    totalPrice += (item?.TotalPrice)??0;
+                    totalPrice += (item?.TotalPrice) ?? 0;
                 }
 
                 c.TotalPrice = totalPrice;
             }
             catch (DO.NotExist ex)
             {
-                throw new BO.Exceptions.NotExist(ex.Message,ex);
+                throw new BO.Exceptions.NotExist(ex.Message, ex);
             }
 
-           
+
         }
 
         else
