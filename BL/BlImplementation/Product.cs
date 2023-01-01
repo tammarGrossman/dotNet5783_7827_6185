@@ -1,6 +1,6 @@
 ﻿
 using BlApi;
-
+using System.Security.Cryptography;
 using static BO.Exceptions;
 namespace BlImplementation;
 
@@ -70,21 +70,17 @@ internal class Product : IProduct
             {
                 if (BO.Validation.ID(id))
                 {
-                    DO.Product DalProduct = dal!.Product.Get(id);
-                    BO.ProductItem BlProductItem = new BO.ProductItem();
-                    BlProductItem.ID = DalProduct.ID;
-                    BlProductItem.Name = DalProduct.Name;
-                    BlProductItem.Price = DalProduct.Price;
-                    BlProductItem.Category_ = (BO.Category?)DalProduct.Category_;
-                    BlProductItem.InStock = DalProduct.InStock;
-
-                    foreach (var item in c.Items)
+                    DO.Product dalProduct = dal!.Product.Get(id);
+                    BO.ProductItem blOrder = new BO.ProductItem()
                     {
-                        if (item?.ProductID == id)
-                            BlProductItem.Amount = item.Amount;
-                    }
-
-                    return BlProductItem;
+                        ID = dalProduct.ID,
+                        Name = dalProduct.Name,
+                        Price = dalProduct.Price,
+                        Category_ = (BO.Category?)dalProduct.Category_,
+                        InStock = dalProduct.InStock,
+                        Amount = (c.Items.FirstOrDefault(x => x?.ProductID == id) ?? throw new NotExist("there is no such product in the cart")).Amount,
+                    };
+                    return blOrder;
                 }
 
                 else
@@ -134,24 +130,13 @@ internal class Product : IProduct
     {
         try
         {
-            bool existInOrder = false;
-            IEnumerable<DO.Order?> orders = dal!.Order.GetAll();
-
-            foreach (DO.Order? order in orders)
-            {
-                foreach (DO.OrderItem? orderItem in dal!.OrderItem.GetProductsInOrder((order?.ID) ?? 0))
-                {
-                    if (orderItem?.ProductID == id)
-                    {
-                        existInOrder = true;
-                    }
-                }
-            }
-
-            if (!existInOrder)
+            IEnumerable<DO.Order?> orders;
+            orders = from DO.Order? order in dal!.Order.GetAll()
+                     where (dal!.OrderItem.GetProductsInOrder((order?.ID) ?? 0)).All(x => x?.ProductID != id)
+                     select order;
+            if (orders.Count() == dal!.Order.GetAll().Count())
                 dal!.Product.Delete(id);
             else
-
                 throw new BO.Exceptions.NotExist("there is such a product in other orders");
         }
         catch (DO.NotExist ex)
