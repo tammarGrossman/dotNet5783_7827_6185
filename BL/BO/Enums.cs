@@ -6,4 +6,4 @@ namespace BO;
 /// </summary>
 public enum Category { Women = 1, Men, Kids, Accesories,None }
 
-public enum OrderStatus {ordered=1,sent, received}
+public enum OrderStatus {payment=1,shiped, delivered}

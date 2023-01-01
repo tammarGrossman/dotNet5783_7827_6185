@@ -16,7 +16,7 @@ namespace DalApi
         /// <param name="oID"></param>
         /// <param name="Condition"></param>
         /// <returns></returns>
-        public IEnumerable<OrderItem?> GetProductsInOrder(int oID, Func<OrderItem?, bool>? Condition = null);
+        public IEnumerable<OrderItem?> GetProductsInOrder(int oID);
 
     }
 }

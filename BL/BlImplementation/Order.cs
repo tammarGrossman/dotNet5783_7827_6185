@@ -1,5 +1,10 @@
 ﻿
 using BlApi;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net;
+using System.Security.Cryptography;
+
 namespace BlImplementation;
 internal class Order : IOrder
 {
@@ -17,7 +22,7 @@ internal class Order : IOrder
         IEnumerable<DO.OrderItem?> proInOr;
         List<BO.OrderForList?> orders = new List<BO.OrderForList?>();
 
-        foreach (DO.Order? item in dal!.Order.GetAll() )
+        foreach (DO.Order? item in dal!.Order.GetAll())
         {
             BO.OrderForList order = new BO.OrderForList();
 
@@ -34,7 +39,7 @@ internal class Order : IOrder
 
             }
 
-            catch (DO.NotExist ex) 
+            catch (DO.NotExist ex)
             {
                 throw new BO.Exceptions.NotExist(ex.Message, ex);
             }
@@ -68,42 +73,46 @@ internal class Order : IOrder
             if (BO.Validation.ID(id))
             {
                 double totalPrice = 0;
-                BO.Order BlOrder = new BO.Order();
-                DO.Order DalOrder = dal!.Order.Get(id);
-                BO.OrderItem BlorderItem = new BO.OrderItem();
-
-                foreach (var item in dal.OrderItem.GetProductsInOrder(id))
-                {
-                    BlorderItem.ID = (item?.OrderItemID) ?? 0;
-                    BlorderItem.Name = dal.Product.Get((item?.ProductID) ?? 0).Name;
-                    BlorderItem.ProductID = (item?.ProductID) ?? 0;
-                    BlorderItem.Price = (item?.Price) ?? 0;
-                    BlorderItem.Amount = (item?.Amount) ?? 0;
-                    BlOrder.Items.Add(BlorderItem);
-                    totalPrice += BlorderItem.Price * BlorderItem.Amount;
-                }
-
-                BlOrder.ID = DalOrder.ID;
-                BlOrder.CustomerName = DalOrder.CustomerName;
-                BlOrder.CustomerEmail = DalOrder.CustomerEmail;
-                BlOrder.CustomerAdress = DalOrder.CustomerAdress;
-                BlOrder.PaymentDate = DalOrder.OrderDate;
-                BlOrder.ShipDate = DalOrder.ShipDate;
-                BlOrder.DeliveryDate = DalOrder.DeliveryDate;
-                BlOrder.TotalPrice = totalPrice;
-                BlOrder.Status = TrackOrder(BlOrder.ID).Status;
-                return BlOrder;
+                DO.Order dalOrder = dal!.Order.Get(id);
+                BO.Order blOrder = new BO.Order() {
+                    ID = dalOrder.ID,
+                    CustomerName = dalOrder.CustomerName,
+                    CustomerEmail = dalOrder.CustomerEmail,
+                    CustomerAdress = dalOrder.CustomerAdress,
+                    PaymentDate = dalOrder.OrderDate,
+                    ShipDate = dalOrder.ShipDate,
+                    DeliveryDate = dalOrder.DeliveryDate,
+                    Status = Status(dalOrder),
+                    //Items = from DO.OrderItem? orderItem in dal.OrderItem.GetAll(x => x?.OrderID == id)
+                    //        select new BO.OrderItem()
+                    //        {
+                    //            ID = (orderItem?.OrderItemID) ?? throw new BO.Exceptions.MissingInputValue("id"),
+                    //            Name = dal.Product.Get((orderItem?.ProductID) ?? throw new BO.Exceptions.MissingInputValue("id")).Name ?? "",
+                    //            ProductID = (orderItem?.ProductID) ?? throw new BO.Exceptions.MissingInputValue("id"),
+                    //            Price = (orderItem?.Price) ?? 0,
+                    //            Amount = (orderItem?.Amount) ?? 0,
+                    //            TotalPrice = (orderItem?.Price * orderItem?.Amount) ?? 0
+                    //        },
+                    TotalPrice = dal.OrderItem.GetAll(x => x?.OrderID == id).Sum(x => x?.Price * x?.Amount) ?? 0,
+                };
+                 return blOrder;
             }
-
             else
                 throw new BO.Exceptions.NotLegal("this is not a legal details of order");
         }
-
-        catch (DO.NotExist ex)
+         catch (DO.NotExist ex)
         {
-            throw new BO.Exceptions.NotExist(ex.Message,ex);
+            throw new BO.Exceptions.NotExist(ex.Message, ex);
         }
     }
+    
+     private BO.OrderStatus Status(DO.Order order)
+     {
+    return order.DeliveryDate != null ? BO.OrderStatus.delivered : order.ShipDate != null ? BO.OrderStatus.shiped : BO.OrderStatus.payment;
+     }
+
+
+
 
     /// <summary>
     ///  a function to update sent date of order
@@ -113,168 +122,168 @@ internal class Order : IOrder
     /// <exception cref="NotLegal"></exception>
     /// <exception cref="BO.Exceptions.NotExist"></exception>
     public BO.Order UpdateSend(int id)
+{
+    try
     {
-        try
+        double totalPrice = 0;
+        DO.Order dalOrder = dal!.Order.Get(id);
+        BO.Order blOrder = new BO.Order();
+        BO.OrderItem BlorderItem = new BO.OrderItem();
+        DO.Order DOorder = new DO.Order();
+
+        if (dalOrder.ShipDate == DateTime.MinValue)
         {
-            double totalPrice = 0;
-            DO.Order dalOrder = dal!.Order.Get(id);
-            BO.Order blOrder = new BO.Order();
-            BO.OrderItem BlorderItem = new BO.OrderItem();
-            DO.Order DOorder = new DO.Order();
+            DOorder.ID = dalOrder.ID;
+            DOorder.CustomerName = dalOrder.CustomerName;
+            DOorder.CustomerEmail = dalOrder.CustomerEmail;
+            DOorder.CustomerAdress = dalOrder.CustomerAdress;
+            DOorder.OrderDate = dalOrder.OrderDate;
+            DOorder.DeliveryDate = dalOrder.DeliveryDate;
+            DOorder.ShipDate = DateTime.Now;
+            dal.Order.Update(DOorder);
 
-            if (dalOrder.ShipDate == DateTime.MinValue)
+            foreach (DO.OrderItem? item in dal.OrderItem.GetProductsInOrder(id))
             {
-                DOorder.ID = dalOrder.ID;
-                DOorder.CustomerName = dalOrder.CustomerName;
-                DOorder.CustomerEmail = dalOrder.CustomerEmail;
-                DOorder.CustomerAdress = dalOrder.CustomerAdress;
-                DOorder.OrderDate = dalOrder.OrderDate;
-                DOorder.DeliveryDate = dalOrder.DeliveryDate;
-                DOorder.ShipDate = DateTime.Now;
-                dal.Order.Update(DOorder);
-
-                foreach (DO.OrderItem? item in dal.OrderItem.GetProductsInOrder(id))
-                {
-                    BlorderItem.ID = item?.OrderItemID??0;
-                    BlorderItem.Name = dal.Product.Get(item?.ProductID??0).Name;
-                    BlorderItem.ProductID = item?.ProductID??0;
-                    BlorderItem.Price = item?.Price??0;
-                    BlorderItem.Amount = item?.Amount??0;
-                    BlorderItem.TotalPrice = BlorderItem.Price * BlorderItem.Amount;
-                    blOrder.Items.Add(BlorderItem);
-                    totalPrice += BlorderItem.Price * BlorderItem.Amount;
-                }
-
-                blOrder.ID = DOorder.ID;
-                blOrder.CustomerName = DOorder.CustomerName;
-                blOrder.CustomerAdress = DOorder.CustomerAdress;
-                blOrder.CustomerEmail = DOorder.CustomerEmail;
-                blOrder.PaymentDate = DOorder.OrderDate;
-                blOrder.ShipDate = DOorder.ShipDate;
-                blOrder.DeliveryDate = DOorder.DeliveryDate;
-                blOrder.TotalPrice = totalPrice;
-                blOrder.Status = BO.OrderStatus.sent;
-                return blOrder;
+                BlorderItem.ID = item?.OrderItemID ?? 0;
+                BlorderItem.Name = dal.Product.Get(item?.ProductID ?? 0).Name;
+                BlorderItem.ProductID = item?.ProductID ?? 0;
+                BlorderItem.Price = item?.Price ?? 0;
+                BlorderItem.Amount = item?.Amount ?? 0;
+                BlorderItem.TotalPrice = BlorderItem.Price * BlorderItem.Amount;
+                blOrder.Items.Add(BlorderItem);
+                totalPrice += BlorderItem.Price * BlorderItem.Amount;
             }
 
-            throw new BO.Exceptions.NotLegal("this is not a legal value of order");
+            blOrder.ID = DOorder.ID;
+            blOrder.CustomerName = DOorder.CustomerName;
+            blOrder.CustomerAdress = DOorder.CustomerAdress;
+            blOrder.CustomerEmail = DOorder.CustomerEmail;
+            blOrder.PaymentDate = DOorder.OrderDate;
+            blOrder.ShipDate = DOorder.ShipDate;
+            blOrder.DeliveryDate = DOorder.DeliveryDate;
+            blOrder.TotalPrice = totalPrice;
+            blOrder.Status = BO.OrderStatus.shiped;
+            return blOrder;
         }
 
-        catch (DO.NotExist ex)
+        throw new BO.Exceptions.NotLegal("this is not a legal value of order");
+    }
+
+    catch (DO.NotExist ex)
+    {
+        throw new BO.Exceptions.NotExist(ex.Message, ex);
+    }
+}
+
+/// <summary>
+/// a function to update delivered date of order
+/// </summary>
+/// <param name="id"></param>
+/// <returns></returns>
+/// <exception cref="NotLegal"></exception>
+/// <exception cref="NotExist"></exception>
+public BO.Order UpdateSupply(int id)
+{
+    try
+    {
+        double totalPrice = 0;
+        DO.Order dalOrder = dal!.Order.Get(id);
+        BO.Order blOrder = new BO.Order();
+        BO.OrderItem BlorderItem = new BO.OrderItem();
+        DO.Order DOorder = new DO.Order();
+
+        if (dalOrder.DeliveryDate == DateTime.MinValue)
         {
-            throw new BO.Exceptions.NotExist(ex.Message, ex);
+            DOorder.ID = dalOrder.ID;
+            DOorder.CustomerName = dalOrder.CustomerName;
+            DOorder.CustomerEmail = dalOrder.CustomerEmail;
+            DOorder.CustomerAdress = dalOrder.CustomerAdress;
+            DOorder.OrderDate = dalOrder.OrderDate;
+            DOorder.ShipDate = dalOrder.ShipDate;
+            DOorder.DeliveryDate = DateTime.Now;
+            dal.Order.Update(DOorder);
+
+            foreach (var item in dal.OrderItem.GetProductsInOrder(id))
+            {
+                BlorderItem.ID = (item?.OrderItemID) ?? 0;
+                BlorderItem.Name = dal.Product.Get((item?.ProductID) ?? 0).Name;
+                BlorderItem.ProductID = (item?.ProductID) ?? 0;
+                BlorderItem.Price = (item?.Price) ?? 0;
+                BlorderItem.Amount = (item?.Amount) ?? 0;
+                BlorderItem.TotalPrice = BlorderItem.Price * BlorderItem.Amount;
+                blOrder.Items.Add(BlorderItem);
+                totalPrice += BlorderItem.Price * BlorderItem.Amount;
+            }
+
+            blOrder.ID = DOorder.ID;
+            blOrder.CustomerName = DOorder.CustomerName;
+            blOrder.CustomerEmail = DOorder.CustomerEmail;
+            blOrder.CustomerAdress = DOorder.CustomerAdress;
+            blOrder.PaymentDate = DOorder.OrderDate;
+            blOrder.ShipDate = DOorder.ShipDate;
+            blOrder.DeliveryDate = DOorder.DeliveryDate;
+            blOrder.TotalPrice = totalPrice;
+            blOrder.Status = BO.OrderStatus.delivered;
+            return blOrder;
+        }
+
+        throw new BO.Exceptions.NotLegal("this is not legal details of order");
+    }
+
+    catch (DO.NotExist ex)
+    {
+        throw new BO.Exceptions.NotExist(ex.Message, ex);
+    }
+}
+
+/// <summary>
+/// a function to track order
+/// </summary>
+/// <param name="id"></param>
+/// <returns></returns>
+/// <exception cref="NotExist"></exception>
+public BO.OrderTracking TrackOrder(int id)
+{
+    DO.Order order = new DO.Order();
+    BO.OrderTracking orderTracking = new BO.OrderTracking();
+    bool exist = false;
+
+    try
+    {
+        order = dal!.Order.Get(id);
+
+        if (order.ID != 0)
+            exist = true;
+        orderTracking.ID = (order.ID);
+
+        if (order.DeliveryDate != null)
+        {
+            orderTracking.Status = BO.OrderStatus.delivered;
+            orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.OrderDate, "Order delivered"));
+        }
+
+        else if (order.ShipDate != null)
+        {
+            orderTracking.Status = BO.OrderStatus.shiped;
+            orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.ShipDate, "Order Shiped"));
+        }
+
+        else
+        {
+            orderTracking.Status = BO.OrderStatus.payment;
+            orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.OrderDate, "Order Payment"));
         }
     }
 
-    /// <summary>
-    /// a function to update delivered date of order
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    /// <exception cref="NotLegal"></exception>
-    /// <exception cref="NotExist"></exception>
-    public BO.Order UpdateSupply(int id)
+    catch (DO.NotExist ex)
     {
-        try
-        {
-            double totalPrice = 0;
-            DO.Order dalOrder = dal!.Order.Get(id);
-            BO.Order blOrder = new BO.Order();
-            BO.OrderItem BlorderItem = new BO.OrderItem();
-            DO.Order DOorder = new DO.Order();
-
-            if (dalOrder.DeliveryDate == DateTime.MinValue)
-            {
-                DOorder.ID = dalOrder.ID;
-                DOorder.CustomerName = dalOrder.CustomerName;
-                DOorder.CustomerEmail = dalOrder.CustomerEmail;
-                DOorder.CustomerAdress = dalOrder.CustomerAdress;
-                DOorder.OrderDate = dalOrder.OrderDate;
-                DOorder.ShipDate = dalOrder.ShipDate;
-                DOorder.DeliveryDate = DateTime.Now;
-                dal.Order.Update(DOorder);
-
-                foreach (var item in dal.OrderItem.GetProductsInOrder(id))
-                {
-                    BlorderItem.ID = (item?.OrderItemID) ?? 0;
-                    BlorderItem.Name = dal.Product.Get((item?.ProductID) ?? 0).Name;
-                    BlorderItem.ProductID = (item?.ProductID) ?? 0;
-                    BlorderItem.Price = (item?.Price) ?? 0;
-                    BlorderItem.Amount = (item?.Amount) ?? 0;
-                    BlorderItem.TotalPrice = BlorderItem.Price * BlorderItem.Amount;
-                    blOrder.Items.Add(BlorderItem);
-                    totalPrice += BlorderItem.Price * BlorderItem.Amount;
-                }
-
-                blOrder.ID = DOorder.ID;
-                blOrder.CustomerName = DOorder.CustomerName;
-                blOrder.CustomerEmail = DOorder.CustomerEmail;
-                blOrder.CustomerAdress = DOorder.CustomerAdress;
-                blOrder.PaymentDate = DOorder.OrderDate;
-                blOrder.ShipDate = DOorder.ShipDate;
-                blOrder.DeliveryDate = DOorder.DeliveryDate;
-                blOrder.TotalPrice = totalPrice;
-                blOrder.Status = BO.OrderStatus.received;
-                return blOrder;
-            }
-
-            throw new BO.Exceptions.NotLegal("this is not legal details of order");
-        }
-
-        catch (DO.NotExist ex)
-        {
-            throw new BO.Exceptions.NotExist(ex.Message, ex);
-        }
+        throw new BO.Exceptions.NotExist(ex.Message, ex);
     }
 
-    /// <summary>
-    /// a function to track order
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    /// <exception cref="NotExist"></exception>
-    public BO.OrderTracking TrackOrder(int id)
-    {
-        DO.Order order = new DO.Order();
-        BO.OrderTracking orderTracking = new BO.OrderTracking();
-        bool exist = false;
+    if (!exist)
+        throw new BO.Exceptions.NotExist("the order does not exist");
 
-        try
-        {
-           order = dal!.Order.Get(id);
-
-            if (order.ID != 0)
-                exist = true;
-            orderTracking.ID = (order.ID);
-
-            if (order.DeliveryDate != null)
-            {
-                orderTracking.Status = BO.OrderStatus.received;
-                orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.OrderDate, "Order delivered"));
-            }
-
-            else if (order.ShipDate > DateTime.MinValue)
-            {
-                orderTracking.Status = BO.OrderStatus.sent;
-                orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.ShipDate, "Order Sent"));
-            }
-
-            else
-            {
-                orderTracking.Status = BO.OrderStatus.ordered;
-                orderTracking.Tracking.Add(new Tuple<DateTime?,string?>(order.OrderDate, "Order recieved"));
-            }
-        }
-
-        catch (DO.NotExist ex)
-        {
-            throw new BO.Exceptions.NotExist(ex.Message, ex);
-        }   
-        
-        if (!exist)
-            throw new BO.Exceptions.NotExist("the order does not exist");
-
-        return orderTracking;
-    }
+    return orderTracking;
+}
 }
 

@@ -119,29 +119,11 @@ internal class DalOrderItem : IOrderItem
     /// <param name="oIID"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<OrderItem?> GetProductsInOrder(int oID, Func<OrderItem?, bool>? Condition = null)
+    public IEnumerable<OrderItem?> GetProductsInOrder(int oID)
     {
-        List<OrderItem?> newOrderItems = new List<OrderItem?>();
-        OrderItem oI = new OrderItem();
-        int i = 0;
-
-        foreach (OrderItem? item in DataSource.orderItems)
-        {
-            if (item?.OrderID == oID)
-            { //FIND
-                i++;
-                oI.OrderItemID = (item?.OrderItemID) ?? 0;
-                oI.ProductID = (item?.ProductID) ?? 0;
-                oI.OrderID = (item?.OrderID) ?? 0;
-                oI.Price = (item?.Price) ?? 0;
-                oI.Amount = (item?.Amount) ?? 0;
-                newOrderItems.Add(oI);
-            }
-        }
-
-        if (i != 0)
-            return newOrderItems;
-        else
-            throw new NotExist(oID, "order item");
+        List<OrderItem?> OrderItemsList= DataSource.orderItems.FindAll(order => order?.OrderID == oID);
+        if( OrderItemsList.Count()>0)
+            return OrderItemsList;
+        throw new NotExist(oID, "order item");
     }
 }
