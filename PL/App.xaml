@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="btn" TargetType="Button">
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>    
     </Application.Resources>
 </Application>

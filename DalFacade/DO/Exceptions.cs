@@ -7,8 +7,12 @@ public class NotExist:Exception
 {
     int id;
     string name;
-     
-        public NotExist(int id_,string name_):base()
+
+    public NotExist()
+    {
+    }
+
+    public NotExist(int id_,string name_):base()
         {
         id = id_;
         name = name_;

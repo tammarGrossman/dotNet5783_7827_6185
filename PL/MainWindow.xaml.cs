@@ -1,4 +1,6 @@
 ﻿
+using PL.Orders;
+using PL.Products;
 using System.Windows;
 
 
@@ -22,9 +24,12 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ProductViewList_Click(object sender, RoutedEventArgs e)=>new ProductListWindow().Show();
+       // private void ProductViewList_Click(object sender, RoutedEventArgs e)=>new ProductListWindow().Show();
 
         private void managerWindowBut_Click(object sender, RoutedEventArgs e) => new ManagerWindow().Show();
-       
+
+        private void trackOrderWindow_Click(object sender, RoutedEventArgs e)=> new TrackOrderWindow().Show();
+
+        private void orderWindowBut_Click(object sender, RoutedEventArgs e) => new ProductsCatalog().Show();
     }
 }
