@@ -37,14 +37,15 @@ internal class Product : IProduct
     {
         try
         {
-            BO.Product BlProduct = new BO.Product();
-            DO.Product DOProduct = dal!.Product.Get(id);
-            BlProduct.Name = DOProduct.Name;
-            BlProduct.ID = DOProduct.ID;
-            BlProduct.Price = DOProduct.Price;
-            BlProduct.Category_ = (BO.Category?)DOProduct.Category_;
-            BlProduct.InStock = DOProduct.InStock;
-            return BlProduct;
+            DO.Product dalProduct = dal!.Product.Get(id);
+            return new BO.Product()
+            {
+                Name = dalProduct.Name,
+                ID = dalProduct.ID,
+                Price = dalProduct.Price,
+                Category_ = (BO.Category?)dalProduct.Category_,
+                InStock = dalProduct.InStock
+            };
         }
 
         catch (DO.NotExist ex)
