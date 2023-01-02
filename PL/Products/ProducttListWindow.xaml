@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ProductList" Height="450" Width="800">
+        Title="ProductList" Height="450" Width="800" 
+        DataContext="{Binding Path=products, RelativeSource={RelativeSource self}}">
     <Grid Name="MainGrid">
-        <ListView Grid.Row="1"  x:Name="ProductListView" SelectionChanged="ProductListView_SelectionChanged">
+        <ListView Grid.Row="1"  x:Name="ProductListView" SelectionChanged="ProductListView_SelectionChanged" ItemsSource="{Binding}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn/> 
                 </GridView>
             </ListView.View>
         </ListView>

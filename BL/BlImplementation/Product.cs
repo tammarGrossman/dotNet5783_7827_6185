@@ -23,7 +23,6 @@ internal class Product : IProduct
                    Price = doProduct.Price,
                    Category_ = (BO.Category?)doProduct.Category_,
                };
-
         return cond is null ? list : list.Where(cond);
     }
 
