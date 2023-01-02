@@ -21,13 +21,24 @@ namespace PL.Orders
     public partial class OrderListWindow : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-        private ObservableCollection<BO.OrderForList> orders = new ObservableCollection<BO.OrderForList>();
+
+
+        public ObservableCollection<BO.OrderForList> orders
+        {
+            get { return (ObservableCollection<BO.OrderForList>)GetValue(ordersProperty); }
+            set { SetValue(ordersProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for orders.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ordersProperty =
+            DependencyProperty.Register("orders", typeof(ObservableCollection<BO.OrderForList>), typeof(Window), new PropertyMetadata(null));
+
 
         public OrderListWindow()
         {
             InitializeComponent();
-           // return BO.OrderForList from bl.Orders.gGetAll()
-            DataContext =orders;
+            var help = bl!.Order.GetAll();
+            orders = help == null ? new() : new(help);
         }
 
     }

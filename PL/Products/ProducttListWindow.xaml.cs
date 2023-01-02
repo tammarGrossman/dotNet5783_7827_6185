@@ -1,5 +1,7 @@
 ﻿
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,13 +13,26 @@ namespace PL
     public partial class ProductListWindow : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
+
+        public ObservableCollection<BO.ProductForList> products
+        {
+            get { return (ObservableCollection<BO.ProductForList>)GetValue(productsProperty); }
+            set { SetValue(productsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for prods.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty productsProperty =
+            DependencyProperty.Register("products", typeof(ObservableCollection<BO.ProductForList>), typeof(Window), new PropertyMetadata(null));
+
         /// <summary>
         /// show all products
         /// </summary>
         public ProductListWindow()
         {
             InitializeComponent();
-            ProductListView.ItemsSource = bl.Product.GetAll();
+            var help = bl!.Product.GetAll();
+            products = help == null ? new() : new(help);
+           // ProductListView.ItemsSource = bl.Product.GetAll();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
         /// <summary>
@@ -42,7 +57,7 @@ namespace PL
         private void addNewProduct_Click(object sender, RoutedEventArgs e)
         {
             new ProductWindow().ShowDialog();
-            ProductListView.ItemsSource = bl.Product.GetAll();
+            ProductListView.ItemsSource = bl!.Product.GetAll();
         }
         /// <summary>
         /// open window to update product
@@ -52,13 +67,13 @@ namespace PL
         private void ProductListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var lv = sender as ListView;
-            BO.ProductForList pl = (BO.ProductForList)lv.SelectedItem;
+            BO.ProductForList pl = (BO.ProductForList)lv!.SelectedItem;
             if (ProductListView.ItemsSource != null&& pl!=null) 
             {               
                 int id = pl.ID;
                 try
                 {
-                    BO.Product p = bl.Product.Get(id);
+                    BO.Product p = bl!.Product.Get(id);
                     new ProductWindow(p).ShowDialog();
                     ProductListView.ItemsSource = bl.Product.GetAll();
                 }

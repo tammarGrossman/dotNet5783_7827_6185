@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.Orders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,12 @@ namespace PL
         /// <param name="e"></param>
         private void showProductList_Click(object sender, RoutedEventArgs e) => new ProductListWindow().Show();
 
-
+        /// <summary>
+        /// on click of view order list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void showOrderList_Click(object sender, RoutedEventArgs e) => new OrderListWindow().Show();
+        
     }
 }

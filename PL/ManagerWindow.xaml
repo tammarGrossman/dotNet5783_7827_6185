@@ -8,7 +8,7 @@
         Title="ManagerWindow" Height="450" Width="800">
     <Grid>
         <Button x:Name="showProductList" Content="רשימת מוצרים" HorizontalAlignment="Left" Margin="210,170,0,0" VerticalAlignment="Top" Click="showProductList_Click" />
-        <Button x:Name="showOrderList" Content="רשימת הזמנות" HorizontalAlignment="Left" Margin="323,170,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="showOrderList" Content="רשימת הזמנות" HorizontalAlignment="Left" Margin="323,170,0,0" VerticalAlignment="Top" Click="showOrderList_Click"/>
 
     </Grid>
 </Window>

@@ -18,18 +18,18 @@ internal class Order : IOrder
     /// <returns></returns>
     public IEnumerable<BO.OrderForList?> GetAll()
     {//add try catch
-        List<BO.OrderForList> orders = new List<BO.OrderForList>();
+        IEnumerable<BO.OrderForList> orders = new List<BO.OrderForList>();
         try
         {
-            orders = (List<BO.OrderForList>)from DO.Order? order in dal!.Order.GetAll()
-                                            select new BO.OrderForList()
-                                            {
-                                                ID = order?.ID ?? 0,
-                                                CustomerName = order?.CustomerName ?? "",
-                                                Status = OrderStatus(order ?? throw new Exception("")),
-                                                AmountOfItems = dal.OrderItem.GetProductsInOrder(order?.ID ?? 0).Count(oI => oI?.Amount > 0),
-                                                TotalPrice = dal.OrderItem.GetProductsInOrder(order?.ID ?? 0).Sum(oI => (oI?.Amount * oI?.Price) ?? 0)
-                                            };
+            orders = (from DO.Order? order in dal!.Order.GetAll()
+                      select new BO.OrderForList()
+                      {
+                          ID = order?.ID ?? 0,
+                          CustomerName = order?.CustomerName ?? "",
+                          Status = OrderStatus(order ?? throw new Exception("")),
+                          AmountOfItems = dal.OrderItem.GetProductsInOrder(order?.ID ?? 0).Count(oI => oI?.Amount > 0),
+                          TotalPrice = dal.OrderItem.GetProductsInOrder(order?.ID ?? 0).Sum(oI => (oI?.Amount * oI?.Price) ?? 0)
+                      });
             return orders;
         }
         catch (DO.NotExist ex)
@@ -222,7 +222,8 @@ internal class Order : IOrder
                     DeliveryDate = dalOrder.DeliveryDate,
                     TotalPrice = 0,
                     Status = BO.OrderStatus.delivered,
-                    Items = (List<BO.OrderItem?>)from DO.OrderItem? item in dal.OrderItem.GetProductsInOrder(id)
+
+                    Items = (List<BO.OrderItem?>)(from DO.OrderItem? item in dal.OrderItem.GetProductsInOrder(id)
                                                  select new BO.OrderItem()
                                                  {
 
@@ -232,7 +233,7 @@ internal class Order : IOrder
                                                      Price = (item?.Price) ?? 0,
                                                      Amount = (item?.Amount) ?? 0,
                                                      TotalPrice = (item?.Price) ?? 0 * (item?.Amount) ?? 0
-                                                 }
+                                                 })
                 };
                 blOrder.TotalPrice = blOrder.Items.Sum(x => x?.TotalPrice ?? 0);
                 return blOrder;

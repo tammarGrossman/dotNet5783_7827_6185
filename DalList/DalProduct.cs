@@ -28,7 +28,7 @@ internal class DalProduct : IProduct
     {
 
         if (productExist(id))//found
-            DataSource.products.Find(product => product?.ID == id);
+            return DataSource.products.Find(product => product?.ID == id) ?? throw new NotExist(id, "product");
         throw new NotExist(id, "product");
     }
 
@@ -88,7 +88,7 @@ internal class DalProduct : IProduct
     public Product GetByCon(Func<Product?, bool>? Condition )
     {
         return DataSource.products.Find(x => Condition!(x)) ??
-        throw  new NotExist(0, "product");
+        throw  new NotExist(0, "product"); 
 
     }
 }
