@@ -88,7 +88,7 @@ internal class DalProduct : IProduct
     public Product GetByCon(Func<Product?, bool>? Condition )
     {
         return DataSource.products.Find(x => Condition!(x)) ??
-        throw  new NotExist(0, "product"); ;
+        throw  new NotExist(0, "product");
 
     }
 }
