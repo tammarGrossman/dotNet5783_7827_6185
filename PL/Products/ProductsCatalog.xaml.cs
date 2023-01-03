@@ -21,11 +21,21 @@ namespace PL.Products
     public partial class ProductsCatalog : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-        private ObservableCollection<BO.ProductItem> productItems=new ObservableCollection<BO.ProductItem>();
+        public ObservableCollection<BO.ProductForList> products
+        {
+            get { return (ObservableCollection<BO.ProductForList>)GetValue(productsProperty); }
+            set { SetValue(productsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for prods.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty productsProperty =
+            DependencyProperty.Register("products", typeof(ObservableCollection<BO.ProductForList>), typeof(Window), new PropertyMetadata(null));
+
         public ProductsCatalog()
         {
             InitializeComponent();
-            DataContext = productItems;
+            var help = bl!.Product.GetAll();
+            products = help == null ? new() : new(help);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

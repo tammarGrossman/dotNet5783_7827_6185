@@ -45,9 +45,9 @@ namespace PL
           
             var cat = (BO.Category)((ComboBox)sender).SelectedItem;
             if (cat.ToString() != "None")
-                ProductListView.ItemsSource = bl.Product.GetAll(x => x?.Category_ == cat);
+                ProductListView.ItemsSource = bl!.Product.GetAll(x => x?.Category_ == cat);
             else
-                ProductListView.ItemsSource = bl.Product.GetAll();
+                ProductListView.ItemsSource = bl!.Product.GetAll();
         }
         /// <summary>
         /// open window to add product

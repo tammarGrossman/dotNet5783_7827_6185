@@ -6,11 +6,12 @@
         xmlns:local="clr-namespace:PL.Products"
         mc:Ignorable="d"
         Title="ProductsCatalog" Height="450" Width="800"
-        >
+        DataContext="{Binding Path=products, RelativeSource={RelativeSource self}}"
+    >
     <Grid>
         <ComboBox x:Name="categorySelector" HorizontalAlignment="Left" Margin="506,10,0,0" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="categorylbl" Content="Category" HorizontalAlignment="Left" Margin="155,10,0,0" VerticalAlignment="Top"/>
-        <ListView d:ItemsSource="{Binding}" Margin="10,86,0,0">
+        <ListView x:Name="productsCatalogList" d:ItemsSource="{Binding}" Margin="10,86,0,0">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

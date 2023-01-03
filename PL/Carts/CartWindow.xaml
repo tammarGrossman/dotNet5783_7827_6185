@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Carts"
         mc:Ignorable="d"
-        Title="CartWindow" Height="450" Width="800">
+        Title="CartWindow" Height="450" Width="800"
+        DataContext="{Binding Path=orderItems, RelativeSource={RelativeSource self}}">
     <Grid>
         <TextBox x:Name="customerEmail" HorizontalAlignment="Left" Margin="159,127,0,0" TextWrapping="Wrap" Text="ייל" VerticalAlignment="Top" Width="120"/>
         <Label Content="אימייל לקוח" HorizontalAlignment="Left" Margin="329,124,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,0.356"/>
