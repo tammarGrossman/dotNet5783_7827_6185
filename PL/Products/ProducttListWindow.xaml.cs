@@ -65,7 +65,7 @@ namespace PL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ProductListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        { 
             var lv = sender as ListView;
             BO.ProductForList pl = (BO.ProductForList)lv!.SelectedItem;
             if (ProductListView.ItemsSource != null&& pl!=null) 
@@ -75,9 +75,13 @@ namespace PL
                 {
                     BO.Product p = bl!.Product.Get(id);
                     new ProductWindow(p).ShowDialog();
-                    ProductListView.ItemsSource = bl.Product.GetAll();
+                    //ProductListView.ItemsSource = bl.Product.GetAll();
+                    var help = bl!.Product.GetAll();
+                    products = help == null ? new() : new(help);
+                    CategorySelector.SelectedItem = BO.Category.None;
+
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
