@@ -23,9 +23,9 @@ namespace PL.Orders
         BlApi.IBl? bl = BlApi.Factory.Get();
 
 
-        public ObservableCollection<BO.OrderForList> orders
+        public ObservableCollection<BO.OrderForList?> orders
         {
-            get { return (ObservableCollection<BO.OrderForList>)GetValue(ordersProperty); }
+            get { return (ObservableCollection<BO.OrderForList?>)GetValue(ordersProperty); }
             set { SetValue(ordersProperty, value); }
         }
 
@@ -41,16 +41,15 @@ namespace PL.Orders
             orders = help == null ? new() : new(help);
         }
 
-        private void OrderListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+        private void OrderListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
             var lv = sender as ListView;
-            BO.OrderForList pl = (BO.OrderForList)lv!.SelectedItem;
-            if (OrderListView.ItemsSource != null && pl != null)
+            if (OrderListView.ItemsSource != null)
             {
-                int id = pl.ID;
                 try
                 {
-                    BO.Order p = bl!.Order.Get(id);
-                    new Order(p).ShowDialog();
+                    new Order(((BO.OrderForList)lv!.SelectedItem).ID).ShowDialog();
+
                     //ProductListView.ItemsSource = bl.Product.GetAll();
                     //  var help = bl!.Product.GetAll();
                     //  products = help == null ? new() : new(help);
@@ -64,8 +63,5 @@ namespace PL.Orders
             }
            
         }
-        
-
-        
     }
 }

@@ -33,21 +33,28 @@ namespace PL
             var help = bl!.Product.GetAll();
             products = help == null ? new() : new(help);
            // ProductListView.ItemsSource = bl.Product.GetAll();
-            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
         /// <summary>
         /// case of filter products by category
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CategorySelector_SelectionChanged(object sender,SelectionChangedEventArgs e)
+        private void categorySelector_SelectionChanged(object sender,SelectionChangedEventArgs e)
         {
           
             var cat = (BO.Category)((ComboBox)sender).SelectedItem;
             if (cat.ToString() != "None")
-                ProductListView.ItemsSource = bl!.Product.GetAll(x => x?.Category_ == cat);
+            {
+                var help = bl!.Product.GetAll(x => x?.Category_ == cat);
+                products = help == null ? new() : new(help);
+            }
+
             else
-                ProductListView.ItemsSource = bl!.Product.GetAll();
+            {
+                var help = bl!.Product.GetAll();
+                products = help == null ? new() : new(help);
+            }
         }
         /// <summary>
         /// open window to add product
@@ -78,7 +85,7 @@ namespace PL
                     //ProductListView.ItemsSource = bl.Product.GetAll();
                     var help = bl!.Product.GetAll();
                     products = help == null ? new() : new(help);
-                    CategorySelector.SelectedItem = BO.Category.None;
+                    categorySelector.SelectedItem = BO.Category.None;
 
                 }
                 catch (Exception ex)

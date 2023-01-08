@@ -24,14 +24,27 @@ namespace PL.Orders
         BlApi.IBl? bl = BlApi.Factory.Get();
 
 
+
+        public ObservableCollection<BO.OrderItem> orderItems
+        {
+            get { return (ObservableCollection<BO.OrderItem>)GetValue(orderItemsProperty); }
+            set { SetValue(orderItemsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for orderItems.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty orderItemsProperty =
+            DependencyProperty.Register("orderItems", typeof(ObservableCollection<BO.OrderItem>), typeof(Window), new PropertyMetadata(null));
+
+
+
         public BO.OrderTracking? trackOrder
         {
-            get { return (BO.OrderTracking?)GetValue(trackOrdersProperty); }
-            set { SetValue(trackOrdersProperty, value); }
+            get { return (BO.OrderTracking?)GetValue(trackOrderProperty); }
+            set { SetValue(trackOrderProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for trackOrders.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty trackOrdersProperty =
+        public static readonly DependencyProperty trackOrderProperty =
             DependencyProperty.Register("trackOrder", typeof(BO.OrderTracking), typeof(Window), new PropertyMetadata(null));
 
 
@@ -42,9 +55,9 @@ namespace PL.Orders
         public TrackOrderWindow(int id)
         {
             InitializeComponent();
-            try {
-                var help = bl!.Order.TrackOrder(id);
-
+            try 
+            {
+                trackOrder = bl!.Order.TrackOrder(id);
             }
             catch (Exception ex) {
 

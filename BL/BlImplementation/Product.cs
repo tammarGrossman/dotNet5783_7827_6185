@@ -77,7 +77,7 @@ internal class Product : IProduct
                         Name = dalProduct.Name,
                         Price = dalProduct.Price,
                         Category_ = (BO.Category?)dalProduct.Category_,
-                        InStock = dalProduct.InStock,
+                        InStock = dalProduct.InStock > 0 ?true : false,
                         Amount = (c.Items.FirstOrDefault(x => x?.ProductID == id) ?? throw new NotExist("there is no such product in the cart")).Amount,
                     };
                     return blOrder;

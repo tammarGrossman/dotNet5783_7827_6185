@@ -30,7 +30,8 @@ internal class DalOrderItem : IOrderItem
     public OrderItem Get(int id)
     {
         if (OrderItemExist(id))//found
-            DataSource.orderItems.Find(orderI => orderI?.OrderItemID == id);
+           return DataSource.orderItems.Find(orderI => orderI?.OrderItemID == id) ?? throw new NotExist(id, "order item");
+        ;
         throw new NotExist(id, "order item");
     }
 

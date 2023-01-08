@@ -35,7 +35,14 @@
         <Label Content="תאריך שליחת הזמנה" HorizontalAlignment="Left" Margin="335,178,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="recievedDate" HorizontalAlignment="Left" Margin="159,213,0,0" TextWrapping="Wrap" Text="{Binding DeliveryDate}" VerticalAlignment="Top" Width="120"/>
         <Label Content="תאריך קבלת הזמנה" HorizontalAlignment="Left" Margin="335,209,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
-     
+        <ListView x:Name="orderItemsList" ItemsSource="{Binding Items}" Margin="-10,329,10,67">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </Grid>
 </Window>
 

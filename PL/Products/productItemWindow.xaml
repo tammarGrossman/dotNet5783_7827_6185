@@ -5,19 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Products"
         mc:Ignorable="d"
-        Title="productItemWindow" Height="450" Width="800">
+        Title="productItemWindow" Height="450" Width="800"
+        DataContext="{Binding Path=productItem, RelativeSource={RelativeSource self}}"
+        >
     <Grid>
-        <TextBox x:Name="id" HorizontalAlignment="Left" Margin="163,76,0,0" TextWrapping="Wrap" Text="ת.ז" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="id" HorizontalAlignment="Left" Margin="163,76,0,0" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <Label Content="ת.ז" HorizontalAlignment="Left" Margin="373,72,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.112,1.035"/>
-        <TextBox x:Name="name" HorizontalAlignment="Left" Margin="163,116,0,0" TextWrapping="Wrap" Text="שם" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.477,3.841"/>
+        <TextBox x:Name="name" HorizontalAlignment="Left" Margin="163,116,0,0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.477,3.841" IsEnabled="False"/>
         <Label Content="שם" HorizontalAlignment="Left" Margin="370,116,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.083,0.417"/>
-        <TextBox x:Name="price" HorizontalAlignment="Left" Margin="161,259,0,0" TextWrapping="Wrap" Text="מחיר" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="price" HorizontalAlignment="Left" Margin="161,259,0,0" TextWrapping="Wrap" Text="{Binding Price}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <Label Content="מחיר" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="-0.292,0.691" Margin="362,248,0,0"/>
-        <TextBox x:Name="category" HorizontalAlignment="Left" Margin="163,156,0,0" TextWrapping="Wrap" Text="קטגוריה" VerticalAlignment="Top" Width="120"/>
-        <Label Content="קטגוריה" HorizontalAlignment="Left" Margin="346,156,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="inStock" HorizontalAlignment="Left" Margin="163,186,0,0" TextWrapping="Wrap" Text="מלאי" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="category" HorizontalAlignment="Left" Margin="163,156,0,0" TextWrapping="Wrap" Text="{Binding Category_}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <Label Content="קטגוריה" HorizontalAlignment="Left" Margin="346,156,0,0" VerticalAlignment="Top" />
+        <TextBox x:Name="inStock" HorizontalAlignment="Left" Margin="163,186,0,0" TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <Label Content="מלאי" HorizontalAlignment="Left" Margin="363,186,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="amount" HorizontalAlignment="Left" Margin="163,217,0,0" TextWrapping="Wrap" Text="כמות" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="amount" HorizontalAlignment="Left" Margin="163,217,0,0" TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <Label Content="כמות" HorizontalAlignment="Left" Margin="363,217,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
     </Grid>
 </Window>

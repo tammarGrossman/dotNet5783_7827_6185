@@ -4,22 +4,6 @@ using System;
 using System.Windows;
 namespace PL
 {
-
- 
-
-     
-
-
-
-
-
-
-
-
-
-
-
-
     /// <summary>
     /// Interaction logic for Product.xaml
     /// </summary>
@@ -99,7 +83,7 @@ namespace PL
                     {//add case
                         try
                         {
-                            bl.Product.Add(p);
+                            bl!.Product.Add(p);
                             add = false;
                             MessageBox.Show("the product added succesfully");
                             this.Close();
@@ -113,7 +97,7 @@ namespace PL
                     {
                         try
                         {
-                            bl.Product.Update(p);
+                            bl!.Product.Update(p);
                             update = false;
                             MessageBox.Show("the product updated succesfully");
                             this.Close();

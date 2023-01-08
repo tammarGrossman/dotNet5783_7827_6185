@@ -21,7 +21,7 @@ public class ProductItem
     /// <summary>
     /// if the product is in stock
     /// </summary>
-    public int InStock { get; set; }
+    public bool InStock { get; set; }
     /// <summary>
     /// the amount of Product
     /// </summary>

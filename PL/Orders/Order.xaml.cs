@@ -44,12 +44,24 @@ namespace PL
         /// <summary>      
         /// to update product 
         /// </summary>
-        /// <param name="p"></param>
-        public Order(BO.Order o)
+        /// <param name="id"></param>
+        public Order(int id)
         {
             InitializeComponent();
-            order = bl!.Order.Get(o.ID);
-
+            var o = bl!.Order.Get(id);
+            order = new BO.Order()
+            {
+                ID = id,
+                CustomerAdress = o.CustomerAdress,
+                CustomerEmail = o.CustomerEmail,
+                CustomerName = o.CustomerName,
+                PaymentDate = o.PaymentDate,
+                ShipDate = o.ShipDate,
+                DeliveryDate = o.DeliveryDate,
+                Status = o.Status,
+                TotalPrice = o.TotalPrice,
+                Items = o.Items
+            };
         }
 
         /// <summary>

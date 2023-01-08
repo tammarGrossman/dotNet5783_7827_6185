@@ -18,7 +18,7 @@ internal class Order : IOrder
     /// <returns></returns>
     public IEnumerable<BO.OrderForList?> GetAll()
     {
-        IEnumerable<BO.OrderForList> orders = new List<BO.OrderForList>();
+        IEnumerable<BO.OrderForList?> orders = new List<BO.OrderForList>();
         try
         {
             orders = (from DO.Order? order in dal!.Order.GetAll()

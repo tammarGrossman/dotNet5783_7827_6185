@@ -9,7 +9,7 @@
         DataContext="{Binding Path=products, RelativeSource={RelativeSource self}}"
     >
     <Grid>
-        <ComboBox x:Name="categorySelector" HorizontalAlignment="Left" Margin="506,10,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="categorySelector" HorizontalAlignment="Left" Margin="506,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="categorySelector_SelectionChanged"/>
         <Label x:Name="categorylbl" Content="Category" HorizontalAlignment="Left" Margin="155,10,0,0" VerticalAlignment="Top"/>
        
         <Button  x:Name="orderSubmit" Content="אישור הזמנה" HorizontalAlignment="Left" Margin="281,344,0,0" VerticalAlignment="Top" Click="orderSubmit_Click"/>

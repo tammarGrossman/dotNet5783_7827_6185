@@ -38,15 +38,19 @@ namespace PL.Products
         {
             InitializeComponent();
         }
-        public productItemWindow(BO.ProductItem pi)
+        public productItemWindow(int id)
         {
             InitializeComponent();
-
+            BO.Product p= bl!.Product.Get(id);  
+            productItem = new BO.ProductItem()
+            {
+                ID = p.ID,
+                Name = p.Name,
+                Price = p.Price,
+                Category_ = p.Category_,
+                InStock = p.InStock > 0 ? true : false,
+                Amount = p.InStock
+            };
         }
-
-
-
-
-
     }
 }

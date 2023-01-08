@@ -28,7 +28,7 @@ namespace PL
 
         private void managerWindowBut_Click(object sender, RoutedEventArgs e) => new ManagerWindow().Show();
 
-        private void trackOrderWindow_Click(object sender, RoutedEventArgs e)=> new TrackOrderWindow().Show();
+        private void trackOrderWindow_Click(object sender, RoutedEventArgs e)=> new TrackOrderWindow.Show();
 
         private void orderWindowBut_Click(object sender, RoutedEventArgs e) => new ProductsCatalog().Show();
     }
