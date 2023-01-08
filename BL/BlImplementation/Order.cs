@@ -100,7 +100,7 @@ internal class Order : IOrder
                     ShipDate = dalOrder.ShipDate,
                     DeliveryDate = dalOrder.DeliveryDate,
                     Status = OrderStatus(dalOrder),
-                    Items = (List<BO.OrderItem?>)(from DO.OrderItem? orderItem in dal.OrderItem.GetAll(x => x?.OrderID == id)
+                    Items = ((List<BO.OrderItem?>)(from DO.OrderItem? orderItem in dal.OrderItem.GetAll(x => x?.OrderID == id)
                                                   select new BO.OrderItem()
                                                   {
                                                       ID = (orderItem?.OrderItemID) ?? throw new BO.Exceptions.MissingInputValue("id"),
@@ -109,7 +109,7 @@ internal class Order : IOrder
                                                       Price = (orderItem?.Price) ?? 0,
                                                       Amount = (orderItem?.Amount) ?? 0,
                                                       TotalPrice = (orderItem?.Price * orderItem?.Amount) ?? 0
-                                                  }),
+                                                  })),
                     TotalPrice = dal.OrderItem.GetAll(x => x?.OrderID == id).Sum(x => x?.Price * x?.Amount) ?? 0,
                 };
                 return blOrder;

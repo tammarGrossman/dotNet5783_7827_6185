@@ -65,5 +65,10 @@ namespace PL.Orders
                 MessageBox.Show(ex.Message,"invalid id");
             }
         }
+
+        private void ShowOrderDetails_Click(object sender, RoutedEventArgs e) => new Order(trackOrder?.ID??0).Show();
+        
+
+        
     }
 }
