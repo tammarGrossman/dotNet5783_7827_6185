@@ -33,7 +33,7 @@ internal class DalOrder : IOrder
     public Order Get(int id)
     {
         if (OrderExist(id))//found
-            DataSource.orders.Find(order => order?.ID == id);
+            return  DataSource.orders.FirstOrDefault(order => order?.ID == id)?? throw new NotExist(id, "order");
         throw new NotExist(id, "order");
     }
     /// <summary>

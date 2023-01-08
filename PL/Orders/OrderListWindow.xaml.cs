@@ -41,5 +41,31 @@ namespace PL.Orders
             orders = help == null ? new() : new(help);
         }
 
+        private void OrderListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            var lv = sender as ListView;
+            BO.OrderForList pl = (BO.OrderForList)lv!.SelectedItem;
+            if (OrderListView.ItemsSource != null && pl != null)
+            {
+                int id = pl.ID;
+                try
+                {
+                    BO.Order p = bl!.Order.Get(id);
+                    new Order(p).ShowDialog();
+                    //ProductListView.ItemsSource = bl.Product.GetAll();
+                    //  var help = bl!.Product.GetAll();
+                    //  products = help == null ? new() : new(help);
+                    // CategorySelector.SelectedItem = BO.Category.None;
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+           
+        }
+        
+
+        
     }
 }

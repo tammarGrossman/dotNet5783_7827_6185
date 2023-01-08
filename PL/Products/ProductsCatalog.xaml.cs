@@ -44,6 +44,39 @@ namespace PL.Products
         }
 
         private void orderSubmit_Click(object sender, RoutedEventArgs e) => new Carts.CartWindow().Show();
-        
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var lv = sender as ListView;
+            if (productsCatalogList.ItemsSource != null )
+            {
+                try
+                {
+                            BO.Product p = bl!.Product.Get(((BO.ProductForList)lv!.SelectedItem).ID);
+                            BO.ProductItem pi = new BO.ProductItem()
+                            {
+                                ID = p.ID,
+                                Name = p.Name,
+                                Price = p.Price,
+                                Category_ = p.Category_,
+                                InStock = p.InStock,
+                                Amount = 0
+                            };
+                            new productItemWindow(pi).ShowDialog();
+
+                          //  BO.Product p = bl!.order.Get(id);
+                   // new ProductWindow(p).ShowDialog();
+                    //ProductListView.ItemsSource = bl.Product.GetAll();
+                    var help = bl!.Product.GetAll();
+                    products = help == null ? new() : new(help);
+                   // CategorySelector.SelectedItem = BO.Category.None;
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
     }
 }

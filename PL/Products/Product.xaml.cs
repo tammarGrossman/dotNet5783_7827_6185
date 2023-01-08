@@ -4,6 +4,22 @@ using System;
 using System.Windows;
 namespace PL
 {
+
+ 
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
     /// <summary>
     /// Interaction logic for Product.xaml
     /// </summary>
@@ -13,10 +29,20 @@ namespace PL
         private static bool update = false;
         private static bool add = false;
 
-        /// <summary>
-        /// to add product
-        /// </summary>
-        public ProductWindow()
+        public BO.Product product
+        {
+            get { return (BO.Product)GetValue(productProperty); }
+            set { SetValue(productProperty, value); }
+        }
+        // Using a DependencyProperty as the backing store for order.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty productProperty =
+            DependencyProperty.Register("product", typeof(BO.Product), typeof(Window), new PropertyMetadata(null));
+
+     
+    /// <summary>
+    /// to add product
+    /// </summary>
+    public ProductWindow()
         {
             InitializeComponent();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
@@ -29,14 +55,18 @@ namespace PL
         public ProductWindow(BO.Product p)
         {
             InitializeComponent();
-            update = true;
+       
+            
+        
+        update = true;
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             CategorySelector.SelectedItem = p.Category_;
-            id.Text = (p.ID).ToString();
-            name.Text = p.Name;
-            price.Text = (p.Price).ToString();
-            inStock.Text = (p.InStock).ToString();
+            product = bl!.Product.Get(p.ID);
+            
         }
+
+
+
         /// <summary>
         /// submit product to add or apdate
         /// </summary>

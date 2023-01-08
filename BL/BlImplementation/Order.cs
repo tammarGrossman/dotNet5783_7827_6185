@@ -17,7 +17,7 @@ internal class Order : IOrder
     /// </summary>
     /// <returns></returns>
     public IEnumerable<BO.OrderForList?> GetAll()
-    {//add try catch
+    {
         IEnumerable<BO.OrderForList> orders = new List<BO.OrderForList>();
         try
         {

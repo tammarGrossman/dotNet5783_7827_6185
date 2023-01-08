@@ -54,7 +54,7 @@ public class Order
     /// </summary>
     public Order()
     {
-        Items = new List<OrderItem>();
+        Items = new List<OrderItem?>();
     }
 
 

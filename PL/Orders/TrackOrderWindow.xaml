@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:PL.Orders"
         mc:Ignorable="d"
         Title="TrackOrderWindow" Height="450" Width="800"
-        DataContext="{Binding Path=trackOrders, RelativeSource={RelativeSource self}}"
+        DataContext="{Binding Path=trackOrder, RelativeSource={RelativeSource self}}"
         >
     <Grid>
-        <TextBox x:Name="id" HorizontalAlignment="Left" Margin="260,41,0,0" TextWrapping="Wrap" Text="קוד מעקבהזמנה" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="id" HorizontalAlignment="Left" Margin="260,41,0,0" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120"/>
         <Label Content="קוד מעקב הזמנה" HorizontalAlignment="Left" Margin="445,41,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="status" HorizontalAlignment="Left" Margin="260,72,0,0" TextWrapping="Wrap" Text="סטטוס הזמנה" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="status" HorizontalAlignment="Left" Margin="260,72,0,0" TextWrapping="Wrap" Text="{Binding Status}" VerticalAlignment="Top" Width="120"/>
         <Label Content="סטטוס הזמנה" HorizontalAlignment="Left" Margin="460,72,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
         <ListView d:ItemsSource="{Binding}" Margin="21,126,21,38">
             <ListView.View>

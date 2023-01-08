@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BO;
+using DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,13 +22,29 @@ namespace PL.Products
     public partial class productItemWindow : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
+       
+        public BO.ProductItem productItem
+        {
+            get { return (BO.ProductItem)GetValue(productProperty); }
+            set { SetValue(productProperty, value); }
+        }
+        // Using a DependencyProperty as the backing store for order.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty productProperty =
+            DependencyProperty.Register("productItem", typeof(BO.ProductItem), typeof(Window), new PropertyMetadata(null));
+
+
 
         public productItemWindow()
         {
             InitializeComponent();
         }
+        public productItemWindow(BO.ProductItem pi)
+        {
+            InitializeComponent();
 
-       
+        }
+
+
 
 
 
