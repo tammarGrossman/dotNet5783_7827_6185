@@ -1,5 +1,7 @@
 ﻿
 using BlApi;
+using BO;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using static BO.Exceptions;
 namespace BlImplementation;
@@ -77,7 +79,7 @@ internal class Product : IProduct
                         Name = dalProduct.Name,
                         Price = dalProduct.Price,
                         Category_ = (BO.Category?)dalProduct.Category_,
-                        InStock = dalProduct.InStock > 0 ?true : false,
+                        InStock = dalProduct.InStock > 0 ? true : false,
                         Amount = (c.Items.FirstOrDefault(x => x?.ProductID == id) ?? throw new NotExist("there is no such product in the cart")).Amount,
                     };
                     return blOrder;
@@ -175,4 +177,24 @@ internal class Product : IProduct
             throw new BO.Exceptions.NotExist(ex.Message, ex);
         }
     }
+
+    public IEnumerable<ProductItem?> GetAllPI(Func<BO.ProductItem?, bool>? cond = null)
+    {
+
+        IEnumerable<ProductItem> items;
+        items = from DO.Product item in dal!.Product.GetAll()
+                 select new ProductItem()
+                 {
+                     ID = item.ID,
+                     Name = item.Name,
+                     Price = item.Price,
+                     Category_ = (BO.Category?)item.Category_,
+                     InStock = item.InStock > 0 ? true : false,
+                     Amount =item.InStock
+                 };
+        return cond is null ? items : items.Where(cond);
+    }
+
+  
+
 }

@@ -36,5 +36,11 @@ public interface IProduct
     /// </summary>
     /// <param name="p"></param>
     public void Update(Product p);
+    /// <summary>
+    /// get list of productitem for cart
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns></returns>
+    public IEnumerable<ProductItem?> GetAllPI(Func<BO.ProductItem?, bool>? cond = null);
 
 }

@@ -26,21 +26,21 @@ namespace PL.Products
         private BO.Cart c = new BO.Cart();
 
 
-        public ObservableCollection<BO.ProductForList> products
+        public ObservableCollection<BO.ProductItem> products
         {
-            get { return (ObservableCollection<BO.ProductForList>)GetValue(productsProperty); }
+            get { return (ObservableCollection<BO.ProductItem>)GetValue(productsProperty); }
             set { SetValue(productsProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for products.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty productsProperty =
-            DependencyProperty.Register("products", typeof(ObservableCollection<BO.ProductForList>), typeof(Window), new PropertyMetadata(null));
+            DependencyProperty.Register("products", typeof(ObservableCollection<BO.ProductItem>), typeof(Window), new PropertyMetadata(null));
 
 
         public ProductsCatalog()
         {
             InitializeComponent();
-            var help = bl!.Product.GetAll();
+            var help = bl!.Product.GetAllPI();
             products = help == null ? new() : new(help);
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
@@ -74,13 +74,13 @@ namespace PL.Products
             var cat = (BO.Category)((ComboBox)sender).SelectedItem;
             if (cat.ToString() != "None")
             {
-                var help = bl!.Product.GetAll(x => x?.Category_ == cat);
+                var help = bl!.Product.GetAllPI(x => x?.Category_ == cat);
                 products = help == null ? new() : new(help);    
             }
 
             else
             {
-                var help = bl!.Product.GetAll();
+                var help = bl!.Product.GetAllPI();
                 products = help == null ? new() : new(help);
             }
         }
@@ -92,10 +92,12 @@ namespace PL.Products
                 int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
                 int index = c.Items.FindIndex(x => x.ID == id);
                 if (index != -1)//found
-                    bl!.Cart.Update(c, id, 1);
+                   c= bl!.Cart.Update(c, id, 1);
 
                 else
-                    bl!.Cart.Add(c, id);
+                   c= bl!.Cart.Add(c, id);
+
+                MessageBox.Show($"the product {c} added sucsessfuly to the cart ");
             }
 
             catch(BO.Exceptions.NotExist ex)

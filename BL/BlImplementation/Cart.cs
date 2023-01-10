@@ -18,7 +18,8 @@ internal class Cart : ICart
     /// <exception cref="NotLegal"></exception>
     public BO.Cart Add(BO.Cart c, int id)
     {
-        if (BO.Validation.NameAdress(c.CustomerName ?? "") && BO.Validation.NameAdress(c.CustomerAdress ?? "") && BO.Validation.Email(c.CustomerEmail ?? "") && BO.Validation.Price(c.TotalPrice) && BO.Validation.ID(id))
+        //BO.Validation.NameAdress(c.CustomerName ?? "") && BO.Validation.NameAdress(c.CustomerAdress ?? "") && BO.Validation.Email(c.CustomerEmail ?? "") &&
+        if ( BO.Validation.Price(c.TotalPrice) && BO.Validation.ID(id))
         {
             try
             {
