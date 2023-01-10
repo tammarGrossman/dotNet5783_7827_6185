@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace PL.Products
 {
@@ -21,6 +22,17 @@ namespace PL.Products
     public partial class ProductsCatalog : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
+        public CustomerDetails custDetails
+        {
+            get { return (CustomerDetails)GetValue(custDetailsProperty); }
+            set { SetValue(custDetailsProperty, value); }
+        }
+
+        public static readonly DependencyProperty custDetailsProperty =
+            DependencyProperty.Register("custDetails", typeof(CustomerDetails), typeof(Window), new PropertyMetadata(null));
+
+
+       
         public ObservableCollection<BO.ProductForList> products
         {
             get { return (ObservableCollection<BO.ProductForList>)GetValue(productsProperty); }
@@ -39,7 +51,12 @@ namespace PL.Products
             products = help == null ? new() : new(help);
         }
 
-        private void orderSubmit_Click(object sender, RoutedEventArgs e) => new Carts.CartWindow().Show();
+        private void orderSubmit_Click(object sender, RoutedEventArgs e) 
+            {
+            List<BO.OrderItem> list = new List<BO.OrderItem>();
+
+            new Carts.CartWindow(list).Show();
+            }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -76,6 +93,11 @@ namespace PL.Products
                 var help = bl!.Product.GetAll();
                 products = help == null ? new() : new(help);
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -37,17 +37,23 @@ namespace PL.Carts
         public CartWindow()
         {
             InitializeComponent();
-            var help = new BO.OrderItem();
+          
+
 
         }
-        public CartWindow(List<OrderItem>list)
+        public CartWindow(List<OrderItem>cartList)
         {
-
             InitializeComponent();
+            orderItems = cartList == null ? new() : new(cartList);
         }
 
         private void orderConfirmation_Click(object sender, RoutedEventArgs e)
         {
+            BO.Order o = new BO.Order()
+            {
+             
+            };
+
             MessageBox.Show("the cart confirm succesfuly");
         }
     }

@@ -8,11 +8,14 @@
         Title="ProductsCatalog" Height="450" Width="800"
         DataContext="{Binding Path=products, RelativeSource={RelativeSource self}}"
     >
-    <Grid>
+    <Grid Margin="0,0,0,-16"
+     DataContext="{Binding Path=custDetails, RelativeSource={RelativeSource self}}"
+
+          >
         <ComboBox x:Name="categorySelector" HorizontalAlignment="Left" Margin="506,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="categorySelector_SelectionChanged"/>
         <Label x:Name="categorylbl" Content="Category" HorizontalAlignment="Left" Margin="155,10,0,0" VerticalAlignment="Top"/>
        
-        <Button  x:Name="orderSubmit" Content="אישור הזמנה" HorizontalAlignment="Left" Margin="281,344,0,0" VerticalAlignment="Top" Click="orderSubmit_Click"/>
+        <Button  x:Name="orderSubmit" Content="אישור הזמנה" HorizontalAlignment="Left" Margin="329,404,0,0" VerticalAlignment="Top" Click="orderSubmit_Click"/>
         <ListView  x:Name="productsCatalogList" ItemsSource="{Binding}" Margin="89,63,156,135" SelectionChanged="ListView_SelectionChanged">
             <ListView.View>
                 <GridView>
@@ -20,6 +23,13 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="718,274,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Label Content="שם:" HorizontalAlignment="Left" Margin="605,330,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="custName" HorizontalAlignment="Left" Margin="465,338,0,0" TextWrapping="Wrap" Text="{Binding name}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="כתובת:" HorizontalAlignment="Left" Margin="605,361,0,0" VerticalAlignment="Top"/>
+        <TextBox  x:Name="custAddress" HorizontalAlignment="Left" Margin="465,369,0,0" TextWrapping="Wrap" Text="{Binding address}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="מייל:" HorizontalAlignment="Left" Margin="626,404,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.174,-0.445"/>
+        <TextBox x:Name="CustEmail" HorizontalAlignment="Left" Margin="465,396,0,0" TextWrapping="Wrap" Text="{Binding email}" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>
