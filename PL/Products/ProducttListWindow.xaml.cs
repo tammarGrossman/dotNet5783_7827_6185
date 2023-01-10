@@ -80,8 +80,7 @@ namespace PL
                 int id = pl.ID;
                 try
                 {
-                    BO.Product p = bl!.Product.Get(id);
-                    new ProductWindow(p).ShowDialog();
+                    new ProductWindow(id).ShowDialog();
                     //ProductListView.ItemsSource = bl.Product.GetAll();
                     var help = bl!.Product.GetAll();
                     products = help == null ? new() : new(help);

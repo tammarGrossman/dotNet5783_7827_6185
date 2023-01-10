@@ -49,6 +49,7 @@ namespace PL
         {
             InitializeComponent();
             var o = bl!.Order.Get(id);
+            MessageBox.Show($"{o.CustomerName}");
             order = new BO.Order()
             {
                 ID = id,
@@ -62,6 +63,7 @@ namespace PL
                 TotalPrice = o.TotalPrice,
                 Items = o.Items
             };
+
         }
 
         /// <summary>
