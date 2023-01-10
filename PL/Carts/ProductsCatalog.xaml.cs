@@ -24,15 +24,18 @@ namespace PL.Products
         BlApi.IBl? bl = BlApi.Factory.Get();
 
         private BO.Cart c = new BO.Cart();
+
+
         public ObservableCollection<BO.ProductForList> products
         {
             get { return (ObservableCollection<BO.ProductForList>)GetValue(productsProperty); }
             set { SetValue(productsProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for prods.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for products.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty productsProperty =
             DependencyProperty.Register("products", typeof(ObservableCollection<BO.ProductForList>), typeof(Window), new PropertyMetadata(null));
+
 
         public ProductsCatalog()
         {
@@ -83,22 +86,47 @@ namespace PL.Products
         }
 
         private void addProductToCart_Click(object sender, RoutedEventArgs e)
-        {      
-            int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
-            int index = c.Items.FindIndex(x => x.ID == id);
-            if (index != -1)//found
-                bl!.Cart.Update(c, id, 1);
+        {
+            try
+            {
+                int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
+                int index = c.Items.FindIndex(x => x.ID == id);
+                if (index != -1)//found
+                    bl!.Cart.Update(c, id, 1);
 
-            else
-                bl!.Cart.Add(c, id);          
+                else
+                    bl!.Cart.Add(c, id);
+            }
+
+            catch(BO.Exceptions.NotExist ex)
+            {
+               MessageBox.Show(ex.Message);
+            }
+
+            catch (BO.Exceptions.NotLegal ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void deleteProductFromCart_Click(object sender, RoutedEventArgs e)
         {
-            int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
-            int index = c.Items.FindIndex(x => x.ID == id);
-            if (index != -1)//found
-                bl!.Cart.Update(c, id, -1);            
+            try
+            {
+                int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
+                int index = c.Items.FindIndex(x => x.ID == id);
+                bl!.Cart.Update(c, id, -1);
+            }
+
+            catch (BO.Exceptions.NotExist ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            catch (BO.Exceptions.NotLegal ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         
     }

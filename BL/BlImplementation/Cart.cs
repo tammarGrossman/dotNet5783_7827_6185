@@ -89,6 +89,9 @@ internal class Cart : ICart
                 if (newQuantity < 0)
                     throw new BO.Exceptions.NotLegal("your cart does not contain this amount of this item");
 
+                if (newQuantity == 0)
+                    c.Items.Remove(c.Items.FirstOrDefault(x => x?.ProductID == id));
+
                 else if (newQuantity > pInStock)
                     throw new BO.Exceptions.NotLegal("there is not enough amount of this item in the store");
 
