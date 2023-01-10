@@ -22,25 +22,29 @@ namespace PL.Orders
 
         BlApi.IBl? bl = BlApi.Factory.Get();
 
-        public int OrderID
+
+
+        public int orderID
         {
-            get { return (int)GetValue(OrderIDProperty); }
-            set { SetValue(OrderIDProperty, value); }
+            get { return (int)GetValue(orderIDProperty); }
+            set { SetValue(orderIDProperty, value); }
         }
-        // Using a DependencyProperty as the backing store for order.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty OrderIDProperty =
-            DependencyProperty.Register("OrderID", typeof(int), typeof(Window), new PropertyMetadata(0));
+
+        // Using a DependencyProperty as the backing store for orderID.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty orderIDProperty =
+            DependencyProperty.Register("orderID", typeof(int), typeof(Window), new PropertyMetadata(0));
+
 
         public NumOfOrder()
         {
             InitializeComponent();
-            OrderID = 18;
+            orderID = 15;
         }
 
         private void moveToTrackOrder_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show($"{OrderID} jk");
-            new TrackOrderWindow(OrderID).Show();
+            MessageBox.Show($"{orderID}");
+            new TrackOrderWindow(orderID).Show();
         }
         
 

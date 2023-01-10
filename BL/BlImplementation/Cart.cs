@@ -16,14 +16,12 @@ internal class Cart : ICart
     /// <exception cref="NotFound"></exception>
     /// <exception cref="NotExist"></exception>
     /// <exception cref="NotLegal"></exception>
-    public void Add(BO.Cart c, int id)
+    public BO.Cart Add(BO.Cart c, int id)
     {
         if (BO.Validation.NameAdress(c.CustomerName ?? "") && BO.Validation.NameAdress(c.CustomerAdress ?? "") && BO.Validation.Email(c.CustomerEmail ?? "") && BO.Validation.Price(c.TotalPrice) && BO.Validation.ID(id))
         {
             try
             {
-                double totalPrice = 0;
-                bool exist = false, pExist = false;
                 BO.OrderItem boOrderItem ;
                 DO.Product doProduct = dal!.Product.Get(id);
                 int index = c.Items.FindIndex(x => x?.ProductID == id);
@@ -43,15 +41,18 @@ internal class Cart : ICart
                         };
                         c.Items.Add(boOrderItem);
 
+                      
                     }
 
                     catch (DO.NotExist ex)
                     {
                         throw new BO.Exceptions.NotExist($"the product id {id} does not exist");
                     }
+                    c.TotalPrice = c.Items.Sum(x => x.TotalPrice);
                 }
-             
-              c.TotalPrice= c.Items.Sum(x => x.TotalPrice);
+
+                return c;
+
             }
 
             catch (DO.NotExist ex)

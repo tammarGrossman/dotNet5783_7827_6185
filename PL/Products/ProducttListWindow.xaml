@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="ProductList" Height="450" Width="800" 
         DataContext="{Binding Path=products, RelativeSource={RelativeSource self}}">
+    
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -32,7 +33,7 @@
             <Label Grid.Column="0" FontWeight="Bold"  FontSize="19" Margin="0,10,194,5">סינון לפי קטגוריה</Label>
             <ComboBox x:Name="categorySelector" Grid.ColumnSpan="4" Margin="190,10,232,10" SelectionChanged="categorySelector_SelectionChanged" Text="choose category"/>
             <Button Content="Add new Product" Grid.Column="3" HorizontalAlignment="Left" Margin="109,5,0,5" Padding="5" x:Name="addNewProduct" Click="addNewProduct_Click"
-                      Height="60" Width="209" FontSize="22" Background="SteelBlue" FontWeight="Bold" Foreground="#FFFBF5F5" BorderBrush="#FFFBF5F5"/>
+                    Height="60" Width="209" FontSize="22" Background="SteelBlue" FontWeight="Bold" Foreground="#FFFBF5F5" BorderBrush="#FFFBF5F5"/>
         </Grid>
 
     </Grid>

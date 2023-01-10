@@ -10,7 +10,7 @@ public interface ICart
     /// </summary>
     /// <param name="c"></param>
     /// <param name="id"></param>
-    public void Add(Cart c, int id);
+    public Cart Add(Cart c, int id);
     /// <summary>
     /// update quantity of product in the cart
     /// </summary>

@@ -6,24 +6,64 @@
         xmlns:local="clr-namespace:PL.Products"
         mc:Ignorable="d"
         Title="ProductsCatalog" Height="450" Width="800"
-        DataContext="{Binding Path=products, RelativeSource={RelativeSource self}}"
-    >
-    <Grid Margin="0,0,0,-16"
+        DataContext="{Binding Path=products, RelativeSource={RelativeSource self}}">
 
-          >
-        <ComboBox x:Name="categorySelector" HorizontalAlignment="Left" Margin="506,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="categorySelector_SelectionChanged"/>
-        <Label x:Name="categorylbl" Content="Category" HorizontalAlignment="Left" Margin="155,10,0,0" VerticalAlignment="Top"/>
-       
-        <Button  x:Name="orderSubmit" Content="אישור הזמנה" HorizontalAlignment="Left" Margin="329,404,0,0" VerticalAlignment="Top" Click="orderSubmit_Click"/>
-        <ListView  x:Name="productsCatalogList" ItemsSource="{Binding}" Margin="89,63,156,135" SelectionChanged="ListView_SelectionChanged">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="718,274,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+    <Window.Resources>
+        <DataTemplate x:Key="productItemTemplate" DataType="local:ProductItem">
+            <Grid>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-    </Grid>
+                <TextBox Grid.Column="0" x:Name="id" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+                <TextBox Grid.Column="1" x:Name="name" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.477,3.841" IsEnabled="False"/>
+                <TextBox Grid.Column="2" x:Name="price" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Price}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+                <TextBox Grid.Column="3" x:Name="category" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Category_}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+                <TextBox Grid.Column="4" x:Name="inStock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+                <TextBox Grid.Column="5" x:Name="amount" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+                <Button Grid.Column="6" Content="addProductToCart"  CommandParameter="" Click="addProductToCart_Click" Width="100" Height="50" Margin="0"/>
+                <Button Grid.Column="6" Content="deleteProductFromCart"  CommandParameter="" Click="deleteProductFromCart_Click" Width="100" Height="50" Margin="0" Visibility="Hidden"/>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    <StackPanel>
+
+        <ComboBox x:Name="categorySelector" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120" SelectionChanged="categorySelector_SelectionChanged"/>
+        <ListView x:Name="productsCatalogList" ItemsSource="{Binding}" ItemTemplate="{StaticResource productItemTemplate}" HorizontalContentAlignment="Stretch" />
+        <Button Content="order submit" Click="orderSubmit_Click" />
+    </StackPanel>
 </Window>
-<!--DataContext="{Binding Path=custDetails, RelativeSource={RelativeSource self}}"-->
+
+
+<!--<Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Label Grid.Column="0" Content="ת.ז" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="-0.112,1.035"/>
+    <Label Grid.Column="1" Content="שם" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="1.083,0.417"/>
+    <Label Grid.Column="2" Content="מחיר" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="-0.292,0.691" Margin="362,248,0,0"/>
+    <Label Grid.Column="3" Content="קטגוריה" HorizontalAlignment="Left"  VerticalAlignment="Top" />
+    <Label Grid.Column="4" Content="מלאי" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+    <Label Grid.Column="5" Content="כמות" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
+</Grid>-->

@@ -22,17 +22,8 @@ namespace PL.Products
     public partial class ProductsCatalog : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-        public CustomerDetails custDetails
-        {
-            get { return (CustomerDetails)GetValue(custDetailsProperty); }
-            set { SetValue(custDetailsProperty, value); }
-        }
 
-        public static readonly DependencyProperty custDetailsProperty =
-            DependencyProperty.Register("custDetails", typeof(CustomerDetails), typeof(Window), new PropertyMetadata(null));
-
-
-       
+        private BO.Cart c = new BO.Cart();
         public ObservableCollection<BO.ProductForList> products
         {
             get { return (ObservableCollection<BO.ProductForList>)GetValue(productsProperty); }
@@ -46,18 +37,18 @@ namespace PL.Products
         public ProductsCatalog()
         {
             InitializeComponent();
-            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             var help = bl!.Product.GetAll();
             products = help == null ? new() : new(help);
+            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
         private void orderSubmit_Click(object sender, RoutedEventArgs e) => new Carts.CustomerWindow().Show();
             
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void productsCatalogList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var lv = sender as ListView;
-            if (productsCatalogList.ItemsSource != null )
+            if (products != null)
             {
                 try
                 {
@@ -91,9 +82,24 @@ namespace PL.Products
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+        private void addProductToCart_Click(object sender, RoutedEventArgs e)
+        {      
+            int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
+            int index = c.Items.FindIndex(x => x.ID == id);
+            if (index != -1)//found
+                bl!.Cart.Update(c, id, 1);
 
+            else
+                bl!.Cart.Add(c, id);          
         }
+
+        private void deleteProductFromCart_Click(object sender, RoutedEventArgs e)
+        {
+            int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
+            int index = c.Items.FindIndex(x => x.ID == id);
+            if (index != -1)//found
+                bl!.Cart.Update(c, id, -1);            
+        }
+        
     }
 }

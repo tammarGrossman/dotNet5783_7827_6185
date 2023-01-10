@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:PL.Orders"
         mc:Ignorable="d"
         Title="NumOfOrder" Height="450" Width="800"
-        DataContext="{Binding Path=OrderID , RelativeSource={RelativeSource self} }">
+        DataContext="{Binding Path=orderID , RelativeSource={RelativeSource self} }">
     <Grid> 
         <Label x:Name="numOrderL"  Content="קוד הזמנה :" HorizontalAlignment="Left" Margin="482,153,0,0" VerticalAlignment="Top" Height="34" Width="86"/>
-        <TextBox  x:Name="numOrderT" HorizontalAlignment="Left" Margin="247,152,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" Width="170" Height="25" RenderTransformOrigin="0.5,0.5">
+        <TextBox  x:Name="numOrderT" HorizontalAlignment="Left" Margin="247,152,0,0" TextWrapping="Wrap" Text="{Binding Path=orderID}" VerticalAlignment="Top" Width="170" Height="25" RenderTransformOrigin="0.5,0.5">
             <TextBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

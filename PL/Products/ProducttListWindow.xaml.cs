@@ -64,7 +64,6 @@ namespace PL
         private void addNewProduct_Click(object sender, RoutedEventArgs e)
         {
             new ProductWindow().ShowDialog();
-            ProductListView.ItemsSource = bl!.Product.GetAll();
         }
         /// <summary>
         /// open window to update product
