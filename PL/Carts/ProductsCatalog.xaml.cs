@@ -51,12 +51,8 @@ namespace PL.Products
             products = help == null ? new() : new(help);
         }
 
-        private void orderSubmit_Click(object sender, RoutedEventArgs e) 
-            {
-            List<BO.OrderItem> list = new List<BO.OrderItem>();
-
-            new Carts.CartWindow(list).Show();
-            }
+        private void orderSubmit_Click(object sender, RoutedEventArgs e) => new Carts.CustomerWindow().Show();
+            
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

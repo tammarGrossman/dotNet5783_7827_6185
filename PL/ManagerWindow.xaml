@@ -7,8 +7,11 @@
         mc:Ignorable="d"
         Title="ManagerWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="showProductList" Content="רשימת מוצרים" HorizontalAlignment="Left" Margin="210,170,0,0" VerticalAlignment="Top" Click="showProductList_Click" />
-        <Button x:Name="showOrderList" Content="רשימת הזמנות" HorizontalAlignment="Left" Margin="323,170,0,0" VerticalAlignment="Top" Click="showOrderList_Click"/>
+        <Button x:Name="showProductList" Content="רשימת מוצרים" HorizontalAlignment="Left" Margin="210,170,0,0" VerticalAlignment="Top" Click="showProductList_Click" 
+                  Height="60" Width="160" FontSize="22" Background="SteelBlue" FontWeight="Bold" Foreground="#FFFBF5F5" BorderBrush="#FFFBF5F5"/>
+        <Button x:Name="showOrderList" Content="רשימת הזמנות" HorizontalAlignment="Left" Margin="432,170,0,0" VerticalAlignment="Top" Click="showOrderList_Click"
+                  Height="60" Width="160" FontSize="22" Background="SteelBlue" FontWeight="Bold" Foreground="#FFFBF5F5" BorderBrush="#FFFBF5F5"/>
+        <Image HorizontalAlignment="Left" Height="151" Margin="34,302,0,0" VerticalAlignment="Top" Width="421" Source="/1111.jpg"/>
 
     </Grid>
 </Window>

@@ -28,6 +28,7 @@ namespace PL
     /// </summary>
     public ProductWindow()
         {
+            product = new BO.Product();
             InitializeComponent();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             add = true;

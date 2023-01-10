@@ -9,17 +9,20 @@
         DataContext="{Binding Path=trackOrder, RelativeSource={RelativeSource self}}"
         >
     <Grid>
-        <TextBox x:Name="id" HorizontalAlignment="Left" Margin="260,41,0,0" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="קוד מעקב הזמנה" HorizontalAlignment="Left" Margin="445,41,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="status" HorizontalAlignment="Left" Margin="260,72,0,0" TextWrapping="Wrap" Text="{Binding Status}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="סטטוס הזמנה" HorizontalAlignment="Left" Margin="460,72,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
-        <ListView ItemsSource="{Binding Tracking}" Margin="21,126,21,38" >
+        <TextBox x:Name="id" HorizontalAlignment="Left" Margin="357,42,0,0" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="קוד מעקב הזמנה" HorizontalAlignment="Left" Margin="542,42,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="status" HorizontalAlignment="Left" Margin="357,73,0,0" TextWrapping="Wrap" Text="{Binding Status}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="סטטוס הזמנה" HorizontalAlignment="Left" Margin="557,73,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
+        <ListView ItemsSource="{Binding Tracking}" Margin="21,112,21,44" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="ShowOrderDetails"   Content="לצפיה בפרטי ההזמנה" HorizontalAlignment="Left" Margin="90,39,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.298,0.483" Height="28" Width="52" Click="ShowOrderDetails_Click"/>
+        <Button x:Name="ShowOrderDetails"   Content="לצפיה בפרטי ההזמנה" HorizontalAlignment="Left" Margin="21,39,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.298,0.483"  Click="ShowOrderDetails_Click"
+                  Height="60" Width="238" FontSize="22" Background="SteelBlue" FontWeight="Bold" Foreground="#FFFBF5F5" BorderBrush="#FFFBF5F5"/>
+
+        <Image HorizontalAlignment="Left" Height="151" Margin="34,302,0,0" VerticalAlignment="Top" Width="421" Source="/1111.jpg"/>
     </Grid>
 </Window>

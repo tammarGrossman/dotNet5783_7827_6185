@@ -23,6 +23,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="orderConfirmation" Content="אישור הזמנה" HorizontalAlignment="Left" Margin="273,404,0,0" VerticalAlignment="Top" Click="orderConfirmation_Click"/>
+        <Button x:Name="orderConfirmation" Content="אישור הזמנה" HorizontalAlignment="Left" Margin="273,404,0,0" VerticalAlignment="Top" Click="orderConfirmation_Click"
+                                  Height="60" Width="160" FontSize="22" Background="SteelBlue" FontWeight="Bold" Foreground="#FFFBF5F5" BorderBrush="#FFFBF5F5"/>
+        <Image HorizontalAlignment="Left" Height="151" Margin="34,302,0,0" VerticalAlignment="Top" Width="421" Source="/1111.jpg"/>
+
     </Grid>
 </Window>

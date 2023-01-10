@@ -9,7 +9,7 @@
         DataContext="{Binding Path=OrderID , RelativeSource={RelativeSource self} }">
     <Grid> 
         <Label x:Name="numOrderL"  Content="קוד הזמנה :" HorizontalAlignment="Left" Margin="482,153,0,0" VerticalAlignment="Top" Height="34" Width="86"/>
-        <TextBox  x:Name="numOrderT" HorizontalAlignment="Left" Margin="247,152,0,0" TextWrapping="Wrap" Text="{Binding Path=OrderID}" VerticalAlignment="Top" Width="170" Height="25" RenderTransformOrigin="0.5,0.5">
+        <TextBox  x:Name="numOrderT" HorizontalAlignment="Left" Margin="247,152,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" Width="170" Height="25" RenderTransformOrigin="0.5,0.5">
             <TextBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -19,7 +19,9 @@
                 </TransformGroup>
             </TextBox.RenderTransform>
         </TextBox>
-        <Button x:Name="moveToTrackOrder" Content="אישור" HorizontalAlignment="Left" Margin="311,285,0,0" VerticalAlignment="Top" Height="29" Width="129" Click="moveToTrackOrder_Click"/>
+        <Button x:Name="moveToTrackOrder" Content="אישור" HorizontalAlignment="Left" Margin="311,285,0,0" VerticalAlignment="Top"  Click="moveToTrackOrder_Click" 
+                  Height="60" Width="160" FontSize="22" Background="SteelBlue" FontWeight="Bold" Foreground="#FFFBF5F5" BorderBrush="#FFFBF5F5"/>
+        <Image HorizontalAlignment="Left" Height="151" Margin="34,302,0,0" VerticalAlignment="Top" Width="421" Source="/1111.jpg"/>
 
     </Grid>
 </Window>

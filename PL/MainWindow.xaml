@@ -7,9 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button  x:Name="managerWindowBut" Content="מנהל" HorizontalAlignment="Left" Margin="197,117,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.1,0.663" Click="managerWindowBut_Click"/>
-        <Button  x:Name="orderWindowBut"  Content="להזמנה חדשה" HorizontalAlignment="Left" Margin="267,117,0,0" VerticalAlignment="Top" Click="orderWindowBut_Click"/>
-        <Button  x:Name="trackOrderWindow" Content="למעקב הזמנה" HorizontalAlignment="Left" Margin="370,117,0,0" VerticalAlignment="Top" Click="trackOrderWindow_Click"/>
+        <Button  x:Name="managerWindowBut" Content="מנהל" HorizontalAlignment="Left" Margin="101,239,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.1,0.663" Click="managerWindowBut_Click"  Height="60" Width="160" FontSize="22" Background="SteelBlue" FontWeight="Bold" Foreground="#FFFBF5F5" BorderBrush="#FFFBF5F5" />
+        <Button  x:Name="orderWindowBut"  Content="להזמנה חדשה" HorizontalAlignment="Center" Margin="0,239,0,0" VerticalAlignment="Top" Click="orderWindowBut_Click" RenderTransformOrigin="1.121,-2.042" 
+                 Height="60" Width="160" FontSize="22" Background="SteelBlue" FontWeight="Bold" Foreground="#FFFBF5F5" BorderBrush="#FFFBF5F5"/>
+        <Button  x:Name="trackOrderWindow" Content="למעקב הזמנה" HorizontalAlignment="Left" Margin="555,239,0,0" VerticalAlignment="Top" Click="trackOrderWindow_Click" Height="60" Width="160" FontSize="22" Background="SteelBlue" FontWeight="Bold" Foreground="#FFFBF5F5" BorderBrush="#FFFBF5F5"/>
+        <Image HorizontalAlignment="Left" Height="151" Margin="34,302,0,0" VerticalAlignment="Top" Width="421" Source="/1111.jpg"/>
+        <Label Content="DECATHLON"  VerticalAlignment="Top" Foreground="#FFF1E9E9" FontWeight="Bold" FontSize="87" HorizontalContentAlignment="Center" Margin="0,25,0,0"  Width="800" Height="136" Background="SteelBlue"/>
         <!--<Button x:Name="ProductViewList" Width="150" Height="100"   Click="ProductViewList_Click">להצגת מוצרים</Button>-->
     </Grid>
 </Window>
