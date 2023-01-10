@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Order" Height="450" Width="800"
+        Title="Order" Height="542" Width="800"
       DataContext="{Binding Path=order, RelativeSource={RelativeSource self}}">
     <Grid Margin="0,10,-258,-276">
         <Grid.ColumnDefinitions>
@@ -35,7 +35,7 @@
         <Label Content="תאריך שליחת הזמנה" HorizontalAlignment="Left" Margin="335,178,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="recievedDate" HorizontalAlignment="Left" Margin="159,213,0,0" TextWrapping="Wrap" Text="{Binding DeliveryDate}" VerticalAlignment="Top" Width="120"/>
         <Label Content="תאריך קבלת הזמנה" HorizontalAlignment="Left" Margin="335,209,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
-        <ListView x:Name="orderItemsList" ItemsSource="{Binding Items}" Margin="-10,329,10,67">
+        <ListView x:Name="orderItemsList" ItemsSource="{Binding Items}" Margin="7,205,236,141" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

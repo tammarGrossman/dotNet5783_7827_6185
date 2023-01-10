@@ -90,30 +90,27 @@ internal class Order : IOrder
             if (BO.Validation.ID(id))
             {
                 DO.Order dalOrder = dal!.Order.Get(id);
-                BO.Order blOrder = new BO.Order()
-                {
-                    ID = dalOrder.ID,
-                    CustomerName = dalOrder.CustomerName,
-                    CustomerEmail = dalOrder.CustomerEmail,
-                    CustomerAdress = dalOrder.CustomerAdress,
-                    PaymentDate = dalOrder.OrderDate,
-                    ShipDate = dalOrder.ShipDate,
-                    DeliveryDate = dalOrder.DeliveryDate,
-                    Status = OrderStatus(dalOrder),
-                    Items = null 
-                    /*((List<BO.OrderItem?>)(from DO.OrderItem? orderItem in dal.OrderItem.GetAll(x => x?.OrderID == id)
-                                                  select new BO.OrderItem()
-                                                  {
-                                                      ID = (orderItem?.OrderItemID) ?? throw new BO.Exceptions.MissingInputValue("id"),
-                                                      Name = dal.Product.Get((orderItem?.ProductID) ?? throw new BO.Exceptions.MissingInputValue("id")).Name ?? "",
-                                                      ProductID = (orderItem?.ProductID) ?? throw new BO.Exceptions.MissingInputValue("id"),
-                                                      Price = (orderItem?.Price) ?? 0,
-                                                      Amount = (orderItem?.Amount) ?? 0,
-                                                      TotalPrice = (orderItem?.Price * orderItem?.Amount) ?? 0
-                                                  })),
-                    TotalPrice = dal.OrderItem.GetAll(x => x?.OrderID == id).Sum(x => x?.Price * x?.Amount) ?? 0
-                    */, TotalPrice=0 
-                };
+                BO.Order blOrder = new BO.Order();
+                blOrder.ID = dalOrder.ID;
+                blOrder.CustomerName = dalOrder.CustomerName;
+                blOrder.CustomerEmail = dalOrder.CustomerEmail;
+                blOrder.CustomerAdress = dalOrder.CustomerAdress;
+                blOrder.PaymentDate = dalOrder.OrderDate;
+                blOrder.ShipDate = dalOrder.ShipDate;
+                blOrder.DeliveryDate = dalOrder.DeliveryDate;
+                blOrder.Status = OrderStatus(dalOrder);
+                IEnumerable<DO.OrderItem?> orderItems = dal!.OrderItem.GetAll(orderItem => orderItem?.OrderID == id);
+                blOrder.Items = (from orderItem in orderItems
+                                 select new BO.OrderItem
+                                 {
+                                     ID = orderItem?.OrderID ?? 0,
+                                     ProductID = orderItem?.ProductID ?? 0,
+                                     Name = dal!.Product.Get(orderItem?.ProductID??0).Name,
+                                     Amount = orderItem?.Amount ?? 0,
+                                     Price = orderItem?.Price ?? 0,
+                                     TotalPrice = orderItem?.Price * orderItem?.Amount ?? 0
+                                 }).ToList();
+                blOrder.TotalPrice = dal.OrderItem.GetAll(x => x?.OrderID == id).Sum(x => x?.Price * x?.Amount) ?? 0;
                 return blOrder;
             }
             else
@@ -148,7 +145,7 @@ internal class Order : IOrder
         {
             DO.Order dalOrder = dal!.Order.Get(id);
             BO.Order blOrder;
-
+            IEnumerable<DO.OrderItem?> orderItems = dal!.OrderItem.GetProductsInOrder(id);
             if (dalOrder.ShipDate == null)
             {
                 dalOrder.ShipDate = DateTime.Now;
@@ -165,16 +162,16 @@ internal class Order : IOrder
                     DeliveryDate = dalOrder.DeliveryDate,
                     TotalPrice = 0,
                     Status = BO.OrderStatus.shiped,
-                    Items = (List<BO.OrderItem?>)(from DO.OrderItem? item in dal.OrderItem.GetProductsInOrder(id)
-                                                  select new BO.OrderItem
-                                                  {
-                                                      ID = item?.OrderItemID ?? 0,
-                                                      Name = dal.Product.Get(item?.ProductID ?? 0).Name,
-                                                      ProductID = item?.ProductID ?? 0,
-                                                      Price = item?.Price ?? 0,
-                                                      Amount = item?.Amount ?? 0,
-                                                      TotalPrice = (item?.Price) ?? 0 * (item?.Amount) ?? 0
-                                                  })
+                    Items = (from item in orderItems
+                             select new BO.OrderItem
+                             {
+                                 ID = item?.OrderItemID ?? 0,
+                                 Name = dal.Product.Get(item?.ProductID ?? 0).Name,
+                                 ProductID = item?.ProductID ?? 0,
+                                 Price = item?.Price ?? 0,
+                                 Amount = item?.Amount ?? 0,
+                                 TotalPrice = (item?.Price) ?? 0 * (item?.Amount) ?? 0
+                             }).ToList(),
 
                 };
                 blOrder.TotalPrice = blOrder.Items.Sum(x => x?.TotalPrice ?? 0);
@@ -206,7 +203,7 @@ internal class Order : IOrder
 
             DO.Order dalOrder = dal!.Order.Get(id);
             BO.Order blOrder;
-
+            IEnumerable<DO.OrderItem?> orderItems = dal!.OrderItem.GetProductsInOrder(id);
             if (dalOrder.DeliveryDate == DateTime.MinValue)
             {
 
@@ -224,18 +221,17 @@ internal class Order : IOrder
                     DeliveryDate = dalOrder.DeliveryDate,
                     TotalPrice = 0,
                     Status = BO.OrderStatus.delivered,
+                    Items = (from item in orderItems
+                             select new BO.OrderItem()
+                             {
 
-                    Items = (List<BO.OrderItem?>)(from DO.OrderItem? item in dal.OrderItem.GetProductsInOrder(id)
-                                                 select new BO.OrderItem()
-                                                 {
-
-                                                     ID = (item?.OrderItemID) ?? 0,
-                                                     Name = dal.Product.Get((item?.ProductID) ?? 0).Name,
-                                                     ProductID = (item?.ProductID) ?? 0,
-                                                     Price = (item?.Price) ?? 0,
-                                                     Amount = (item?.Amount) ?? 0,
-                                                     TotalPrice = (item?.Price) ?? 0 * (item?.Amount) ?? 0
-                                                 })
+                                 ID = (item?.OrderItemID) ?? 0,
+                                 Name = dal.Product.Get((item?.ProductID) ?? 0).Name,
+                                 ProductID = (item?.ProductID) ?? 0,
+                                 Price = (item?.Price) ?? 0,
+                                 Amount = (item?.Amount) ?? 0,
+                                 TotalPrice = (item?.Price) ?? 0 * (item?.Amount) ?? 0
+                             }).ToList()
                 };
                 blOrder.TotalPrice = blOrder.Items.Sum(x => x?.TotalPrice ?? 0);
                 return blOrder;

@@ -6,11 +6,10 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="Product" Height="450" Width="640"
-        DataContext="{Binding product, RelativeSource={RelativeSource self} }"
->
+        DataContext="{Binding Path=product  ,RelativeSource={RelativeSource self}}">
     <Grid >
         <Button Content="submit product"  HorizontalAlignment="Left" Margin="295,320,0,0" Padding="5" VerticalAlignment="Top" x:Name="submitProduct" Click="submitProduct_Click"/>
-        <ComboBox HorizontalAlignment="Left" Margin="311,206,0,0" VerticalAlignment="Top" Width="120" x:Name="CategorySelector" Height="26"  />
+        <ComboBox HorizontalAlignment="Left" Margin="311,206,0,0" VerticalAlignment="Top" Width="120" x:Name="CategorySelector" Height="26" SelectedItem="{Binding Category_ }" />
         <Label Content="in stock" HorizontalAlignment="Left" Margin="219,169,0,0"  VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="311,169,0,0" TextWrapping="Wrap" Text="{Binding InStock , Mode=TwoWay }" VerticalAlignment="Top" Width="120" x:Name="inStock" Height="26" Padding="5"/>
         <Label Content="id" HorizontalAlignment="Left" Margin="219,91,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.064,0.9"/>

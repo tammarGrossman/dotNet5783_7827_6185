@@ -35,20 +35,14 @@ namespace PL
         /// <summary>      
         /// to update product 
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="id"></param>
         public ProductWindow(int id)
         {
             InitializeComponent();
-       
-            
-        
-        update = true;
+            update = true;
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            product = bl!.Product.Get(id);
-            
+            product = bl!.Product.Get(id); 
         }
-
-
 
         /// <summary>
         /// submit product to add or apdate
@@ -82,7 +76,7 @@ namespace PL
                     {//add case
                         try
                         {
-                    MessageBox.Show($"{product}");
+                            MessageBox.Show($"{product}");
                             bl!.Product.Add(product);
                             add = false;
                             MessageBox.Show("the product added succesfully");

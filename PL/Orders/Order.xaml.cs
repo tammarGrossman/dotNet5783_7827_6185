@@ -39,7 +39,6 @@ namespace PL
         public Order()
         {
             InitializeComponent();
-       
         }
         /// <summary>      
         /// to update product 
@@ -49,7 +48,6 @@ namespace PL
         {
             InitializeComponent();
             var o = bl!.Order.Get(id);
-            MessageBox.Show($"{o.CustomerName}");
             order = new BO.Order()
             {
                 ID = id,
