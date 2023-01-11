@@ -33,7 +33,7 @@ internal class Cart : ICart
                         DO.Product product = dal.Product.GetByCon(x => x?.ID == id && x?.InStock > 0);
                         boOrderItem = new BO.OrderItem()
                         {
-                            ID = idOrderItem++,
+                            ID = id,
                             ProductID = product.ID,
                             Name = product.Name,
                             Price = product.Price,
@@ -49,7 +49,7 @@ internal class Cart : ICart
                     {
                         throw new BO.Exceptions.NotExist($"the product id {id} does not exist");
                     }
-                    c.TotalPrice = c.Items.Sum(x => x.TotalPrice);
+                    c.TotalPrice = c.Items.Sum(x => x?.TotalPrice??0);
                 }
 
                 return c;
@@ -78,7 +78,7 @@ internal class Cart : ICart
     /// <exception cref="NotExist"></exception>
     public BO.Cart Update(BO.Cart c, int id, int quantity)
     {
-        if (BO.Validation.ID(id) && BO.Validation.NameAdress(c.CustomerName ?? "") && BO.Validation.NameAdress(c.CustomerAdress ?? "") && BO.Validation.Email(c.CustomerEmail ?? ""))
+        if (BO.Validation.ID(id))
             try
             {
                 int pInStock = 0;
@@ -101,7 +101,7 @@ internal class Cart : ICart
                     orderItem.Amount = newQuantity;
                     orderItem.TotalPrice = orderItem.Price * orderItem.Amount;
                 }
-                c.TotalPrice = c.Items.Sum(x => x.TotalPrice);
+                c.TotalPrice = c.Items.Sum(x => x?.TotalPrice??0);
                 return c;
             }
 

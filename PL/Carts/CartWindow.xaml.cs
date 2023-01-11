@@ -1,4 +1,5 @@
 ﻿using BO;
+using PL.Products;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,38 +24,36 @@ namespace PL.Carts
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
 
-        public ObservableCollection<BO.OrderItem> orderItems
+
+
+
+        public BO.Cart fullCart
         {
-            get { return (ObservableCollection<BO.OrderItem>)GetValue(orderItemsProperty); }
-            set { SetValue(orderItemsProperty, value); }
+            get { return (BO.Cart)GetValue(fullCartProperty); }
+            set { SetValue(fullCartProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for orderItems.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty orderItemsProperty =
-            DependencyProperty.Register("orderItems", typeof(ObservableCollection<BO.OrderItem>), typeof(Window), new PropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for fullCart.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty fullCartProperty =
+            DependencyProperty.Register("fullCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
 
 
+     
         public CartWindow()
         {
             InitializeComponent();
-          
-
+            fullCart = ProductsCatalog.c;
+            fullCart.TotalPrice = fullCart.Items.Sum(x => x?.TotalPrice??0);
+            ProductsCatalog.c.TotalPrice = fullCart.TotalPrice;
+            MessageBox.Show($"{fullCart}");
 
         }
-        public CartWindow(List<OrderItem>cartList)
-        {
-            InitializeComponent();
-            orderItems = cartList == null ? new() : new(cartList);
-        }
-
         private void orderConfirmation_Click(object sender, RoutedEventArgs e)
         {
-            BO.Order o = new BO.Order()
-            {
-             
-            };
-
+            bl!.Cart.OrderConfirmation(fullCart);
             MessageBox.Show("the cart confirm succesfuly");
+            this.Close();
+            new MainWindow().Show();    
         }
     }
 }

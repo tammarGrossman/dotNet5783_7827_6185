@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Carts"
         mc:Ignorable="d"
-        Title="CustomerWindow" Height="450" Width="800">
+        Title="CustomerWindow" Height="450" Width="800"
+        DataContext="{Binding Path=cart , RelativeSource={RelativeSource self}}">
     <Grid>
         <Label Content="שם:" HorizontalAlignment="Left" Margin="535,151,0,0" VerticalAlignment="Top" Height="38" Width="42"/>
-        <TextBox x:Name="custName" HorizontalAlignment="Center" Margin="0,163,0,0" TextWrapping="Wrap" Text="Binding name" VerticalAlignment="Top" Width="167" Height="26"/>
+        <TextBox x:Name="custName" HorizontalAlignment="Center" Margin="0,163,0,0" TextWrapping="Wrap" Text="{Binding CustomerName}" VerticalAlignment="Top" Width="167" Height="26"/>
         <Label Content="כתובת:" HorizontalAlignment="Left" Margin="535,196,0,0" VerticalAlignment="Top" Height="38" Width="64"/>
-        <TextBox  x:Name="custAddress" HorizontalAlignment="Center" Margin="0,208,0,0" TextWrapping="Wrap" Text="Binding address" VerticalAlignment="Top" Width="167" Height="26"/>
+        <TextBox  x:Name="custAddress" HorizontalAlignment="Center" Margin="0,208,0,0" TextWrapping="Wrap" Text="{Binding CustomerAdress}"  VerticalAlignment="Top" Width="167" Height="26"/>
         <Label Content="מייל:" HorizontalAlignment="Left" Margin="564,259,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.174,-0.445" Height="38" Width="47"/>
-        <TextBox x:Name="CustEmail" HorizontalAlignment="Center" Margin="0,247,0,0" TextWrapping="Wrap" Text="Binding email" VerticalAlignment="Top" Width="167" Height="26"/>
+        <TextBox x:Name="CustEmail" HorizontalAlignment="Center" Margin="0,247,0,0" TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Top" Width="167" Height="26"/>
         <Button x:Name="moveToCart"  Content="אישור פרטים " HorizontalAlignment="Left" Margin="333,345,0,0" VerticalAlignment="Top" Click="moveToCart_Click"/>
     </Grid>
 </Window>

@@ -6,17 +6,17 @@
         xmlns:local="clr-namespace:PL.Carts"
         mc:Ignorable="d"
         Title="CartWindow" Height="450" Width="800"
-        DataContext="{Binding Path=orderItems, RelativeSource={RelativeSource self}}">
+        DataContext="{Binding Path=fullCart, RelativeSource={RelativeSource self}}">
     <Grid>
-        <TextBox x:Name="customerEmail" HorizontalAlignment="Left" Margin="159,127,0,0" TextWrapping="Wrap" Text="ייל" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="customerEmail" HorizontalAlignment="Left" Margin="159,127,0,0" TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Top" Width="120"/>
         <Label Content="אימייל לקוח" HorizontalAlignment="Left" Margin="329,124,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,0.356"/>
-        <TextBox x:Name="customerAdress" HorizontalAlignment="Left" Margin="159,96,0,0" TextWrapping="Wrap" Text="כתובת" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="customerAdress" HorizontalAlignment="Left" Margin="159,96,0,0" TextWrapping="Wrap" Text="{Binding CustomerAdress}" VerticalAlignment="Top" Width="120"/>
         <Label Content="כתובת לקוח" HorizontalAlignment="Left" Margin="330,92,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.011,0.394"/>
-        <TextBox x:Name="customerName" HorizontalAlignment="Left" Margin="159,61,0,0" TextWrapping="Wrap" Text="שם" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="customerName" HorizontalAlignment="Left" Margin="159,61,0,0" TextWrapping="Wrap" Text="{Binding CustomerName}" VerticalAlignment="Top" Width="120"/>
         <Label Content="שם לקוח" HorizontalAlignment="Left" Margin="346,61,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
-        <TextBox x:Name="totalPrice" HorizontalAlignment="Left" Margin="159,152,0,0" TextWrapping="Wrap" Text="מחיר סופי" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="totalPrice" HorizontalAlignment="Left" Margin="159,152,0,0" TextWrapping="Wrap" Text="{Binding TotalPrice}" VerticalAlignment="Top" Width="120"/>
         <Label Content=" מחיר סופי " HorizontalAlignment="Left" Margin="332,150,0,0" VerticalAlignment="Top"/>
-        <ListView ItemsSource="{Binding}" Margin="159,195,373,51">
+        <ListView ItemsSource="{Binding Items}" Margin="159,195,373,51">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

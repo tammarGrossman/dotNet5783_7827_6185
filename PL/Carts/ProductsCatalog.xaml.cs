@@ -23,7 +23,7 @@ namespace PL.Products
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
 
-        private BO.Cart c = new BO.Cart();
+        public static BO.Cart c = new BO.Cart();
 
 
         public ObservableCollection<BO.ProductItem> products
@@ -90,13 +90,13 @@ namespace PL.Products
             try
             {
                 int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
-                int index = c.Items.FindIndex(x => x.ID == id);
+                int index = c.Items.FindIndex(x => x?.ID == id);
                 if (index != -1)//found
                    c= bl!.Cart.Update(c, id, 1);
 
                 else
                    c= bl!.Cart.Add(c, id);
-
+                
                 MessageBox.Show($"the product {c} added sucsessfuly to the cart ");
             }
 
