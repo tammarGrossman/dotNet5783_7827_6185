@@ -49,7 +49,6 @@ namespace PL.Carts
             MessageBox.Show($"{cart}");
              ProductsCatalog.c=cart;
             new Carts.CartWindow().Show();
-
         }
     }
 }

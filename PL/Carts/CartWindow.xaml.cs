@@ -24,9 +24,6 @@ namespace PL.Carts
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
 
-
-
-
         public BO.Cart fullCart
         {
             get { return (BO.Cart)GetValue(fullCartProperty); }
@@ -45,8 +42,6 @@ namespace PL.Carts
             fullCart = ProductsCatalog.c;
             fullCart.TotalPrice = fullCart.Items.Sum(x => x?.TotalPrice??0);
             ProductsCatalog.c.TotalPrice = fullCart.TotalPrice;
-            MessageBox.Show($"{fullCart}");
-
         }
         private void orderConfirmation_Click(object sender, RoutedEventArgs e)
         {

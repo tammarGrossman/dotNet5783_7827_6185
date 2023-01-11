@@ -19,13 +19,6 @@ namespace PL
             InitializeComponent();
         }
 
-        /// <summary>
-        /// open window to show product and more action
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-       // private void ProductViewList_Click(object sender, RoutedEventArgs e)=>new ProductListWindow().Show();
-
         private void managerWindowBut_Click(object sender, RoutedEventArgs e) => new ManagerWindow().Show();
 
         private void trackOrderWindow_Click(object sender, RoutedEventArgs e)=> new NumOfOrder().Show();
