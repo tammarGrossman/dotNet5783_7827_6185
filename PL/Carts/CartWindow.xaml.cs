@@ -50,5 +50,64 @@ namespace PL.Carts
             this.Close();
             new MainWindow().Show();    
         }
+
+        private void addProductToCart_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
+                fullCart = bl!.Cart.Update(fullCart, id, 1);
+                MessageBox.Show($"the product {fullCart} added sucsessfuly to the cart ");
+            }
+
+            catch (BO.Exceptions.NotExist ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            catch (BO.Exceptions.NotLegal ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void decreaseProductFromCart_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
+
+                bl!.Cart.Update(fullCart, id, -1);
+            }
+
+            catch (BO.Exceptions.NotExist ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            catch (BO.Exceptions.NotLegal ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void deleteProductFromCart_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
+                int index = fullCart.Items.FindIndex(x => x.ID == id);
+                bl!.Cart.Update(fullCart, id, -(fullCart.Items[index].Amount));
+            }
+
+            catch (BO.Exceptions.NotExist ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            catch (BO.Exceptions.NotLegal ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

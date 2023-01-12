@@ -7,25 +7,55 @@
         mc:Ignorable="d"
         Title="CartWindow" Height="450" Width="800"
         DataContext="{Binding Path=fullCart, RelativeSource={RelativeSource self}}">
-    <Grid>
-        <TextBox x:Name="customerEmail" HorizontalAlignment="Left" Margin="159,127,0,0" TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="אימייל לקוח" HorizontalAlignment="Left" Margin="329,124,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,0.356"/>
-        <TextBox x:Name="customerAdress" HorizontalAlignment="Left" Margin="159,96,0,0" TextWrapping="Wrap" Text="{Binding CustomerAdress}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="כתובת לקוח" HorizontalAlignment="Left" Margin="330,92,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.011,0.394"/>
-        <TextBox x:Name="customerName" HorizontalAlignment="Left" Margin="159,61,0,0" TextWrapping="Wrap" Text="{Binding CustomerName}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="שם לקוח" HorizontalAlignment="Left" Margin="346,61,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
-        <TextBox x:Name="totalPrice" HorizontalAlignment="Left" Margin="159,152,0,0" TextWrapping="Wrap" Text="{Binding TotalPrice}" VerticalAlignment="Top" Width="120"/>
-        <Label Content=" מחיר סופי " HorizontalAlignment="Left" Margin="332,150,0,0" VerticalAlignment="Top"/>
-        <ListView ItemsSource="{Binding Items}" Margin="159,195,373,51">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button x:Name="orderConfirmation" Content="אישור הזמנה" HorizontalAlignment="Left" Margin="273,404,0,0" VerticalAlignment="Top" Click="orderConfirmation_Click"
-                                  Height="60" Width="160" FontSize="22" Background="SteelBlue" FontWeight="Bold" Foreground="#FFFBF5F5" BorderBrush="#FFFBF5F5"/>
-        <Image HorizontalAlignment="Left" Height="151" Margin="34,302,0,0" VerticalAlignment="Top" Width="421" Source="/1111.jpg"/>
 
-    </Grid>
+    <Window.Resources>
+        <DataTemplate x:Key="productItemTemplate" DataType="local:ProductItem">
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0" x:Name="id" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+                <TextBox Grid.Column="1" x:Name="name" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.477,3.841" IsEnabled="False"/>
+                <TextBox Grid.Column="2" x:Name="price" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Price}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+                <TextBox Grid.Column="3" x:Name="category" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Category_}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+                <TextBox Grid.Column="4" x:Name="inStock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+                <TextBox Grid.Column="5" x:Name="amount" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+                <Button Grid.Column="6" Content="add "  CommandParameter="" Click="addProductToCart_Click" Width="100" Height="50" Margin="0"/>
+                <Button Grid.Column="7" Content="decrease"  CommandParameter="" Click="decreaseProductFromCart_Click" Width="100" Height="50" Margin="0" Visibility="Hidden"/>
+                <Button Grid.Column="8" Content="delete"  CommandParameter="" Click="deleteProductFromCart_Click" Width="100" Height="50" Margin="0" />
+
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    <StackPanel Margin="10,10,10,14">
+        <TextBox x:Name="customerEmail" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="אימייל לקוח" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="-0.028,0.356"/>
+        <TextBox x:Name="customerAdress" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CustomerAdress}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="כתובת לקוח" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="-0.011,0.394"/>
+        <TextBox x:Name="customerName" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding CustomerName}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="שם לקוח" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
+        <TextBox x:Name="totalPrice" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TotalPrice}" VerticalAlignment="Top" Width="120"/>
+        <Label Content=" מחיר סופי " HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+        <ListView x:Name="productsCatalogList" ItemsSource="{Binding Items}" ItemTemplate="{StaticResource productItemTemplate}" HorizontalContentAlignment="Stretch" />
+        <Button x:Name="orderConfirmation" Content="אישור הזמנה" HorizontalAlignment="Left" Margin="336,347,0,0" VerticalAlignment="Top" Click="orderConfirmation_Click"
+                                  Height="60" Width="160" FontSize="22" Background="SteelBlue" FontWeight="Bold" Foreground="#FFFBF5F5" BorderBrush="#FFFBF5F5"/>
+        <Image HorizontalAlignment="Left" Height="140" Margin="10,337,0,0" VerticalAlignment="Top" Width="379" Source="/1111.jpg"/>
+
+    </StackPanel>
+
+
 </Window>

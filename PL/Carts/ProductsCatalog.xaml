@@ -37,11 +37,11 @@
             </Grid>
         </DataTemplate>
     </Window.Resources>
-    <StackPanel>
+    <StackPanel Margin="0,10,0,0">
 
         <ComboBox x:Name="categorySelector" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120" SelectionChanged="categorySelector_SelectionChanged"/>
         <ListView x:Name="productsCatalogList" ItemsSource="{Binding}" ItemTemplate="{StaticResource productItemTemplate}" HorizontalContentAlignment="Stretch" />
-        <Button Content="order submit" Click="orderSubmit_Click" />
+        <Button Content="order submit" Click="orderSubmit_Click" RenderTransformOrigin="0.504,3.321" Width="218" />
     </StackPanel>
 </Window>
 
