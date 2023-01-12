@@ -21,7 +21,7 @@
         <Label Content="מלאי" HorizontalAlignment="Left" Margin="363,186,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="amount" HorizontalAlignment="Left" Margin="163,217,0,0" TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <Label Content="כמות" HorizontalAlignment="Left" Margin="363,217,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
-        <Image HorizontalAlignment="Left" Height="151" Margin="34,302,0,0" VerticalAlignment="Top" Width="421" Source="/1111.jpg"/>
+        <Image HorizontalAlignment="Left" Margin="34,302,0,0" VerticalAlignment="Top" />
 
     </Grid>
 </Window>

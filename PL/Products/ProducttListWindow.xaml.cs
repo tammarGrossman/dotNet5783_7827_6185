@@ -22,7 +22,7 @@ namespace PL
 
         // Using a DependencyProperty as the backing store for prods.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty productsProperty =
-            DependencyProperty.Register("products", typeof(ObservableCollection<BO.ProductForList>), typeof(Window), new PropertyMetadata(null));
+            DependencyProperty.Register("products", typeof(ObservableCollection<BO.ProductForList>), typeof(ProductListWindow), new PropertyMetadata(null));
 
         /// <summary>
         /// show all products
@@ -52,6 +52,7 @@ namespace PL
 
             else
             {
+
                 var help = bl!.Product.GetAll();
                 products = help == null ? new() : new(help);
             }
@@ -64,6 +65,11 @@ namespace PL
         private void addNewProduct_Click(object sender, RoutedEventArgs e)
         {
             new ProductWindow().ShowDialog();
+
+            var help = bl!.Product.GetAll();
+            products = help == null ? new() : new(help);
+            categorySelector.SelectedItem = BO.Category.None;
+
         }
         /// <summary>
         /// open window to update product

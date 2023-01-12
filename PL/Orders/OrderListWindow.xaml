@@ -22,7 +22,7 @@
                 </GridView>
             </ListView.View>
        </ListView>
-        <Image HorizontalAlignment="Left" Height="151" Margin="34,302,0,0" VerticalAlignment="Top" Width="421" Source="/1111.jpg"/>
+        <Image HorizontalAlignment="Left" Margin="34,302,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

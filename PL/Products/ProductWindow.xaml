@@ -8,7 +8,7 @@
         Title="Product" Height="450" Width="640"
         DataContext="{Binding Path=product  ,RelativeSource={RelativeSource self}}">
     <Grid >
-        <Button Content="submit product"  HorizontalAlignment="Left" Margin="196,284,0,0" Padding="5" VerticalAlignment="Top" x:Name="submitProduct" Click="submitProduct_Click"   Height="60" Width="192" FontSize="22" Background="SteelBlue" FontWeight="Bold" Foreground="#FFFBF5F5" BorderBrush="#FFFBF5F5"/>
+        <Button Content="submit product"  HorizontalAlignment="Left" Margin="196,284,0,0" Padding="5" VerticalAlignment="Top" x:Name="submitProduct" Click="submitProduct_Click"   />
         <ComboBox HorizontalAlignment="Left" Margin="288,178,0,0" VerticalAlignment="Top" Width="120" x:Name="CategorySelector" Height="26" SelectedItem="{Binding Category_ }" />
         <Label Content="in stock" HorizontalAlignment="Left" Margin="196,141,0,0"  VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="288,141,0,0" TextWrapping="Wrap" Text="{Binding InStock , Mode=TwoWay }" VerticalAlignment="Top" Width="120" x:Name="inStock" Height="26" Padding="5"/>
@@ -19,7 +19,7 @@
         <Label Content="category" HorizontalAlignment="Left" Margin="196,178,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.445,0.443"/>
         <TextBox HorizontalAlignment="Left" Margin="288,217,0,0" TextWrapping="Wrap" Text="{Binding Price  , Mode=TwoWay }"  VerticalAlignment="Top" Width="120" x:Name="price" Height="26"/>
         <Label Content="price" HorizontalAlignment="Left" Margin="196,217,0,0" VerticalAlignment="Top"/>
-        <Image HorizontalAlignment="Left" Height="151" Margin="10,314,0,0" VerticalAlignment="Top" Width="421" Source="/1111.jpg"/>
+        <Image HorizontalAlignment="Left"  Margin="10,314,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

@@ -4,8 +4,21 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style x:Key="btn" TargetType="Button">
-            <Setter Property="BorderBrush" Value="Black"/>
-        </Style>    
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="SteelBlue" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontFamily" Value="Dubai Medium" />
+            <Setter Property="FontSize" Value="22 px" />
+            <Setter Property="BorderBrush" Value="#FFFBF5F5" />
+            <Setter Property="Width" Value="192"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Foreground" Value="#FFFBF5F5"/>
+
+        </Style>
+        <Style TargetType="Image">
+         <Setter Property="Width" Value="379"/>
+            <Setter Property="Height" Value="140"/>
+            <Setter Property="Source" Value="1111.jpg"/>
+        </Style>
     </Application.Resources>
 </Application>

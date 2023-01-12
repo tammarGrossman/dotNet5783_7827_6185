@@ -38,7 +38,6 @@ namespace PL.Orders
         public NumOfOrder()
         {
             InitializeComponent();
-            orderID = 19;
         }
 
         private void moveToTrackOrder_Click(object sender, RoutedEventArgs e)

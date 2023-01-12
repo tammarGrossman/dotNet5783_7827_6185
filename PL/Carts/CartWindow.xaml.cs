@@ -35,7 +35,7 @@ namespace PL.Carts
             DependencyProperty.Register("fullCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
 
 
-     
+
         public CartWindow()
         {
             InitializeComponent();
@@ -55,7 +55,7 @@ namespace PL.Carts
         {
             try
             {
-                int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
+                int id = ((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductID;
                 fullCart = bl!.Cart.Update(fullCart, id, 1);
                 MessageBox.Show($"the product {fullCart} added sucsessfuly to the cart ");
             }
@@ -75,9 +75,10 @@ namespace PL.Carts
         {
             try
             {
-                int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
+                int id = ((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductID;
+               fullCart= bl!.Cart.Update(fullCart, id, -1);
+                MessageBox.Show($"the product {fullCart} decrease sucsessfuly to the cart ");
 
-                bl!.Cart.Update(fullCart, id, -1);
             }
 
             catch (BO.Exceptions.NotExist ex)
@@ -94,9 +95,11 @@ namespace PL.Carts
         {
             try
             {
-                int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
-                int index = fullCart.Items.FindIndex(x => x.ID == id);
-                bl!.Cart.Update(fullCart, id, -(fullCart.Items[index].Amount));
+                int id = ((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductID;
+                int index = fullCart.Items.FindIndex(x => x.ProductID == id);
+               fullCart= bl!.Cart.Update(fullCart, id, -(fullCart.Items[index].Amount));
+                MessageBox.Show($"the product {fullCart} delete sucsessfuly to the cart ");
+
             }
 
             catch (BO.Exceptions.NotExist ex)

@@ -20,9 +20,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="ShowOrderDetails"   Content="לצפיה בפרטי ההזמנה" HorizontalAlignment="Left" Margin="21,39,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.298,0.483"  Click="ShowOrderDetails_Click"
-                  Height="60" Width="238" FontSize="22" Background="SteelBlue" FontWeight="Bold" Foreground="#FFFBF5F5" BorderBrush="#FFFBF5F5"/>
+        <Button x:Name="ShowOrderDetails"   Content="לצפייה בפרטים" HorizontalAlignment="Left" Margin="21,39,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.298,0.483"  Click="ShowOrderDetails_Click"/>
 
-        <Image HorizontalAlignment="Left" Height="151" Margin="34,302,0,0" VerticalAlignment="Top" Width="421" Source="/1111.jpg"/>
+        <Image HorizontalAlignment="Left"  Margin="34,302,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

@@ -1,6 +1,8 @@
 ﻿
 using BlApi;
+using System.Diagnostics;
 using System.Security.Cryptography;
+using System.Xml.Linq;
 
 namespace BlImplementation;
 internal class Cart : ICart
@@ -18,30 +20,42 @@ internal class Cart : ICart
     /// <exception cref="NotLegal"></exception>
     public BO.Cart Add(BO.Cart c, int id)
     {
-        //BO.Validation.NameAdress(c.CustomerName ?? "") && BO.Validation.NameAdress(c.CustomerAdress ?? "") && BO.Validation.Email(c.CustomerEmail ?? "") &&
         if ( BO.Validation.Price(c.TotalPrice) && BO.Validation.ID(id))
         {
             try
             {
+                BO.Cart cart = new BO.Cart();
                 BO.OrderItem boOrderItem ;
                 DO.Product doProduct = dal!.Product.Get(id);
                 int index = c.Items.FindIndex(x => x?.ProductID == id);
                 if (index == -1)
                 {
+                    cart.CustomerAdress = c.CustomerAdress;
+                    cart.CustomerEmail=c.CustomerEmail;
+                    cart.CustomerName=c.CustomerName;
+                    cart.Items = new(c.Items);   
                     try
                     {
                         DO.Product product = dal.Product.GetByCon(x => x?.ID == id && x?.InStock > 0);
-                        boOrderItem = new BO.OrderItem()
-                        {
-                            ID = id,
-                            ProductID = product.ID,
-                            Name = product.Name,
-                            Price = product.Price,
-                            TotalPrice = product.Price,
-                            Amount = 1
-                        };
-                        c.Items.Add(boOrderItem);
-
+                        //boOrderItem = new BO.OrderItem()
+                        //{
+                        //    ID = id,
+                        //    ProductID = product.ID,
+                        //    Name = product.Name,
+                        //    Price = product.Price,
+                        //    TotalPrice = product.Price,
+                        //    Amount = 1
+                        //};
+                        //dal.OrderItem.Add(new DO.OrderItem {                         
+                        //    ProductID = product.ID,
+                         
+                        //    Price = product.Price,
+                           
+                        //    Amount = 1
+                        //});
+                    
+                        //cart.Items.Add(boOrderItem);
+                       
                       
                     }
 
@@ -49,10 +63,10 @@ internal class Cart : ICart
                     {
                         throw new BO.Exceptions.NotExist($"the product id {id} does not exist");
                     }
-                    c.TotalPrice = c.Items.Sum(x => x?.TotalPrice??0);
+                    cart.TotalPrice = cart.Items.Sum(x => x?.TotalPrice??0);
                 }
+                return cart;
 
-                return c;
 
             }
 
@@ -81,17 +95,21 @@ internal class Cart : ICart
         if (BO.Validation.ID(id))
             try
             {
+                BO.Cart cart = new BO.Cart();
                 int pInStock = 0;
                 int newQuantity = 0;
-                BO.OrderItem orderItem= c.Items.FirstOrDefault(x=>x?.ID==id) ?? throw new BO.Exceptions.NotExist("the product item does not exist in the cart");
+                BO.OrderItem orderItem= c.Items.FirstOrDefault(x=>x?.ProductID==id) ?? throw new BO.Exceptions.NotExist("the product item does not exist in the cart");
                 pInStock = dal!.Product.Get(orderItem.ProductID).InStock;
                 newQuantity = orderItem.Amount + quantity;
-
+                cart.CustomerAdress = c.CustomerAdress;
+                cart.CustomerEmail = c.CustomerEmail;
+                cart.CustomerName = c.CustomerName;
+                cart.Items = new(c.Items);
                 if (newQuantity < 0)
                     throw new BO.Exceptions.NotLegal("your cart does not contain this amount of this item");
 
                 if (newQuantity == 0)
-                    c.Items.Remove(c.Items.FirstOrDefault(x => x?.ProductID == id));
+                    cart.Items.Remove(cart.Items.FirstOrDefault(x => x?.ProductID == id));
 
                 else if (newQuantity > pInStock)
                     throw new BO.Exceptions.NotLegal("there is not enough amount of this item in the store");
@@ -99,10 +117,10 @@ internal class Cart : ICart
                 else
                 {
                     orderItem.Amount = newQuantity;
-                    orderItem.TotalPrice = orderItem.Price * orderItem.Amount;
+                    orderItem.TotalPrice = orderItem.Price * orderItem.Amount;                   
                 }
-                c.TotalPrice = c.Items.Sum(x => x?.TotalPrice??0);
-                return c;
+                cart.TotalPrice = cart.Items.Sum(x => x?.TotalPrice??0);
+                return cart;
             }
 
             catch (DO.NotExist ex)

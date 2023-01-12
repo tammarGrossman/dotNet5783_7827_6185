@@ -46,9 +46,16 @@ namespace PL.Carts
 
         private void moveToCart_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show($"{cart}");
-             ProductsCatalog.c=cart;
-            new Carts.CartWindow().Show();
+            if (cart.CustomerEmail != "" && cart.CustomerName != "" && cart.CustomerAdress != "")
+            {
+                MessageBox.Show($"{cart}");
+                ProductsCatalog.c = cart;
+                new Carts.CartWindow().Show();
+            }
+            else
+            {
+                MessageBox.Show("one or more details are missing");
+            }
         }
     }
 }

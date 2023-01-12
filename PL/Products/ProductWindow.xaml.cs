@@ -81,6 +81,7 @@ namespace PL
                             bl!.Product.Add(product);
                             add = false;
                             MessageBox.Show("the product added succesfully");
+                            
                             this.Close();
                         }
                         catch (Exception ex)
