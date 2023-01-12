@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BO;
+using PL.Products;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,8 +44,18 @@ namespace PL.Orders
 
         private void moveToTrackOrder_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show($"{orderID}");
-            new TrackOrderWindow(orderID).Show();
+            //change which vakue
+            if (orderID != -1 )
+            {
+                MessageBox.Show($"{orderID}");
+                new TrackOrderWindow(orderID).Show();
+            }
+            else
+            {
+                MessageBox.Show("id detail is missing");
+            }
+
+
         }
         
 

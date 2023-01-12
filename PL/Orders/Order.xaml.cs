@@ -63,6 +63,26 @@ namespace PL
             };
 
         }
+      
+
+       
+       
+
+        private void sentDateUpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            order = bl!.Order.UpdateSend(order.ID);
+        }
+        private void recievedDateUpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                order = bl!.Order.UpdateSupply(order.ID);
+            }
+            catch (Exception x)
+            {
+                MessageBox.Show(x.Message);
+            }
+        }
 
         /// <summary>
         /// submit product to add or apdate
@@ -70,9 +90,9 @@ namespace PL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <exception cref="Exception"></exception>
-         
-       // private void submitProduct_Click(object sender, RoutedEventArgs e)
-       // {
+
+        // private void submitProduct_Click(object sender, RoutedEventArgs e)
+        // {
         //    BO.Product p = new BO.Product();
         //    bool missing = false;
         //    //למלא פרטים מהטופס
@@ -129,6 +149,6 @@ namespace PL
         //        missing = false;
         //    }
         //}
- //   }
-}
+        //   }
+    }
 }

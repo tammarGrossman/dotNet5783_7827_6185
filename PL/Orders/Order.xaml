@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Order" Height="542" Width="800"
+        Title="Order" Height="542" Width="800" 
       DataContext="{Binding Path=order, RelativeSource={RelativeSource self}}">
+    <Window.Resources>
+        <local:InputEnabledConverter x:Key="inputEnabledConverter" />
+    </Window.Resources>
     <Grid Margin="0,10,-258,-276">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="77*"/>
@@ -17,24 +20,27 @@
             <RowDefinition Height="57*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="id" HorizontalAlignment="Left" Margin="227,24,0,0" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="ת.ז" HorizontalAlignment="Left" Margin="452,20,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="customerEmail" HorizontalAlignment="Left" Margin="227,121,0,0" TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="אימייל לקוח" HorizontalAlignment="Left" Margin="443,113,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="customerAdress" HorizontalAlignment="Left" Margin="227,90,0,0" TextWrapping="Wrap" Text="{Binding CustomerAdress}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="כתובת לקוח" HorizontalAlignment="Left" Margin="443,82,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="customerName" HorizontalAlignment="Left" Margin="227,55,0,0" TextWrapping="Wrap" Text="{Binding CustomerName }" VerticalAlignment="Top" Width="120"/>
-        <Label Content="שם לקוח" HorizontalAlignment="Left" Margin="451,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
-        <TextBox x:Name="status" HorizontalAlignment="Left" Margin="227,240,0,0" TextWrapping="Wrap" Text="{Binding Status}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="סטטוס" HorizontalAlignment="Left" Margin="462,234,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.654,-0.054"/>
-        <TextBox  x:Name="totalPrice" HorizontalAlignment="Left" Margin="227,278,0,0" TextWrapping="Wrap" Text="{Binding TotalPrice}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="מחיר סופי" HorizontalAlignment="Left" Margin="452,269,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="paymentDate" HorizontalAlignment="Left" Margin="227,146,0,0" TextWrapping="Wrap" Text="{Binding PaymentDate}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="תאריך ביצוע הזמנה" HorizontalAlignment="Left" Margin="403,144,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="sentDate" HorizontalAlignment="Left" Margin="227,176,0,0" TextWrapping="Wrap" Text="{Binding ShipDate}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="תאריך שליחת הזמנה" HorizontalAlignment="Left" Margin="403,172,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="recievedDate" HorizontalAlignment="Left" Margin="227,207,0,0" TextWrapping="Wrap" Text="{Binding DeliveryDate}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="תאריך קבלת הזמנה" HorizontalAlignment="Left" Margin="403,203,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
+        <TextBox x:Name="id" HorizontalAlignment="Left" Margin="431,27,0,0" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="ת.ז" HorizontalAlignment="Left" Margin="656,23,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="customerEmail" HorizontalAlignment="Left" Margin="431,124,0,0" TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="אימייל לקוח" HorizontalAlignment="Left" Margin="647,116,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="customerAdress" HorizontalAlignment="Left" Margin="431,93,0,0" TextWrapping="Wrap" Text="{Binding CustomerAdress}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="כתובת לקוח" HorizontalAlignment="Left" Margin="647,85,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="customerName" HorizontalAlignment="Left" Margin="431,58,0,0" TextWrapping="Wrap" Text="{Binding CustomerName }" VerticalAlignment="Top" Width="120"/>
+        <Label Content="שם לקוח" HorizontalAlignment="Left" Margin="655,54,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
+        <TextBox x:Name="status" HorizontalAlignment="Left" Margin="431,243,0,0" TextWrapping="Wrap" Text="{Binding Status}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="סטטוס" HorizontalAlignment="Left" Margin="666,237,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.654,-0.054"/>
+        <TextBox  x:Name="totalPrice" HorizontalAlignment="Left" Margin="431,281,0,0" TextWrapping="Wrap" Text="{Binding TotalPrice}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="מחיר סופי" HorizontalAlignment="Left" Margin="656,272,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="paymentDate" HorizontalAlignment="Left" Margin="431,149,0,0" TextWrapping="Wrap" Text="{Binding PaymentDate}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="תאריך ביצוע הזמנה" HorizontalAlignment="Left" Margin="607,147,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="sentDate" HorizontalAlignment="Left" Margin="431,179,0,0" TextWrapping="Wrap" Text="{Binding ShipDate}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="תאריך שליחת הזמנה" HorizontalAlignment="Left" Margin="607,175,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="sentDateUpdateButton" IsEnabled="{Binding ElementName=sentDate ,Path=Text,Converter={StaticResource inputEnabledConverter}}"  HorizontalAlignment="Left" Margin="220,160,0,0" VerticalAlignment="Top" Width="91" Content="update send" Height="37" Click="sentDateUpdateButton_Click"/>
+        <TextBox x:Name="recievedDate" HorizontalAlignment="Left" Margin="431,210,0,0" TextWrapping="Wrap" Text="{Binding DeliveryDate}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="תאריך קבלת הזמנה" HorizontalAlignment="Left" Margin="607,206,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
+        <Button   x:Name= "recievedDateUpdateButton" IsEnabled="{Binding ElementName=recievedDate,Path=Text,Converter={StaticResource inputEnabledConverter}}" HorizontalAlignment="Left" Margin="220,201,0,0" VerticalAlignment="Top" Height="31" Width="91"  Content="update" Click="recievedDateUpdateButton_Click" >
+        </Button>
         <ListView x:Name="orderItemsList" ItemsSource="{Binding Items}" Margin="24,314,33,183">
             <ListView.View>
                 <GridView>

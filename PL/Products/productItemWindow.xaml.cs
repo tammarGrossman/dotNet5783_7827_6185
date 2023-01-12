@@ -41,6 +41,7 @@ namespace PL.Products
         public productItemWindow(int id)
         {
             InitializeComponent();
+
             BO.Product p= bl!.Product.Get(id);  
             productItem = new BO.ProductItem()
             {

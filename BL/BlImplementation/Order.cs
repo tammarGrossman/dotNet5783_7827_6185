@@ -200,11 +200,13 @@ internal class Order : IOrder
     {
         try
         {
-
             DO.Order dalOrder = dal!.Order.Get(id);
             BO.Order blOrder;
             IEnumerable<DO.OrderItem?> orderItems = dal!.OrderItem.GetProductsInOrder(id);
-            if (dalOrder.DeliveryDate == DateTime.MinValue)
+            //other exception
+            if (dalOrder.ShipDate == null)
+                throw new Exception("Delivery date can not be updated before shipping date");
+            if (dalOrder.DeliveryDate == null)
             {
 
                 dalOrder.DeliveryDate = DateTime.Now;

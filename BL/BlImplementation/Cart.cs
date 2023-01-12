@@ -37,26 +37,30 @@ internal class Cart : ICart
                     try
                     {
                         DO.Product product = dal.Product.GetByCon(x => x?.ID == id && x?.InStock > 0);
-                        //boOrderItem = new BO.OrderItem()
-                        //{
-                        //    ID = id,
-                        //    ProductID = product.ID,
-                        //    Name = product.Name,
-                        //    Price = product.Price,
-                        //    TotalPrice = product.Price,
-                        //    Amount = 1
-                        //};
+
+                        //החזרתי כדי שיעבוד בינתיים צריך לשנותת
+                        boOrderItem = new BO.OrderItem()
+                        {
+                            ID = id,
+                            ProductID = product.ID,
+                            Name = product.Name,
+                            Price = product.Price,
+                            TotalPrice = product.Price,
+                            Amount = 1
+                        };
+
+
                         //dal.OrderItem.Add(new DO.OrderItem {                         
                         //    ProductID = product.ID,
-                         
+
                         //    Price = product.Price,
-                           
+
                         //    Amount = 1
                         //});
-                    
-                        //cart.Items.Add(boOrderItem);
-                       
-                      
+
+                        cart.Items.Add(boOrderItem);
+
+
                     }
 
                     catch (DO.NotExist ex)
