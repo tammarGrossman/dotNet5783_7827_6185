@@ -37,7 +37,15 @@ internal class Cart : ICart
                     try
                     {
                         DO.Product product = dal.Product.GetByCon(x => x?.ID == id && x?.InStock > 0);
-
+                        //doOrderItem = new DO.OrderItem()
+                        //{
+                        //    ProductID = product.ID,
+                        //    Name = product.Name,
+                        //    Price = product.Price,
+                        //    TotalPrice = product.Price,
+                        //    Amount = 1
+                        //};
+                        //dal.OrderItem.Add(doOrderItem)
                         //החזרתי כדי שיעבוד בינתיים צריך לשנותת
                         boOrderItem = new BO.OrderItem()
                         {
@@ -48,7 +56,7 @@ internal class Cart : ICart
                             TotalPrice = product.Price,
                             Amount = 1
                         };
-
+                       
 
                         //dal.OrderItem.Add(new DO.OrderItem {                         
                         //    ProductID = product.ID,

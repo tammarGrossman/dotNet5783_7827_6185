@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button  x:Name="managerWindowBut" Content="מנהל" HorizontalAlignment="Left" Margin="101,239,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.1,0.663" Click="managerWindowBut_Click"  />
+        <Button  x:Name="managerWindowBut" Content="מנהל" HorizontalAlignment="Left" Margin="71,237,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.1,0.663" Click="managerWindowBut_Click"  />
         <Button  x:Name="orderWindowBut"  Content="להזמנה חדשה" HorizontalAlignment="Center" Margin="0,239,0,0" VerticalAlignment="Top" Click="orderWindowBut_Click" RenderTransformOrigin="1.121,-2.042"/>
         <Button  x:Name="trackOrderWindow" Content="למעקב הזמנה" HorizontalAlignment="Left" Margin="555,239,0,0" VerticalAlignment="Top" Click="trackOrderWindow_Click" />
         <Image HorizontalAlignment="Left"  Margin="34,302,0,0" VerticalAlignment="Top"/>
