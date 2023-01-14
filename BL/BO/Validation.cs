@@ -66,7 +66,8 @@ public static class Validation
     /// <returns></returns>
     public static bool ID(int id)
     {
-        return id < 0 ? false : true;
+        string idP = Convert.ToString(id);
+        return idP.Length >= 6 ? true : false;
     }
     public static bool Price(double p)
         {

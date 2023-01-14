@@ -40,7 +40,7 @@ namespace PL.Products
         public ProductsCatalog()
         {
             InitializeComponent();
-            var help = bl!.Product.GetAllPI();
+                var help = bl!.Product.GetAllPI();
             products = help == null ? new() : new(help);
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }

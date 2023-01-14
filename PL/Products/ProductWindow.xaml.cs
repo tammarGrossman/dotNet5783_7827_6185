@@ -42,7 +42,14 @@ namespace PL
             InitializeComponent();
             update = true;
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            product = bl!.Product.Get(id); 
+            try
+            {
+                product = bl!.Product.Get(id);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         /// <summary>

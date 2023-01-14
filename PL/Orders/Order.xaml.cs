@@ -47,7 +47,10 @@ namespace PL
         public Order(int id)
         {
             InitializeComponent();
-            var o = bl!.Order.Get(id);
+            try
+            {
+                var o = bl!.Order.Get(id);
+          
             order = new BO.Order()
             {
                 ID = id,
@@ -61,7 +64,11 @@ namespace PL
                 TotalPrice = o.TotalPrice,
                 Items = o.Items
             };
-
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
       
 
@@ -70,7 +77,14 @@ namespace PL
 
         private void sentDateUpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            order = bl!.Order.UpdateSend(order.ID);
+            try
+            {
+                order = bl!.Order.UpdateSend(order.ID);
+            }
+            catch (Exception x)
+            {
+                MessageBox.Show(x.Message);
+            }
         }
         private void recievedDateUpdateButton_Click(object sender, RoutedEventArgs e)
         {

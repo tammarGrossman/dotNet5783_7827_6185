@@ -45,7 +45,7 @@ namespace PL.Orders
         private void moveToTrackOrder_Click(object sender, RoutedEventArgs e)
         {
             //change which value
-            if (orderID != -1 )
+            if (Convert.ToString(orderID)!= "")
             {
                 MessageBox.Show($"{orderID}");
                 new TrackOrderWindow(orderID).Show();

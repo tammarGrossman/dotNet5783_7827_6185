@@ -49,7 +49,6 @@ internal class Cart : ICart
                         //החזרתי כדי שיעבוד בינתיים צריך לשנותת
                         boOrderItem = new BO.OrderItem()
                         {
-                            ID = id,
                             ProductID = product.ID,
                             Name = product.Name,
                             Price = product.Price,

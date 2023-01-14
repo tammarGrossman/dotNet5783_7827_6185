@@ -45,7 +45,23 @@ namespace PL.Carts
         }
         private void orderConfirmation_Click(object sender, RoutedEventArgs e)
         {
-            bl!.Cart.OrderConfirmation(fullCart);
+            try
+            {
+                bl!.Cart.OrderConfirmation(fullCart);
+            }
+            catch (BO.Exceptions.NotExist ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            catch (BO.Exceptions.NotLegal ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (BO.Exceptions.Duplication ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             MessageBox.Show("the cart confirm succesfuly");
             this.Close();
             new MainWindow().Show();    
