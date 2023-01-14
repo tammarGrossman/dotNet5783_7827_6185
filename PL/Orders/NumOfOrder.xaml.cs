@@ -44,7 +44,7 @@ namespace PL.Orders
 
         private void moveToTrackOrder_Click(object sender, RoutedEventArgs e)
         {
-            //change which vakue
+            //change which value
             if (orderID != -1 )
             {
                 MessageBox.Show($"{orderID}");
