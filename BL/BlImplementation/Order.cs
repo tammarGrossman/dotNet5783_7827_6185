@@ -273,13 +273,13 @@ internal class Order : IOrder
                 orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.OrderDate, "Order delivered"));
             }
 
-            else if (order.ShipDate != null)
+            if (order.ShipDate != null)
             {
                 orderTracking.Status = BO.OrderStatus.shiped;
                 orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.ShipDate, "Order Shiped"));
             }
 
-            else
+            if(order.OrderDate != null)
             {
                 orderTracking.Status = BO.OrderStatus.payment;
                 orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.OrderDate, "Order Payment"));

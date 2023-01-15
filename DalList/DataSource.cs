@@ -45,7 +45,7 @@ static internal class DataSource
             {
                 ts.Add(new TimeSpan(rand.Next(1, 10), rand.Next(0, 24), rand.Next(0, 60), rand.Next(0, 60)));
                 o.DeliveryDate = o.ShipDate + ts;
-            }
+        }
            o.ID = Config.LastOrder;
            o.CustomerAdress = customersAdresses[i];
            o.CustomerEmail = customersEmails[i];
@@ -112,7 +112,5 @@ private static void createOrderItem()
         ///  get the last key of order item
         /// </summary>
         public static int LastOrderItem { get=>lastOrderItem++;}
-
-
     }
 }

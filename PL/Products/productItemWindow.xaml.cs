@@ -28,7 +28,7 @@ namespace PL.Products
             get { return (BO.ProductItem)GetValue(productProperty); }
             set { SetValue(productProperty, value); }
         }
-        // Using a DependencyProperty as the backing store for order.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for productItem.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty productProperty =
             DependencyProperty.Register("productItem", typeof(BO.ProductItem), typeof(Window), new PropertyMetadata(null));
 

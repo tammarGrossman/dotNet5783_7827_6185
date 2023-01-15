@@ -40,13 +40,18 @@ namespace PL.Products
         public ProductsCatalog()
         {
             InitializeComponent();
-                var help = bl!.Product.GetAllPI();
+            var help = bl!.Product.GetAllPI();
             products = help == null ? new() : new(help);
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
-        private void orderSubmit_Click(object sender, RoutedEventArgs e) => new Carts.CustomerWindow().Show();
-            
+        private void orderSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            if (products == null)
+                MessageBox.Show("there is no items in the cart");
+            else
+                new Carts.CustomerWindow().Show();
+        }
 
         private void productsCatalogList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -55,9 +60,9 @@ namespace PL.Products
             {
                 try
                 {
-                    BO.Product p = bl!.Product.Get(((BO.ProductForList)lv!.SelectedItem).ID);                        
+                    BO.Product p = bl!.Product.Get(((BO.ProductForList)lv!.SelectedItem).ID);
                     new productItemWindow(p.ID).ShowDialog();
-                   // var help = bl!.Product.GetAll();
+                    // var help = bl!.Product.GetAll();
                     //products = help == null ? new() : new(help);
                     //categorySelector.SelectedItem = BO.Category.None;
 
@@ -75,7 +80,7 @@ namespace PL.Products
             if (cat.ToString() != "None")
             {
                 var help = bl!.Product.GetAllPI(x => x?.Category_ == cat);
-                products = help == null ? new() : new(help);    
+                products = help == null ? new() : new(help);
             }
 
             else
@@ -92,17 +97,17 @@ namespace PL.Products
                 int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
                 int index = c.Items.FindIndex(x => x?.ID == id);
                 if (index != -1)//found
-                   c= bl!.Cart.Update(c, id, 1);
+                    c = bl!.Cart.Update(c, id, 1);
 
                 else
-                   c= bl!.Cart.Add(c, id);
-                
+                    c = bl!.Cart.Add(c, id);
+
                 MessageBox.Show($"the product {c} added sucsessfuly to the cart ");
             }
 
-            catch(BO.Exceptions.NotExist ex)
+            catch (BO.Exceptions.NotExist ex)
             {
-               MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
 
             catch (BO.Exceptions.NotLegal ex)
@@ -130,6 +135,6 @@ namespace PL.Products
                 MessageBox.Show(ex.Message);
             }
         }
-        
+
     }
 }

@@ -60,11 +60,21 @@ public static class Validation
 
     }
     /// <summary>
-    /// the function check the validation of id 
+    /// the function check the validation of order and orderItem id 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     public static bool ID(int id)
+    {  
+        return id >= 1 ? true : false;
+    }
+
+    /// <summary>
+    /// the function check the validation of product id 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public static bool ProductID(int id)
     {
         string idP = Convert.ToString(id);
         return idP.Length >= 6 ? true : false;

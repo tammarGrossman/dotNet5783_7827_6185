@@ -25,15 +25,15 @@ namespace PL.Orders
 
 
 
-        public ObservableCollection<BO.OrderItem> orderItems
-        {
-            get { return (ObservableCollection<BO.OrderItem>)GetValue(orderItemsProperty); }
-            set { SetValue(orderItemsProperty, value); }
-        }
+        //public ObservableCollection<BO.OrderItem> orderItems
+        //{
+        //    get { return (ObservableCollection<BO.OrderItem>)GetValue(orderItemsProperty); }
+        //    set { SetValue(orderItemsProperty, value); }
+        //}
 
-        // Using a DependencyProperty as the backing store for orderItems.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty orderItemsProperty =
-            DependencyProperty.Register("orderItems", typeof(ObservableCollection<BO.OrderItem>), typeof(Window), new PropertyMetadata(null));
+        //// Using a DependencyProperty as the backing store for orderItems.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty orderItemsProperty =
+        //    DependencyProperty.Register("orderItems", typeof(ObservableCollection<BO.OrderItem>), typeof(Window), new PropertyMetadata(null));
 
 
 
@@ -59,8 +59,9 @@ namespace PL.Orders
             {
                 trackOrder = bl!.Order.TrackOrder(id);
             }
-            catch (Exception ex) {
 
+            catch (Exception ex) 
+            {
                 trackOrder = null; 
                 MessageBox.Show(ex.Message,"invalid id");
             }

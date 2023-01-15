@@ -62,11 +62,9 @@ internal class DalOrderItem : IOrderItem
     /// <returns></returns>
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? Condition = null)
     {
-
-        if (Condition != null)
-            return from orderItem in DataSource.orderItems
-                   where Condition(orderItem)
-                   select orderItem;
+        return from orderItem in DataSource.orderItems
+               where Condition(orderItem)
+               select orderItem;
 
         return from orderItem in DataSource.orderItems
                select orderItem; ;

@@ -22,11 +22,11 @@ namespace PL
         public static readonly DependencyProperty productProperty =
             DependencyProperty.Register("product", typeof(BO.Product), typeof(Window), new PropertyMetadata(null));
 
-     
-    /// <summary>
-    /// to add product
-    /// </summary>
-    public ProductWindow()
+
+        /// <summary>
+        /// to add product
+        /// </summary>
+        public ProductWindow()
         {
             product = new BO.Product();
             InitializeComponent();
@@ -46,7 +46,7 @@ namespace PL
             {
                 product = bl!.Product.Get(id);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -60,7 +60,7 @@ namespace PL
         /// <exception cref="Exception"></exception>
         private void submitProduct_Click(object sender, RoutedEventArgs e)
         {
-           // BO.Product p = new BO.Product();
+            // BO.Product p = new BO.Product();
             //bool missing = false;
             //למלא פרטים מהטופס
             //if (name.Text != "" && price.Text != "" && id.Text != "" && inStock.Text != "" && CategorySelector.SelectedItem.ToString() != "" &&  id.Text.Length >= 6)
@@ -80,37 +80,48 @@ namespace PL
             //{
             //    if (p.Price > 0 && p.InStock > 0 && CategorySelector.SelectedItem.ToString()!="None")
             //    {
-                    if (add)
-                    {//add case
-                        try
-                        {
-                            MessageBox.Show($"{product}");
-                            bl!.Product.Add(product);
-                            add = false;
-                            MessageBox.Show("the product added succesfully");
-                            
-                            this.Close();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-                    }
-                    else if (update)//update case
+            if (add)
+            {//add case
+                try
+                {
+                    if (Convert.ToString(product.Category_ )!= ""&&Convert.ToString(product.Category_) != "None" && Convert.ToString(product.ID)!= ""&& product.ID != 0 && Convert.ToString(product.InStock) != "" && product.InStock != 0 && product.Name != "" && Convert.ToString(product.Price) != "" && product.Price !=0)
                     {
-                        try
-                        {
-                            bl!.Product.Update(product);
-                            update = false;
-                            MessageBox.Show("the product updated succesfully");
-                            this.Close();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
+                        bl!.Product.Add(product);
+                        add = false;
+                        MessageBox.Show("the product added succesfully");
+
+                        this.Close();
                     }
-               // }
+
+                    else
+                        MessageBox.Show("there are one or more missing details");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else if (update)//update case
+            {
+                try
+                {
+                    if (Convert.ToString(product.Category_) != "" && Convert.ToString(product.Category_) != "None" && Convert.ToString(product.ID) != "" && product.ID != 0 && Convert.ToString(product.InStock) != "" && product.InStock != 0 && product.Name != "" && Convert.ToString(product.Price) != "" && product.Price != 0)
+                    {
+                        bl!.Product.Update(product);
+                        update = false;
+                        MessageBox.Show("the product updated succesfully");
+                        this.Close();
+                    }
+
+                    else
+                        MessageBox.Show("there are one or more missing details");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            // }
             //    else
             //    {
             //        MessageBox.Show("one or more of your details of product is in correct");

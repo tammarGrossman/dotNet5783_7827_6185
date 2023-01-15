@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Carts"
         mc:Ignorable="d"
-        Title="CartWindow" Height="450" Width="800"
+        Title="CartWindow" Height="751" Width="800"
         DataContext="{Binding Path=fullCart, RelativeSource={RelativeSource self}}">
 
     <Window.Resources>
@@ -39,7 +39,15 @@
             </Grid>
         </DataTemplate>
     </Window.Resources>
-    <StackPanel Margin="10,10,10,14">
+    <StackPanel Margin="12,28,8,0" RenderTransformOrigin="0.5,0.5" Height="694" VerticalAlignment="Top">
+        <StackPanel.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform/>
+                <SkewTransform AngleX="0.89"/>
+                <RotateTransform/>
+                <TranslateTransform X="3.184"/>
+            </TransformGroup>
+        </StackPanel.RenderTransform>
         <TextBox x:Name="customerEmail" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Top" Width="120"/>
         <Label Content="אימייל לקוח" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="-0.028,0.356"/>
         <TextBox x:Name="customerAdress" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CustomerAdress}" VerticalAlignment="Top" Width="120"/>
@@ -48,8 +56,8 @@
         <Label Content="שם לקוח" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
         <TextBox x:Name="totalPrice" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TotalPrice}" VerticalAlignment="Top" Width="120"/>
         <Label Content=" מחיר סופי " HorizontalAlignment="Left"  VerticalAlignment="Top"/>
-        <ListView x:Name="productsCatalogList" ItemsSource="{Binding Items}" ItemTemplate="{StaticResource orderItemTemplate}" HorizontalContentAlignment="Stretch" />
-        <Button x:Name="orderConfirmation" Content="אישור הזמנה" HorizontalAlignment="Left" Margin="336,347,0,0" VerticalAlignment="Top" Click="orderConfirmation_Click"/>
+        <ListView x:Name="productsCatalogList" ItemsSource="{Binding Items}" ItemTemplate="{StaticResource orderItemTemplate}" HorizontalContentAlignment="Stretch" Height="152" />
+        <Button x:Name="orderConfirmation" Content="אישור הזמנה" Click="orderConfirmation_Click"/>
         <Image HorizontalAlignment="Left"  Margin="10,337,0,0" VerticalAlignment="Top" />
     </StackPanel>
 

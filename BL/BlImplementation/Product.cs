@@ -109,7 +109,7 @@ internal class Product : IProduct
     {
         DO.Product doProduct = new DO.Product();
 
-        if (BO.Validation.ID(p.ID) && BO.Validation.NameAdress(p.Name ?? "") && BO.Validation.Price(p.Price) && BO.Validation.InStock(p.InStock))
+        if (BO.Validation.ProductID(p.ID) && BO.Validation.NameAdress(p.Name ?? "") && BO.Validation.Price(p.Price) && BO.Validation.InStock(p.InStock))
         {
             doProduct.ID = p.ID;
             doProduct.Name = p.Name;
@@ -158,7 +158,7 @@ internal class Product : IProduct
         try
         {
             DO.Product doProduct = new DO.Product();
-            if (BO.Validation.ID(p.ID) && BO.Validation.NameAdress(p.Name ?? "") && BO.Validation.Price(p.Price) && BO.Validation.InStock(p.InStock))
+            if (BO.Validation.ProductID(p.ID) && BO.Validation.NameAdress(p.Name ?? "") && BO.Validation.Price(p.Price) && BO.Validation.InStock(p.InStock))
             {
                 doProduct.ID = p.ID;
                 doProduct.Name = p.Name;
