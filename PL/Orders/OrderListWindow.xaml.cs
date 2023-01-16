@@ -31,7 +31,7 @@ namespace PL.Orders
 
         // Using a DependencyProperty as the backing store for orders.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ordersProperty =
-            DependencyProperty.Register("orders", typeof(ObservableCollection<BO.OrderForList>), typeof(Window), new PropertyMetadata(null));
+            DependencyProperty.Register("orders", typeof(ObservableCollection<BO.OrderForList>), typeof(OrderListWindow), new PropertyMetadata(null));
 
 
         public OrderListWindow()

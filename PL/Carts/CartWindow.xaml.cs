@@ -45,26 +45,35 @@ namespace PL.Carts
         }
         private void orderConfirmation_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (fullCart.Items.Count() != 0)
             {
-                bl!.Cart.OrderConfirmation(fullCart);
-            }
-            catch (BO.Exceptions.NotExist ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+                try
+                {
+                    bl!.Cart.OrderConfirmation(fullCart);
+                }
+                catch (BO.Exceptions.NotExist ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
 
-            catch (BO.Exceptions.NotLegal ex)
-            {
-                MessageBox.Show(ex.Message);
+                catch (BO.Exceptions.NotLegal ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.Exceptions.Duplication ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                MessageBox.Show("the cart confirm succesfuly");
+                this.Close();
+                new MainWindow().Show();
             }
-            catch (BO.Exceptions.Duplication ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("there is no products");
+                this.Close();
+                new ProductsCatalog().Show();
             }
-            MessageBox.Show("the cart confirm succesfuly");
-            this.Close();
-            new MainWindow().Show();    
         }
 
         private void addProductToCart_Click(object sender, RoutedEventArgs e)
@@ -113,7 +122,7 @@ namespace PL.Carts
             {
                 int id = ((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductID;
                 int index = fullCart.Items.FindIndex(x => x.ProductID == id);
-               fullCart= bl!.Cart.Update(fullCart, id, -(fullCart.Items[index].Amount));
+                fullCart= bl!.Cart.Update(fullCart, id, -(fullCart.Items[index].Amount));
                 MessageBox.Show($"the product {fullCart} delete sucsessfuly to the cart ");
 
             }

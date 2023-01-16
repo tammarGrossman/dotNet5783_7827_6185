@@ -47,7 +47,7 @@ namespace PL.Products
 
         private void orderSubmit_Click(object sender, RoutedEventArgs e)
         {
-            if (products == null)
+            if (c.Items.Count() == 0)
                 MessageBox.Show("there is no items in the cart");
             else
                 new Carts.CustomerWindow().Show();
@@ -122,7 +122,8 @@ namespace PL.Products
             {
                 int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
                 int index = c.Items.FindIndex(x => x?.ProductID == id);
-                bl!.Cart.Update(c, id, -1);
+                c = bl!.Cart.Update(c, id, -1);
+                MessageBox.Show($"the product {c} dec sucsessfuly to the cart ");
             }
 
             catch (BO.Exceptions.NotExist ex)

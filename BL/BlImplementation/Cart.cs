@@ -20,7 +20,7 @@ internal class Cart : ICart
     /// <exception cref="NotLegal"></exception>
     public BO.Cart Add(BO.Cart c, int id)
     {
-        if ( BO.Validation.Price(c.TotalPrice) && BO.Validation.ID(id))
+        if ( BO.Validation.Price(c.TotalPrice) && BO.Validation.ProductID(id))
         {
             try
             {
@@ -82,7 +82,7 @@ internal class Cart : ICart
     /// <exception cref="NotExist"></exception>
     public BO.Cart Update(BO.Cart c, int id, int quantity)
     {
-        if (BO.Validation.ID(id))
+        if (BO.Validation.ProductID(id))
             try
             {
                 BO.Cart cart = new BO.Cart();
