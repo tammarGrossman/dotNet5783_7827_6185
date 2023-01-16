@@ -37,7 +37,7 @@
         <TextBox x:Name="sentDate" HorizontalAlignment="Left" Margin="431,179,0,0" TextWrapping="Wrap" Text="{Binding ShipDate}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <Label Content="תאריך שליחת הזמנה" HorizontalAlignment="Left" Margin="607,175,0,0" VerticalAlignment="Top"/>
         <Button x:Name="sentDateUpdateButton" IsEnabled="{Binding ElementName=sentDate ,Path=Text,Converter={StaticResource inputEnabledConverter}}"  HorizontalAlignment="Left" Margin="220,160,0,0" VerticalAlignment="Top" Width="91" Content="update send" Height="37" Click="sentDateUpdateButton_Click"/>
-        <TextBox x:Name="recievedDate" HorizontalAlignment="Left" Margin="431,210,0,0" TextWrapping="Wrap" Text="{Binding DeliveryDate}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="recievedDate" HorizontalAlignment="Left" Margin="431,210,0,0" TextWrapping="Wrap" Text="{Binding DeliveryDate}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <Label Content="תאריך קבלת הזמנה" HorizontalAlignment="Left" Margin="607,206,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></Label>
         <Button   x:Name= "recievedDateUpdateButton" IsEnabled="{Binding ElementName=recievedDate,Path=Text,Converter={StaticResource inputEnabledConverter}}" HorizontalAlignment="Left" Margin="220,201,0,0" VerticalAlignment="Top" Height="31" Width="91"  Content="update" Click="recievedDateUpdateButton_Click" >
         </Button>

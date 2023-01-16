@@ -146,7 +146,7 @@ internal class Cart : ICart
         {
             newOrderID = dal!.Order.Add(newOrder);
 
-            c.Items.Select(item =>
+            foreach (var item in c.Items)
             {
                 newOrderItem.OrderID = newOrderID;
                 newOrderItem.ProductID = item?.ProductID ?? 0;
@@ -189,8 +189,7 @@ internal class Cart : ICart
                 {
                     throw new BO.Exceptions.Duplication(ex.Message, ex);
                 }
-                return pro;
-            });
+            }
         }
 
         else
