@@ -146,12 +146,12 @@ internal class Cart : ICart
         {
             newOrderID = dal!.Order.Add(newOrder);
 
-            foreach (var item in c.Items)
+            c.Items.Select(item =>
             {
                 newOrderItem.OrderID = newOrderID;
-                newOrderItem.ProductID = item?.ProductID??0;
-                newOrderItem.Price = item?.Price??0;
-                newOrderItem.Amount = item?.Amount??0;
+                newOrderItem.ProductID = item?.ProductID ?? 0;
+                newOrderItem.Price = item?.Price ?? 0;
+                newOrderItem.Amount = item?.Amount ?? 0;
 
                 try
                 {
@@ -167,7 +167,7 @@ internal class Cart : ICart
 
                         catch (DO.NotExist ex)
                         {
-                            throw new BO.Exceptions.NotExist(ex.Message,ex);
+                            throw new BO.Exceptions.NotExist(ex.Message, ex);
                         }
                     }
 
@@ -177,7 +177,7 @@ internal class Cart : ICart
 
                 catch (DO.NotExist ex)
                 {
-                    throw new BO.Exceptions.NotExist(ex.Message,ex);
+                    throw new BO.Exceptions.NotExist(ex.Message, ex);
                 }
 
                 try
@@ -187,9 +187,10 @@ internal class Cart : ICart
 
                 catch (DO.Duplication ex)
                 {
-                    throw new BO.Exceptions.Duplication(ex.Message,ex);
+                    throw new BO.Exceptions.Duplication(ex.Message, ex);
                 }
-            }
+                return pro;
+            });
         }
 
         else

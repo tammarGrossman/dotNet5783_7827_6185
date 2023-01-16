@@ -95,7 +95,7 @@ namespace PL.Products
             try
             {
                 int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
-                int index = c.Items.FindIndex(x => x?.ID == id);
+                int index = c.Items.FindIndex(x => x?.ProductID== id);
                 if (index != -1)//found
                     c = bl!.Cart.Update(c, id, 1);
 
@@ -121,7 +121,7 @@ namespace PL.Products
             try
             {
                 int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
-                int index = c.Items.FindIndex(x => x.ID == id);
+                int index = c.Items.FindIndex(x => x?.ProductID == id);
                 bl!.Cart.Update(c, id, -1);
             }
 

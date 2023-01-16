@@ -110,7 +110,8 @@ internal class Order : IOrder
                                      Price = orderItem?.Price ?? 0,
                                      TotalPrice = orderItem?.Price * orderItem?.Amount ?? 0
                                  }).ToList();
-                blOrder.TotalPrice = dal.OrderItem.GetAll(x => x?.OrderID == id).Sum(x => x?.Price * x?.Amount) ?? 0;
+                var items = dal.OrderItem.GetAll(x => x?.OrderID == id);
+                blOrder.TotalPrice = items.Sum(x => x?.Price * x?.Amount) ?? 0;
                 return blOrder;
             }
             else
@@ -267,23 +268,26 @@ internal class Order : IOrder
                 exist = true;
             orderTracking.ID = (order.ID);
 
-            if (order.DeliveryDate != null)
-            {
-                orderTracking.Status = BO.OrderStatus.delivered;
-                orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.OrderDate, "Order delivered"));
-            }
-
-            if (order.ShipDate != null)
-            {
-                orderTracking.Status = BO.OrderStatus.shiped;
-                orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.ShipDate, "Order Shiped"));
-            }
-
-            if(order.OrderDate != null)
+            if (order.OrderDate != null)
             {
                 orderTracking.Status = BO.OrderStatus.payment;
                 orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.OrderDate, "Order Payment"));
+
+                if (order.ShipDate != null)
+                {
+                    orderTracking.Status = BO.OrderStatus.shiped;
+                    orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.ShipDate, "Order Shiped"));
+
+                    if (order.DeliveryDate != null)
+                    {
+                        orderTracking.Status = BO.OrderStatus.delivered;
+                        orderTracking.Tracking.Add(new Tuple<DateTime?, string?>(order.OrderDate, "Order delivered"));
+                    }
+                }
             }
+          
+
+             
         }
 
         catch (DO.NotExist ex)

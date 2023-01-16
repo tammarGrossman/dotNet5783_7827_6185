@@ -32,8 +32,9 @@
                 <TextBox Grid.Column="3" x:Name="category" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Category_}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
                 <TextBox Grid.Column="4" x:Name="inStock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
                 <TextBox Grid.Column="5" x:Name="amount" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                <Button Grid.Column="6" Content="add"  CommandParameter="" Click="addProductToCart_Click" Width="100" Height="50" Margin="0"/>
-                <Button Grid.Column="7" Content="decrease"  CommandParameter="" Click="deleteProductFromCart_Click" Width="100" Height="50" Margin="0" />
+                <Button Grid.Column="6" Content="+"  CommandParameter="" Click="addProductToCart_Click" Width="100" Height="50" Margin="0"/>
+                 <Label Grid.Column="7"  Content="1"></Label>
+                <Button Grid.Column="8" Content="-"  CommandParameter="" Click="deleteProductFromCart_Click" Width="100" Height="50" Margin="0" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
