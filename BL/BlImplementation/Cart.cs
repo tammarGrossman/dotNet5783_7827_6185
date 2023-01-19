@@ -155,14 +155,21 @@ internal class Cart : ICart
 
         if (BO.Validation.NameAdress(newOrder.CustomerName ?? "") && BO.Validation.NameAdress(newOrder.CustomerAdress ?? "") && BO.Validation.Email(newOrder.CustomerEmail ?? ""))
         {
-            newOrderID = dal!.Order.Add(newOrder);
             try
             {
-                c.Items.FindAll(x => dal.Product.Get(x.ProductID).InStock - x.Amount > 0 ? true : throw new BO.Exceptions.NotExist("there is no quantity from this product"));
+                newOrderID = dal!.Order.Add(newOrder);
+            
+                c.Items.FindAll(x => dal.Product.Get(x?.ProductID??0).InStock - x?.Amount > 0 ? true : throw new BO.Exceptions.NotExist("there is no quantity from this product"));
                 var res = from item in c.Items
                           let prod = dal.Product.Get(item.ProductID)
 
-                          let newProd = new DO.Product() { ID = prod.ID, Category_ = prod.Category_, Name = prod.Name, InStock = prod.InStock - item1.Amount }
+                          let newProd = new DO.Product() 
+                          {
+                              ID = prod.ID,
+                              Category_ = prod.Category_,
+                              Name = prod.Name,
+                              InStock = prod.InStock - item.Amount 
+                          }
                           let temp = UpdateProd(newProd)
                           select new DO.OrderItem()
                           {
@@ -177,28 +184,14 @@ internal class Cart : ICart
             {
                 throw new BO.Exceptions.NotExist(ex.Message, ex);
             }
+
+            catch (DO.Duplication ex)
+            {
+                throw new BO.Exceptions.Duplication(ex.Message, ex);
+            }
+
         }
         else
             throw new BO.Exceptions.NotLegal("this is not legal customer details");
-
-            //throw new BO.Exceptions.NotExist("there is no quantity from this product");
-
-
-            ////catch (DO.NotExist ex)
-            ////{
-            ////    throw new BO.Exceptions.NotExist(ex.Message, ex);
-            ////}
-
-            //try
-            //{
-            //    dal.OrderItem.Add(newOrderItem);
-            //}
-
-            //catch (DO.Duplication ex)
-            //{
-            //    throw new BO.Exceptions.Duplication(ex.Message, ex);
-            //}
-            // else
-            //   throw new BO.Exceptions.NotLegal("this is not legal customer details");
     }
 }

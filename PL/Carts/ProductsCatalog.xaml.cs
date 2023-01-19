@@ -50,7 +50,10 @@ namespace PL.Products
             if (c.Items.Count() == 0)
                 MessageBox.Show("there is no items in the cart");
             else
+            {
                 new Carts.CustomerWindow().Show();
+                this.Close();
+            }
         }
 
         private void productsCatalogList_SelectionChanged(object sender, SelectionChangedEventArgs e)
