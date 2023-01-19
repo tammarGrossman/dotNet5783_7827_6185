@@ -1,5 +1,6 @@
 ﻿
 using BlApi;
+using DalApi;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Xml.Linq;
@@ -122,6 +123,18 @@ internal class Cart : ICart
             throw new BO.Exceptions.NotLegal("this is not legal details");
     }
 
+    private bool UpdateProd(DO.Product p)
+    {
+        try
+        {
+            dal!.Product.Update(p);
+            return true;
+        }
+        catch (DO.NotExist ex)
+        {
+            throw new BO.Exceptions.NotExist(ex.Message, ex);
+        }
+    }
     /// <summary>
     ///  a function to submit cart to order
     /// </summary>
@@ -132,9 +145,7 @@ internal class Cart : ICart
     public void OrderConfirmation(BO.Cart c)
     {
         int newOrderID;
-        DO.OrderItem newOrderItem = new DO.OrderItem();
         DO.Order newOrder = new DO.Order();
-        DO.Product pro = new DO.Product();
         newOrder.OrderDate = DateTime.Now;
         newOrder.ShipDate = null;
         newOrder.DeliveryDate = null;
@@ -145,54 +156,49 @@ internal class Cart : ICart
         if (BO.Validation.NameAdress(newOrder.CustomerName ?? "") && BO.Validation.NameAdress(newOrder.CustomerAdress ?? "") && BO.Validation.Email(newOrder.CustomerEmail ?? ""))
         {
             newOrderID = dal!.Order.Add(newOrder);
-
-            foreach (var item in c.Items)
+            try
             {
-                newOrderItem.OrderID = newOrderID;
-                newOrderItem.ProductID = item?.ProductID ?? 0;
-                newOrderItem.Price = item?.Price ?? 0;
-                newOrderItem.Amount = item?.Amount ?? 0;
+                c.Items.FindAll(x => dal.Product.Get(x.ProductID).InStock - x.Amount > 0 ? true : throw new BO.Exceptions.NotExist("there is no quantity from this product"));
+                var res = from item in c.Items
+                          let prod = dal.Product.Get(item.ProductID)
 
-                try
-                {
-                    pro = dal!.Product.Get(newOrderItem.ProductID);
-                    if (BO.Validation.InStock(pro.InStock) && pro.InStock >= newOrderItem.Amount)
-                    {
-                        pro.InStock -= newOrderItem.Amount;
-
-                        try
-                        {
-                            dal.Product.Update(pro);
-                        }
-
-                        catch (DO.NotExist ex)
-                        {
-                            throw new BO.Exceptions.NotExist(ex.Message, ex);
-                        }
-                    }
-
-                    else
-                        throw new BO.Exceptions.NotExist("there is no quantity from this product");
-                }
-
-                catch (DO.NotExist ex)
-                {
-                    throw new BO.Exceptions.NotExist(ex.Message, ex);
-                }
-
-                try
-                {
-                    dal.OrderItem.Add(newOrderItem);
-                }
-
-                catch (DO.Duplication ex)
-                {
-                    throw new BO.Exceptions.Duplication(ex.Message, ex);
-                }
+                          let newProd = new DO.Product() { ID = prod.ID, Category_ = prod.Category_, Name = prod.Name, InStock = prod.InStock - item1.Amount }
+                          let temp = UpdateProd(newProd)
+                          select new DO.OrderItem()
+                          {
+                              OrderID = newOrderID,
+                              Amount = item.Amount,
+                              ProductID = item.ProductID,
+                              Price = item.Price,
+                          };
+                res.All(x => dal.OrderItem.Add(x) > 0 ? true : throw new BO.Exceptions.Duplication("the order item is already exist"));
+            }
+            catch (DO.NotExist ex)
+            {
+                throw new BO.Exceptions.NotExist(ex.Message, ex);
             }
         }
-
         else
             throw new BO.Exceptions.NotLegal("this is not legal customer details");
+
+            //throw new BO.Exceptions.NotExist("there is no quantity from this product");
+
+
+            ////catch (DO.NotExist ex)
+            ////{
+            ////    throw new BO.Exceptions.NotExist(ex.Message, ex);
+            ////}
+
+            //try
+            //{
+            //    dal.OrderItem.Add(newOrderItem);
+            //}
+
+            //catch (DO.Duplication ex)
+            //{
+            //    throw new BO.Exceptions.Duplication(ex.Message, ex);
+            //}
+            // else
+            //   throw new BO.Exceptions.NotLegal("this is not legal customer details");
     }
 }
