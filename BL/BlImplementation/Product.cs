@@ -1,9 +1,6 @@
 ﻿
 using BlApi;
-using BO;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using static BO.Exceptions;
+
 namespace BlImplementation;
 
 internal class Product : IProduct
@@ -80,13 +77,13 @@ internal class Product : IProduct
                         Price = dalProduct.Price,
                         Category_ = (BO.Category?)dalProduct.Category_,
                         InStock = dalProduct.InStock > 0 ? true : false,
-                        Amount = (c.Items.FirstOrDefault(x => x?.ProductID == id) ?? throw new NotExist("there is no such product in the cart")).Amount,
+                        Amount = (c.Items.FirstOrDefault(x => x?.ProductID == id) ?? throw new BO.Exceptions.NotExist("there is no such product in the cart")).Amount,
                     };
                     return blOrder;
                 }
 
                 else
-                    throw new NotLegal("this is not legal id of product");
+                    throw new BO.Exceptions.NotLegal("this is not legal id of product");
             }
 
             catch (DO.NotExist ex)
@@ -178,12 +175,17 @@ internal class Product : IProduct
         }
     }
 
-    public IEnumerable<ProductItem?> GetAllPI(Func<BO.ProductItem?, bool>? cond = null)
+    /// <summary>
+    /// return all product items
+    /// </summary>
+    /// <param name="cond"></param>
+    /// <returns></returns>
+    public IEnumerable<BO.ProductItem?> GetAllPI(Func<BO.ProductItem?, bool>? cond = null)
     {
 
-        IEnumerable<ProductItem> items;
+        IEnumerable<BO.ProductItem> items;
         items = from DO.Product item in dal!.Product.GetAll()
-                 select new ProductItem()
+                 select new BO.ProductItem()
                  {
                      ID = item.ID,
                      Name = item.Name,
@@ -200,25 +202,21 @@ internal class Product : IProduct
     /// </summary>
     /// <param name="c"></param>
     /// <returns></returns>
-    public IEnumerable<ProductForList> GroupingProductsByCat()
+    public IEnumerable<BO.ProductForList> GroupingProductsByCat()
     {
         var ans = (from x in dal!.Product.GetAll()
                    group x by x?.Category_ into g
                    select new { Key = g.Key, Values = g.Take(3) });
-        //var ans2 = ans.Select(x => x.Values);
-        //IEnumerable<Product> products = ans2.Aggregate((result,item)=>result?.Concat(item));
+        
        return (from x in ans
                    from y in x.Values
-                   select new ProductForList()
+                   select new BO.ProductForList()
                    {
                        ID= y?.ID??0, 
                        Name=y?.Name,
                        Price=y?.Price??0,
                        Category_= (BO.Category?)y?.Category_
                    }).ToList();
-        //  ans2.Aggregate()
-      
-
     }
 
 }

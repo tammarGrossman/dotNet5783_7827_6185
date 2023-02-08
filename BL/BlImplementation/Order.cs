@@ -1,12 +1,5 @@
 ﻿
 using BlApi;
-using BO;
-
-using DO;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Net;
-using System.Security.Cryptography;
 
 namespace BlImplementation;
 internal class Order : IOrder
@@ -37,43 +30,6 @@ internal class Order : IOrder
             throw new BO.Exceptions.NotExist(ex.Message, ex);
         }
     }
-
-
-    //foreach (DO.Order? item in dal!.Order.GetAll())
-    //{
-    //    BO.OrderForList order = new BO.OrderForList();
-
-    //    try
-    //    {
-    //        proInOr = dal.OrderItem.GetProductsInOrder((item?.ID) ?? 0);
-    //        countOrders++;
-
-    //        foreach (DO.OrderItem? item2 in proInOr)
-    //        {
-    //            amountOfProInOrd += (item2?.Amount) ?? 0;
-    //            totalPriceInOrd += (item2?.Price) ?? 0 * (item2?.Amount) ?? 0;
-    //        }
-
-    //    }
-
-    //    catch (DO.NotExist ex)
-    //    {
-    //        throw new BO.Exceptions.NotExist(ex.Message, ex);
-    //    }
-
-    //    order.ID = (item?.ID) ?? 0;
-    //    order.CustomerName = item?.CustomerName;
-    //    order.Status = TrackOrder((item?.ID) ?? 0).Status;
-    //    order.TotalPrice = totalPriceInOrd;
-    //    order.AmountOfItems = amountOfProInOrd;
-    //    orders.Add(order);
-    //}
-
-    //if (countOrders == 0)
-    //    throw new BO.Exceptions.NotExist("there is no products in all orders");
-
-    //return orders;
-
 
     /// <summary>
     /// a function to get order by id
@@ -187,7 +143,6 @@ internal class Order : IOrder
             throw new BO.Exceptions.NotExist(ex.Message, ex);
         }
 
-
     }
 
     /// <summary>
@@ -204,9 +159,8 @@ internal class Order : IOrder
             DO.Order dalOrder = dal!.Order.Get(id);
             BO.Order blOrder;
             IEnumerable<DO.OrderItem?> orderItems = dal!.OrderItem.GetProductsInOrder(id);
-            //other exception
             if (dalOrder.ShipDate == null)
-                throw new Exception("Delivery date can not be updated before shipping date");
+                throw new BO.Exceptions.NotLegal("Delivery date can not be updated before shipping date");
             if (dalOrder.DeliveryDate == null)
             {
 
@@ -285,9 +239,7 @@ internal class Order : IOrder
                     }
                 }
             }
-          
-
-             
+           
         }
 
         catch (DO.NotExist ex)

@@ -30,19 +30,24 @@
                 <TextBox Grid.Column="1" x:Name="name" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.477,3.841" IsEnabled="False"/>
                 <TextBox Grid.Column="2" x:Name="price" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Price}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
                 <TextBox Grid.Column="3" x:Name="category" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Category_}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                <TextBox Grid.Column="4" x:Name="inStock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                <TextBox Grid.Column="5" x:Name="amount" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+                <!--<TextBox Grid.Column="4" x:Name="inStock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+                <TextBox Grid.Column="5" x:Name="amount" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>-->
                 <Button Grid.Column="6" Content="+"  CommandParameter="" Click="addProductToCart_Click" Width="100" Height="50" Margin="0"/>
-                 <Label Grid.Column="7"  Content="1"></Label>
                 <Button Grid.Column="8" Content="-"  CommandParameter="" Click="deleteProductFromCart_Click" Width="100" Height="50" Margin="0" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
-    <StackPanel Margin="0,10,0,0">
-
-        <ComboBox x:Name="categorySelector" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120" SelectionChanged="categorySelector_SelectionChanged"/>
-        <ListView x:Name="productsCatalogList" ItemsSource="{Binding}" ItemTemplate="{StaticResource productItemTemplate}" HorizontalContentAlignment="Stretch" />
-        <Button Content="order submit" Click="orderSubmit_Click" RenderTransformOrigin="0.504,3.321" />
-    </StackPanel>
+   
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="270"/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+            <ComboBox Grid.Row="0" x:Name="categorySelector" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120" SelectionChanged="categorySelector_SelectionChanged"/>
+            <ListView  Grid.Row="1" x:Name="productsCatalogList" ItemsSource="{Binding}" ItemTemplate="{StaticResource productItemTemplate}" HorizontalContentAlignment="Stretch" />
+            <Button  Grid.Row="2" Content="order submit" Click="orderSubmit_Click" RenderTransformOrigin="0.504,3.321" />
+        </Grid>
+    
 </Window>
 

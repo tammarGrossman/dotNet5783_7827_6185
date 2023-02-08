@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace PL.Products
 {
@@ -36,12 +26,11 @@ namespace PL.Products
         public static readonly DependencyProperty productsProperty =
             DependencyProperty.Register("products", typeof(ObservableCollection<BO.ProductItem>), typeof(Window), new PropertyMetadata(null));
 
-
         public ProductsCatalog()
         {
             InitializeComponent();
             var help = bl!.Product.GetAllPI();
-            products = help == null ? new() : new(help);
+            products = help == null ? new() : new(help!);
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
@@ -65,11 +54,8 @@ namespace PL.Products
                 {
                     BO.Product p = bl!.Product.Get(((BO.ProductForList)lv!.SelectedItem).ID);
                     new productItemWindow(p.ID).ShowDialog();
-                    // var help = bl!.Product.GetAll();
-                    //products = help == null ? new() : new(help);
-                    //categorySelector.SelectedItem = BO.Category.None;
-
                 }
+
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
@@ -83,13 +69,13 @@ namespace PL.Products
             if (cat.ToString() != "None")
             {
                 var help = bl!.Product.GetAllPI(x => x?.Category_ == cat);
-                products = help == null ? new() : new(help);
+                products = help == null ? new() : new(help!);
             }
 
             else
             {
                 var help = bl!.Product.GetAllPI();
-                products = help == null ? new() : new(help);
+                products = help == null ? new() : new(help!);
             }
         }
 
@@ -106,6 +92,7 @@ namespace PL.Products
                     c = bl!.Cart.Add(c, id);
 
                 MessageBox.Show($"the product {c} added sucsessfuly to the cart ");
+            
             }
 
             catch (BO.Exceptions.NotExist ex)
@@ -138,7 +125,9 @@ namespace PL.Products
             {
                 MessageBox.Show(ex.Message);
             }
+
         }
 
     }
+
 }

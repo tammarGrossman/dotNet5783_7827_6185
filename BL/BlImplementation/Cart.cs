@@ -1,10 +1,6 @@
 ﻿
 using BlApi;
-using BO;
-using DalApi;
-using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Xml.Linq;
+
 
 namespace BlImplementation;
 internal class Cart : ICart
@@ -58,7 +54,6 @@ internal class Cart : ICart
                     cart.TotalPrice = cart.Items.Sum(x => x?.TotalPrice??0);
                 }
                 return cart;
-
 
             }
 
@@ -124,6 +119,12 @@ internal class Cart : ICart
             throw new BO.Exceptions.NotLegal("this is not legal details");
     }
 
+    /// <summary>
+    /// update a product
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.Exceptions.NotExist"></exception>
     private bool UpdateProd(DO.Product p)
     {
         try
@@ -195,7 +196,5 @@ internal class Cart : ICart
         else
             throw new BO.Exceptions.NotLegal("this is not legal customer details");
     }
-
-   
 
 }

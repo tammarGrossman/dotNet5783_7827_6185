@@ -47,14 +47,14 @@ namespace PL
             if (cat.ToString() != "None")
             {
                 var help = bl!.Product.GetAll(x => x?.Category_ == cat);
-                products = help == null ? new() : new(help);
+                products = help == null ? new() : new(help!);
             }
 
             else
             {
 
                 var help = bl!.Product.GetAll();
-                products = help == null ? new() : new(help);
+                products = help == null ? new() : new(help!);
             }
         }
         /// <summary>
@@ -67,7 +67,7 @@ namespace PL
             new ProductWindow().ShowDialog();
 
             var help = bl!.Product.GetAll();
-            products = help == null ? new() : new(help);
+            products = help == null ? new() : new(help!);
             categorySelector.SelectedItem = BO.Category.None;
 
         }
@@ -86,9 +86,8 @@ namespace PL
                 try
                 {
                     new ProductWindow(id).ShowDialog();
-                    //ProductListView.ItemsSource = bl.Product.GetAll();
                     var help = bl!.Product.GetAll();
-                    products = help == null ? new() : new(help);
+                    products = help == null ? new() : new(help!);
                     categorySelector.SelectedItem = BO.Category.None;
 
                 }
@@ -103,6 +102,7 @@ namespace PL
         {
             var help = bl!.Product.GroupingProductsByCat();
             products = help == null ? new() : new(help);
+            categorySelector.SelectedItem = BO.Category.None;
         }
     }    
 }
