@@ -24,5 +24,7 @@ namespace PL
         private void trackOrderWindow_Click(object sender, RoutedEventArgs e)=> new NumOfOrder().Show();
 
         private void orderWindowBut_Click(object sender, RoutedEventArgs e) => new ProductsCatalog().Show();
+
+       
     }
 }

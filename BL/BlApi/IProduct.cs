@@ -43,4 +43,10 @@ public interface IProduct
     /// <returns></returns>
     public IEnumerable<ProductItem?> GetAllPI(Func<BO.ProductItem?, bool>? cond = null);
 
+    /// <summary>
+    /// grouping products and choose the 3 firsts organs
+    /// </summary>
+    /// <returns></returns>
+    IEnumerable<ProductForList> GroupingProductsByCat();
+
 }

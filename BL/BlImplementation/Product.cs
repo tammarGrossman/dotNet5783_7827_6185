@@ -195,6 +195,30 @@ internal class Product : IProduct
         return cond is null ? items : items.Where(cond);
     }
 
-  
+    /// <summary>
+    /// the function groups the products by category and choose the 3 first organs
+    /// </summary>
+    /// <param name="c"></param>
+    /// <returns></returns>
+    public IEnumerable<ProductForList> GroupingProductsByCat()
+    {
+        var ans = (from x in dal!.Product.GetAll()
+                   group x by x?.Category_ into g
+                   select new { Key = g.Key, Values = g.Take(3) });
+        //var ans2 = ans.Select(x => x.Values);
+        //IEnumerable<Product> products = ans2.Aggregate((result,item)=>result?.Concat(item));
+       return (from x in ans
+                   from y in x.Values
+                   select new ProductForList()
+                   {
+                       ID= y?.ID??0, 
+                       Name=y?.Name,
+                       Price=y?.Price??0,
+                       Category_= (BO.Category?)y?.Category_
+                   }).ToList();
+        //  ans2.Aggregate()
+      
+
+    }
 
 }

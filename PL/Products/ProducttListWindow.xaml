@@ -10,12 +10,17 @@
     
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="500*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <ListView Grid.Row="1"  x:Name="ProductListView" SelectionChanged="ProductListView_SelectionChanged" ItemsSource="{Binding}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Add new Product" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="109,5,0,5" Padding="5" x:Name="addNewProduct" Click="addNewProduct_Click"/>
+        <Button Content="Grouping Products" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="109,5,0,5" Padding="5" x:Name="groupingProducts" Click="groupingProducts_Click"/>
+        <ListView Grid.Row="1" Grid.ColumnSpan="2"  x:Name="ProductListView" SelectionChanged="ProductListView_SelectionChanged" ItemsSource="{Binding}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -23,16 +28,13 @@
             </ListView.View>
         </ListView>
 
-        <Grid Name="UpGrid" Height="auto" Grid.Row="2" Width="auto">
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="379*"/>
-                <ColumnDefinition Width="21*"/>
-                <ColumnDefinition Width="77*"/>
-                <ColumnDefinition Width="323*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions >
-            <Label Grid.Column="0" FontWeight="Bold"  FontSize="19" Margin="0,10,194,5">סינון לפי קטגוריה</Label>
-            <ComboBox x:Name="categorySelector" Grid.ColumnSpan="4" Margin="190,10,232,10" SelectionChanged="categorySelector_SelectionChanged" Text="choose category"/>
-            <Button Content="Add new Product" Grid.Column="3" HorizontalAlignment="Left" Margin="109,5,0,5" Padding="5" x:Name="addNewProduct" Click="addNewProduct_Click"/>
+            <Label Grid.Column="0"  FontWeight="Bold"  FontSize="19">סינון לפי קטגוריה</Label>
+            <ComboBox Grid.Column="1" Grid.ColumnSpan="2" x:Name="categorySelector" SelectionChanged="categorySelector_SelectionChanged" Text="choose category"/>
         </Grid>
 
     </Grid>

@@ -98,5 +98,11 @@ namespace PL
                 }
             }
         }
+
+        private void groupingProducts_Click(object sender, RoutedEventArgs e)
+        {
+            var help = bl!.Product.GroupingProductsByCat();
+            products = help == null ? new() : new(help);
+        }
     }    
 }

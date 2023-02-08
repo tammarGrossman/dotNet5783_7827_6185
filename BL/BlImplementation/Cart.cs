@@ -1,5 +1,6 @@
 ﻿
 using BlApi;
+using BO;
 using DalApi;
 using System.Diagnostics;
 using System.Security.Cryptography;
@@ -194,4 +195,7 @@ internal class Cart : ICart
         else
             throw new BO.Exceptions.NotLegal("this is not legal customer details");
     }
+
+   
+
 }
