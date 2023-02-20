@@ -5,23 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Orders"
         mc:Ignorable="d"
-        Title="NumOfOrder" Height="450" Width="800"
+        Title="NumOfOrder" Height="450" Width="820"
         DataContext="{Binding  RelativeSource={RelativeSource self} }">
-    <Grid>
-        <Label x:Name="numOrderL"  Content="קוד הזמנה :" HorizontalAlignment="Left" Margin="482,153,0,0" VerticalAlignment="Top" Height="34" Width="86"/>
-        <TextBox  x:Name="numOrderT" HorizontalAlignment="Left" Margin="247,152,0,0" TextWrapping="Wrap" Text="{Binding Path=orderID, Mode=TwoWay}" VerticalAlignment="Top" Width="170" Height="25" RenderTransformOrigin="0.5,0.5">
-            <TextBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="0.33"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </TextBox.RenderTransform>
-        </TextBox>
-        <Button x:Name="moveToTrackOrder" Content="אישור" HorizontalAlignment="Left" Margin="311,285,0,0" VerticalAlignment="Top"  Click="moveToTrackOrder_Click" />
-        <Image HorizontalAlignment="Left" Margin="34,302,0,0" VerticalAlignment="Top"/>
-        <Image Margin="0,0,65,294" Source="/trackOrderPick.jpg" Stretch="Fill"/>
+    <Window.Resources>
+
+        <Style x:Key="orderTrackImg"  TargetType="Image">
+            <Setter Property="Width" Value="600"/>
+            <Setter Property="Height" Value="140"/>
+            <Setter Property="Source" Value="/trackOrderPick.jpg"/>
+        </Style>
+
+    </Window.Resources>
+    <Grid HorizontalAlignment="Center" Width="820">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+
+        <Label  Grid.Column="1" x:Name="numOrderL"  Content="הקש קוד הזמנה" Width="auto" Margin="0,162,0,169" HorizontalAlignment="Right"/>
+        <TextBox  Grid.Column="1" x:Name="numOrderT" Text="{Binding Path=orderID, Mode=TwoWay}" Margin="0,192,0,192"/>
+        <Button Grid.Column="1" x:Name="moveToTrackOrder" Content="אישור" HorizontalAlignment="Center" Margin="0,318,0,0" VerticalAlignment="Top"  Click="moveToTrackOrder_Click" Height="60" Width="192" />
+        <Image Grid.Column="0" Grid.ColumnSpan="3" x:Name="orderTrackingImg" Style="{DynamicResource orderTrackImg}" Margin="0,0,152,294"  Stretch="Fill"/>
+        <Image Grid.Column="0" HorizontalAlignment="Left"  Margin="10,284,0,0" VerticalAlignment="Top" Height="140" Width="379"/>
+
 
     </Grid>
 </Window>

@@ -16,24 +16,26 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="105" />
+                    <ColumnDefinition Width="105" />
+                    <ColumnDefinition Width="105" />
+                    <ColumnDefinition Width="105" />
+                    <ColumnDefinition Width="105" />
+                    <ColumnDefinition Width="105" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                   
+                   
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" x:Name="id" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                <TextBox Grid.Column="1" x:Name="name" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.477,3.841" IsEnabled="False"/>
-                <TextBox Grid.Column="2" x:Name="price" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Price}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                <TextBox Grid.Column="3" x:Name="category" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Category_}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                <TextBox Grid.Column="4" x:Name="inStock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                <TextBox Grid.Column="5" x:Name="amount" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                <Button Grid.Column="6" Content="+"  CommandParameter="" Click="addProductToCart_Click" Width="100" Height="50" Margin="0"/>
-                <Button Grid.Column="8" Content="-"  CommandParameter="" Click="deleteProductFromCart_Click" Width="100" Height="50" Margin="0" />
+                <TextBox Grid.Column="0" x:Name="id" HorizontalAlignment="Left"   Text="{Binding ID}" VerticalAlignment="Top" Width="100" IsEnabled="False" Margin="2"/>
+                <TextBox Grid.Column="1" x:Name="name" HorizontalAlignment="Left"   Text="{Binding Name}" VerticalAlignment="Top" Width="100"  IsEnabled="False" Margin="2"/>
+                <TextBox Grid.Column="2" x:Name="price" HorizontalAlignment="Left"   Text="{Binding Price}" VerticalAlignment="Top" Width="100" IsEnabled="False" Margin="2"/>
+                <TextBox Grid.Column="3" x:Name="category" HorizontalAlignment="Left" Text="{Binding Category_}" VerticalAlignment="Top" Width="100" IsEnabled="False" Margin="2"/>
+                <TextBox Grid.Column="4" x:Name="inStock" HorizontalAlignment="Left"  Text="{Binding InStock}" VerticalAlignment="Top" Width="100" IsEnabled="False" Margin="2"/>
+                <TextBox Grid.Column="5" x:Name="amount" HorizontalAlignment="Left"   Text="{Binding Amount}" VerticalAlignment="Top" Width="100" IsEnabled="False" Margin="2"/>
+                <Button x:Name="plus" Grid.Column="6" Content="+"   Click="addProductToCart_Click" Width="40" Height="40" Margin="1" />
+                <Button  x:Name="minus" Grid.Column="7" Content="-"  Click="deleteProductFromCart_Click" Width="40" Height="40" Margin="1" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -44,9 +46,16 @@
                 <RowDefinition Height="270"/>
                 <RowDefinition Height="70"/>
             </Grid.RowDefinitions>
-            <ComboBox Grid.Row="0" x:Name="categorySelector" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120" SelectionChanged="categorySelector_SelectionChanged"/>
-            <ListView  Grid.Row="1" x:Name="productsCatalogList" ItemsSource="{Binding}" ItemTemplate="{StaticResource productItemTemplate}" HorizontalContentAlignment="Stretch" />
-            <Button  Grid.Row="2" Content="order submit" Click="orderSubmit_Click" RenderTransformOrigin="0.504,3.321" />
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+            <ComboBox  Grid.Row="0" x:Name="categorySelector" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120" SelectionChanged="categorySelector_SelectionChanged" Margin="5"/>
+            <ListView Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" x:Name="productsCatalogList" ItemsSource="{Binding}" ItemTemplate="{StaticResource productItemTemplate}" HorizontalContentAlignment="Stretch" Margin="5"/>
+            <Button  Grid.Row="2" Content="order submit" Click="orderSubmit_Click" RenderTransformOrigin="0.504,3.321" Grid.ColumnSpan="2" Margin="303,10,305,0" />
         </Grid>
     
 </Window>

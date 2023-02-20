@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <None Remove="1111.jpg" />
+    <None Remove="trackOrderPick.jpg" />
     <None Remove="גכעגכע.jpg" />
   </ItemGroup>
 
@@ -24,6 +25,7 @@
 
   <ItemGroup>
     <Resource Include="1111.jpg" />
+    <Resource Include="trackOrderPick.jpg" />
     <Resource Include="גכעגכע.jpg" />
   </ItemGroup>
 

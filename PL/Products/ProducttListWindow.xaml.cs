@@ -76,11 +76,11 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ProductListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void productListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         { 
             var lv = sender as ListView;
             BO.ProductForList pl = (BO.ProductForList)lv!.SelectedItem;
-            if (ProductListView.ItemsSource != null&& pl!=null) 
+            if (productListView.ItemsSource != null&& pl!=null) 
             {               
                 int id = pl.ID;
                 try

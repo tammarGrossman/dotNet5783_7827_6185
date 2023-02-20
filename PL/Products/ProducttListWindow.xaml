@@ -20,15 +20,10 @@
         </Grid.ColumnDefinitions>
         <Button Content="Add new Product" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="109,5,0,5" Padding="5" x:Name="addNewProduct" Click="addNewProduct_Click"/>
         <Button Content="Grouping Products" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="109,5,0,5" Padding="5" x:Name="groupingProducts" Click="groupingProducts_Click"/>
-        <ListView Grid.Row="1" Grid.ColumnSpan="2"  x:Name="ProductListView" SelectionChanged="ProductListView_SelectionChanged" ItemsSource="{Binding}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <ListView Grid.Row="1" Grid.ColumnSpan="2"  x:Name="productListView" SelectionChanged="productListView_SelectionChanged" ItemsSource="{Binding}"/>
 
-        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
+
+        <Grid Name="upGrid" Height="auto" Grid.Row="0" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="200"/>

@@ -82,7 +82,7 @@ namespace PL.Carts
             {
                 int id = ((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductID;
                 fullCart = bl!.Cart.Update(fullCart, id, 1);
-                MessageBox.Show($"the product {fullCart} added sucsessfuly to the cart ");
+                MessageBox.Show("the product added sucsessfuly to the cart ");
             }
 
             catch (BO.Exceptions.NotExist ex)
@@ -102,7 +102,7 @@ namespace PL.Carts
             {
                 int id = ((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductID;
                fullCart= bl!.Cart.Update(fullCart, id, -1);
-                MessageBox.Show($"the product {fullCart} decrease sucsessfuly to the cart ");
+                MessageBox.Show("the product decreased sucsessfuly from the cart ");
 
             }
 
@@ -121,9 +121,9 @@ namespace PL.Carts
             try
             {
                 int id = ((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductID;
-                int index = fullCart.Items.FindIndex(x => x.ProductID == id);
+                int index = fullCart.Items.FindIndex(x => x?.ProductID == id);
                 fullCart= bl!.Cart.Update(fullCart, id, -(fullCart.Items[index].Amount));
-                MessageBox.Show($"the product {fullCart} delete sucsessfuly to the cart ");
+                MessageBox.Show("the product deleted sucsessfuly from the cart ");
 
             }
 

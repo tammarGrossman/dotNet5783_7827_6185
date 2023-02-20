@@ -91,7 +91,7 @@ namespace PL.Products
                 else
                     c = bl!.Cart.Add(c, id);
 
-                MessageBox.Show($"the product {c} added sucsessfuly to the cart ");
+                MessageBox.Show("the product added sucsessfuly to the cart ");
             
             }
 
@@ -113,7 +113,7 @@ namespace PL.Products
                 int id = ((BO.ProductItem)((FrameworkElement)sender).DataContext).ID;
                 int index = c.Items.FindIndex(x => x?.ProductID == id);
                 c = bl!.Cart.Update(c, id, -1);
-                MessageBox.Show($"the product {c} dec sucsessfuly to the cart ");
+                MessageBox.Show("the product decreased sucsessfuly from the cart ");
             }
 
             catch (BO.Exceptions.NotExist ex)

@@ -34,7 +34,7 @@ namespace PL.Orders
 
         // Using a DependencyProperty as the backing store for orderID.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty orderIDProperty =
-            DependencyProperty.Register("orderID", typeof(int), typeof(Window), new PropertyMetadata(0));
+            DependencyProperty.Register("orderID", typeof(int), typeof(NumOfOrder), new PropertyMetadata(0));
 
 
         public NumOfOrder()
@@ -47,7 +47,6 @@ namespace PL.Orders
             //change which value
             if (Convert.ToString(orderID)!= "")
             {
-                MessageBox.Show($"{orderID}");
                 new TrackOrderWindow(orderID).Show();
             }
             else

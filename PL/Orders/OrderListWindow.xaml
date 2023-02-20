@@ -15,13 +15,8 @@
             <ColumnDefinition Width="422*"/>
             <ColumnDefinition Width="327*"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="OrderListView" Grid.ColumnSpan="4" ItemsSource="{Binding}" SelectionChanged="OrderListView_SelectionChanged">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-       </ListView>
+        <ListView x:Name="orderListView" Grid.ColumnSpan="4" ItemsSource="{Binding}" SelectionChanged="orderListView_SelectionChanged"/>
+
         <Image HorizontalAlignment="Left" Margin="34,302,0,0" VerticalAlignment="Top"/>
 
     </Grid>

@@ -67,7 +67,7 @@ namespace PL.Orders
             }
         }
 
-        private void ShowOrderDetails_Click(object sender, RoutedEventArgs e) => new Order(trackOrder?.ID??0).Show();
+        private void showOrderDetails_Click(object sender, RoutedEventArgs e) => new Order(trackOrder?.ID??0,true).Show();
         
 
         

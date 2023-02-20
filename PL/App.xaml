@@ -16,10 +16,12 @@
             <Setter Property="Foreground" Value="#FFFBF5F5"/>
         </Style>
         
-        <Style TargetType="Image">
+        <Style  TargetType="Image">
+            
          <Setter Property="Width" Value="379"/>
             <Setter Property="Height" Value="140"/>
             <Setter Property="Source" Value="1111.jpg"/>
         </Style>
+
     </Application.Resources>
 </Application>

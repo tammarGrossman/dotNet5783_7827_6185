@@ -13,7 +13,8 @@
         <Label Content="כתובת" HorizontalAlignment="Left" Margin="513,202,0,0" VerticalAlignment="Top" Height="38" Width="64"/>
         <TextBox  x:Name="custAddress" HorizontalAlignment="Center" Margin="0,208,0,0" TextWrapping="Wrap" Text="{Binding CustomerAdress}"  VerticalAlignment="Top" Width="167" Height="26"/>
         <Label Content="מייל" HorizontalAlignment="Left" Margin="529,240,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.174,-0.445" Height="38" Width="48"/>
-        <TextBox x:Name="CustEmail" HorizontalAlignment="Center" Margin="0,247,0,0" TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Top" Width="167" Height="26"/>
-        <Button x:Name="moveToCart"  Content="אישור פרטים " HorizontalAlignment="Left" Margin="352,324,0,0" VerticalAlignment="Top" Click="moveToCart_Click" />
+        <TextBox x:Name="custEmail" HorizontalAlignment="Center" Margin="0,247,0,0" TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Top" Width="167" Height="26"/>
+        <Button x:Name="moveToCart"  Content="אישור פרטים " HorizontalAlignment="Left" Margin="316,324,0,0" VerticalAlignment="Top" Click="moveToCart_Click" />
+        <Image Margin="-110,294,530,0"/>
     </Grid>
 </Window>

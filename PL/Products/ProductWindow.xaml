@@ -9,7 +9,7 @@
         DataContext="{Binding Path=product  ,RelativeSource={RelativeSource self}}">
     <Grid >
         <Button Content="submit product"  HorizontalAlignment="Left" Margin="196,284,0,0" Padding="5" VerticalAlignment="Top" x:Name="submitProduct" Click="submitProduct_Click"   />
-        <ComboBox HorizontalAlignment="Left" Margin="288,178,0,0" VerticalAlignment="Top" Width="120" x:Name="CategorySelector" Height="26" SelectedItem="{Binding Category_ }" />
+        <ComboBox HorizontalAlignment="Left" Margin="288,178,0,0" VerticalAlignment="Top" Width="120" x:Name="categorySelector" Height="26" SelectedItem="{Binding Category_ }" />
         <Label Content="in stock" HorizontalAlignment="Left" Margin="196,141,0,0"  VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="288,141,0,0" TextWrapping="Wrap" Text="{Binding InStock , Mode=TwoWay }" VerticalAlignment="Top" Width="120" x:Name="inStock" Height="26" Padding="5"/>
         <Label Content="id" HorizontalAlignment="Left" Margin="196,63,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.064,0.9"/>

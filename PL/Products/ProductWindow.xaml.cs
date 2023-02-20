@@ -30,7 +30,7 @@ namespace PL
         {
             product = new BO.Product();
             InitializeComponent();
-            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             add = true;
         }
         /// <summary>      
@@ -41,7 +41,7 @@ namespace PL
         {
             InitializeComponent();
             update = true;
-            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             try
             {
                 product = bl!.Product.Get(id);
@@ -60,26 +60,7 @@ namespace PL
         /// <exception cref="Exception"></exception>
         private void submitProduct_Click(object sender, RoutedEventArgs e)
         {
-            // BO.Product p = new BO.Product();
-            //bool missing = false;
-            //למלא פרטים מהטופס
-            //if (name.Text != "" && price.Text != "" && id.Text != "" && inStock.Text != "" && CategorySelector.SelectedItem.ToString() != "" &&  id.Text.Length >= 6)
-            //{
-            //    p.ID = Convert.ToInt32(id.Text);
-            //    p.Name = name.Text;
-            //    p.Price = Convert.ToDouble(price.Text);
-            //    p.Category_ = (BO.Category)Enum.Parse(typeof(BO.Category), (CategorySelector.SelectedItem).ToString());
-            //    p.InStock = int.Parse(inStock.Text);
-            //}
-            //else
-            //{
-            //    missing = true;
-            //    MessageBox.Show("there are one or more missing details");
-            //}
-            //if (!missing)
-            //{
-            //    if (p.Price > 0 && p.InStock > 0 && CategorySelector.SelectedItem.ToString()!="None")
-            //    {
+            
             if (add)
             {//add case
                 try
@@ -116,18 +97,12 @@ namespace PL
                     else
                         MessageBox.Show("there are one or more missing details");
                 }
+
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
-            // }
-            //    else
-            //    {
-            //        MessageBox.Show("one or more of your details of product is in correct");
-            //    }
-            //    missing = false;
-            //}
         }
     }
 }
