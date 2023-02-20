@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 static class DalConfig
 {
-    internal static string? s_dalName;
+    internal  static string? s_dalName;
     internal static Dictionary<string, string> s_dalPackages;
 
     static DalConfig()
