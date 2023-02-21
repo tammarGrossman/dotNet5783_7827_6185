@@ -10,22 +10,26 @@ namespace Dal
 {
     internal class Order : IOrder
     {
+
+        const string s_orders= @"orders";
+
         /// <summary>
         /// add object
         /// </summary>
         /// <param name="o"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public int Add(Order o)
+        public int Add(DO.Order o)
         {
-            int i = DataSource.Config.LastOrder;
-            o.ID = i;
-
-            if (OrderExist(o.ID))
+            List<DO.Order?> orders = XmlTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
+            if(orders.FirstOrDefault(order => order?.ID == o.ID) !=null)
                 throw new Duplication(o.ID, "order");
 
-            DataSource.orders.Add(o);
-            return i;
+            orders.Add(o); 
+
+            XmlTools.SaveListToXMLSerializer(orders, s_orders);
+
+           return o.ID;
         }
 
 
@@ -35,21 +39,14 @@ namespace Dal
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public Order Get(int id)
+        public DO.Order Get(int id)
         {
-            if (OrderExist(id))//found
-                return DataSource.orders.FirstOrDefault(order => order?.ID == id) ?? throw new NotExist(id, "order");
+            List<DO.Order?> orders = XmlTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
+                return orders.FirstOrDefault(o => o?.ID==id) ?? throw new DO.NotExist(id, "order"); 
             throw new NotExist(id, "order");
         }
-        /// <summary>
-        /// function that check if the order exist 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        private bool OrderExist(int id)
-        {
-            return DataSource.orders.Any(order => order?.ID == id);
-        }
+     
+       
         /// <summary>
         /// delete object
         /// </summary>
@@ -58,12 +55,11 @@ namespace Dal
         /// <exception cref="Exception"></exception>
         public void Delete(int id)
         {
-            int count = DataSource.orders.RemoveAll(order => order?.ID == id);
-
-            if (count == 0)
+            List<DO.Order?> orders = XmlTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
+            if (orders.RemoveAll(order => order?.ID == id) == 0)
                 throw new NotExist(id, "order");
 
-
+            XmlTools.SaveListToXMLSerializer(orders, s_orders);
         }
 
         /// <summary>
@@ -71,35 +67,30 @@ namespace Dal
         /// </summary>
         /// <param name="o"></param>
         /// <exception cref="Exception"></exception>
-        public void Update(Order o)
+        public void Update(DO.Order o)
         {
-            int count = DataSource.orders.RemoveAll(order => order?.ID == o.ID);
-            if (count == 0)
-                throw new NotExist(o.ID, "order");
-
-            DataSource.orders.Add(o);
+           Delete(o.ID);
+           Add(o);
         }
 
         /// <summary>
         /// get all objects
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Order?> GetAll(Func<Order?, bool>? Condition = null)
+        public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? Condition = null)
         {
+
+            List<DO.Order?> orders = XmlTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
             if (Condition != null)
-                return from order in DataSource.orders
-                       where Condition(order)
-                       select order;
-
-            return from order in DataSource.orders
-                   select order;
-
+                return  orders.Where(Condition).OrderBy(o=>o?.ID);
+            return orders.Select(o=> o).OrderBy(o => o?.ID);
         }
-        public Order GetByCon(Func<Order?, bool>? Condition)
+        public DO.Order GetByCon(Func<DO.Order?, bool> Condition)
         {
-            return DataSource.orders.Find(x => Condition!(x)) ??
-              throw new NotExist(0, "order");
+            List<DO.Order?> orders = XmlTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
+          
+                return orders.FirstOrDefault(Condition) ?? throw new NotExist(0, "order");  
         }
     }
 }
-}
+

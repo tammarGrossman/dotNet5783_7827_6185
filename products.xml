@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<products>
+	<product>
+		<id>10000000</id>
+		<name>skirt</name>
+		<price>100</price>
+		<category_></category_>
+		<inStock>144</inStock>	
+	</product>
+	
+	<product>
+	<id>20000000</id>
+	<name>shirt</name>
+	<price>150</price>
+	<category_></category_>
+	<inStock>180</inStock>
+	</product>
+	
+	<product>
+		<id>30000000</id>
+		<name>ball</name>
+		<price>120</price>
+		<category_></category_>
+		<inStock>120</inStock>
+	</product>
+	
+	<product>
+		<id>40000000</id>
+		<name>bmb</name>
+		<price>500</price>
+		<category_></category_>
+		<inStock>500</inStock>
+	</product>
+	
+	<product>
+		<id>50000000</id>
+		<name>skirt</name>
+		<price>100</price>
+		<category_></category_>
+		<inStock>144</inStock>
+	</product>
+	
+	<product>
+		<id>60000000</id>
+		<name>skirt</name>
+		<price>100</price>
+		<category_></category_>
+		<inStock>144</inStock>
+	</product>
+	
+	<product>
+		<id>70000000</id>
+		<name>skirt</name>
+		<price>100</price>
+		<category_></category_>
+		<inStock>144</inStock>
+	</product>
+
+</products>
