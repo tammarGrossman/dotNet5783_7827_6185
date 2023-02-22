@@ -13,6 +13,7 @@
         <Image HorizontalAlignment="Left"  Margin="34,302,0,0" VerticalAlignment="Top"/>
         <Label Content="DECATHLON"  VerticalAlignment="Top" Foreground="#FFF1E9E9" FontWeight="Bold" FontSize="87" HorizontalContentAlignment="Center" Margin="0,25,0,0"  Width="800" Height="136" Background="SteelBlue"/>
         <Button  x:Name="trackOrderWindow_Copy" Content="למעקב הזמנה" HorizontalAlignment="Left" Margin="438,336,0,0" VerticalAlignment="Top" Click="trackOrderWindow_Click" />
+        <Button  x:Name="trackOrderWindow_Copy1" Content="למעקב הזמנה" HorizontalAlignment="Left" Margin="608,342,0,0" VerticalAlignment="Top" Click="trackOrderWindow_Click" />
 
     </Grid>
 </Window>
