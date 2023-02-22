@@ -16,12 +16,17 @@ internal class OrderItem : IOrderItem
     /// <exception cref="Exception"></exception>
     public int Add(DO.OrderItem oI)
     {
+
+        XElement elem = XElement.Load(@"..\xml\config.xml");
+        var id = elem.Element("lastOrderItemID");
+        int idO = Convert.ToInt32(id!.Value);
         List<DO.OrderItem?> orderItems = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItems);
         if (orderItems.FirstOrDefault(orderItem => orderItem?.OrderItemID == oI.OrderItemID) != null)
             throw new Duplication(oI.OrderItemID, "orderItem");
-
+        oI.OrderItemID = idO + 1;
         orderItems.Add(oI);
-
+        elem.Element("lastOrderItemID")!.SetValue(idO + 1);
+        elem.Save(@"..\xml\config.xml");
         XmlTools.SaveListToXMLSerializer(orderItems, s_orderItems);
 
         return oI.OrderItemID;

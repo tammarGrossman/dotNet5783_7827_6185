@@ -1,87 +1,59 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<orderItems>
-	<orderItem>
-		<orderItemID>1</orderItemID>
-		<productID>1000000</productID>
-		<orderID>1</orderID>
-		<price>200</price>
-		<amount>2</amount>		
-	</orderItem>
+<ArrayOfOrderItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<OrderItem>
+		<OrderItemID>1</OrderItemID>
+		<ProductID>1000000</ProductID>
+		<OrderID>1</OrderID>
+		<Price>200</Price>
+		<Amount>2</Amount>
+	</OrderItem>
 
-	<orderItem>
-		<orderItemID>2</orderItemID>
-		<productID>2000000</productID>
-		<orderID>2</orderID>
-		<price>200</price>
-		<amount>3</amount>
-	</orderItem>
-	<orderItemID>3</orderItemID>
-	<productID>3000000</productID>
-	<orderID>3</orderID>
-	<price>300</price>
-	<amount>2</amount>
-	
-	<orderItem>
-		<orderItemID>1</orderItemID>
-		<productID>1000000</productID>
-		<orderID>1</orderID>
-		<price>200</price>
-		<amount>2</amount>		
-	</orderItem>
+	<OrderItem>
+		<OrderItemID>2</OrderItemID>
+		<ProductID>2000000</ProductID>
+		<OrderID>2</OrderID>
+		<Price>300</Price>
+		<Amount>2</Amount>
+	</OrderItem>
 
-	<orderItem>
-		<orderItemID>2</orderItemID>
-		<productID>2000000</productID>
-		<orderID>2</orderID>
-		<price>200</price>
-		<amount>3</amount>
-	</orderItem>
-	<orderItemID>3</orderItemID>
-	<productID>3000000</productID>
-	<orderID>3</orderID>
-	<price>300</price>
-	<amount>2</amount>
-	<orderItem>
-		<orderItemID>1</orderItemID>
-		<productID>1000000</productID>
-		<orderID>1</orderID>
-		<price>200</price>
-		<amount>2</amount>
-	</orderItem>
-	<orderItemID>1</orderItemID>
-	<productID>1000000</productID>
-	<orderID>1</orderID>
-	<price>200</price>
-	<amount>2</amount>
-	<orderItem>
-		<orderItemID>1</orderItemID>
-		<productID>1000000</productID>
-		<orderID>1</orderID>
-		<price>200</price>
-		<amount>2</amount>
-	</orderItem>
-	<orderItemID>1</orderItemID>
-	<productID>1000000</productID>
-	<orderID>1</orderID>
-	<price>200</price>
-	<amount>2</amount>
-	<orderItem>
-		<orderItemID>1</orderItemID>
-		<productID>1000000</productID>
-		<orderID>1</orderID>
-		<price>200</price>
-		<amount>2</amount>
-	</orderItem>
-	<orderItemID>1</orderItemID>
-	<productID>1000000</productID>
-	<orderID>1</orderID>
-	<price>200</price>
-	<amount>2</amount>
-	<orderItem>
-		<orderItemID>1</orderItemID>
-		<productID>1000000</productID>
-		<orderID>1</orderID>
-		<price>200</price>
-		<amount>2</amount>
-	</orderItem>
-</orderItems>
+	<OrderItem>
+		<OrderItemID>3</OrderItemID>
+		<ProductID>3000000</ProductID>
+		<OrderID>3</OrderID>
+		<Price>360</Price>
+		<Amount>3</Amount>
+	</OrderItem>
+
+	<OrderItem>
+		<OrderItemID>4</OrderItemID>
+		<ProductID>4000000</ProductID>
+		<OrderID>4</OrderID>
+		<Price>500</Price>
+		<Amount>1</Amount>
+	</OrderItem>
+
+	<OrderItem>
+		<OrderItemID>5</OrderItemID>
+		<ProductID>5000000</ProductID>
+		<OrderID>5</OrderID>
+		<Price>100</Price>
+		<Amount>1</Amount>
+	</OrderItem>
+
+	<OrderItem>
+		<OrderItemID>6</OrderItemID>
+		<ProductID>6000000</ProductID>
+		<OrderID>6</OrderID>
+		<Price>300</Price>
+		<Amount>2</Amount>
+	</OrderItem>
+
+	<OrderItem>
+		<OrderItemID>7</OrderItemID>
+		<ProductID>7000000</ProductID>
+		<OrderID>7</OrderID>
+		<Price>220</Price>
+		<Amount>2</Amount>
+	</OrderItem>
+
+</ArrayOfOrderItem>

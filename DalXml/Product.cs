@@ -84,7 +84,7 @@ internal class Product : IProduct
                        select new DO.Product()
                        {
                            ID = Convert.ToInt32(p.Element("id")!.Value),
-                           Name = p.Element("name").Value,
+                           Name = p.Element("name")!.Value,
                            Price = Convert.ToInt32(p.Element("price")!.Value),
                            Category_ = (Category)Enum.Parse(typeof(Category), p.Element("category")!.Value ?? throw new DO.MissingInputValue("category")),
                            InStock = Convert.ToInt32(p.Element("inStock")!.Value)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Dal;
 
@@ -20,12 +21,17 @@ internal class Order : IOrder
     /// <exception cref="Exception"></exception>
     public int Add(DO.Order o)
     {
+        XElement elem = XElement.Load(@"..\xml\config.xml");
+        var id =elem.Element("lastOrderID");
+        int idO = Convert.ToInt32(id.Value);
         List<DO.Order?> orders = XmlTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
         if (orders.FirstOrDefault(order => order?.ID == o.ID) != null)
             throw new Duplication(o.ID, "order");
-
+        o.ID = idO+1 ;
+          
         orders.Add(o);
-
+        elem.Element("lastOrderID")!.SetValue(idO + 1);
+        elem.Save(@"..\xml\config.xml");
         XmlTools.SaveListToXMLSerializer(orders, s_orders);
 
         return o.ID;
