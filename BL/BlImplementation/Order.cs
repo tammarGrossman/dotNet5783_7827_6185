@@ -1,5 +1,6 @@
 ﻿
 using BlApi;
+using BO;
 
 namespace BlImplementation;
 internal class Order : IOrder
@@ -251,6 +252,13 @@ internal class Order : IOrder
             throw new BO.Exceptions.NotExist("the order does not exist");
 
         return orderTracking;
+    }
+
+    public Order FindOrderToUpdate()
+    {
+    //    (from DO.Order? order in dal!.Order.GetAll()
+   //      select order?.ShipDate??order?.OrderDate).Min()
+  
     }
 }
 
