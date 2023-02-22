@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<orders  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<order>
+		<id>1</id>
+		<customerName>yair</customerName>
+		<customerEmail>y123@gmail.com</customerEmail>
+		<customerAdress>pinkas 2</customerAdress>
+		<orderDate>21/01/2020</orderDate>
+		<shipDate>22/01/2020</shipDate>
+		<deliveryDate>12/02/2020</deliveryDate>
+	</order>
+
+	<order>
+		<id>2</id>
+		<customerName>yair</customerName>
+		<customerEmail>y123@gmail.com</customerEmail>
+		<customerAdress>pinkas 2</customerAdress>
+		<orderDate>21/01/2020</orderDate>
+		<shipDate>22/01/2020</shipDate>
+		<deliveryDate>12/02/2020</deliveryDate>
+	</order>
+
+	<order>
+		<id>3</id>
+		<customerName>yair</customerName>
+		<customerEmail>y123@gmail.com</customerEmail>
+		<customerAdress>pinkas 2</customerAdress>
+		<orderDate>21/01/2020</orderDate>
+		<shipDate>22/01/2020</shipDate>
+		<deliveryDate>12/02/2020</deliveryDate>
+	</order>
+
+	<order>
+		<id>4</id>
+		<customerName>yair</customerName>
+		<customerEmail>y123@gmail.com</customerEmail>
+		<customerAdress>pinkas 2</customerAdress>
+		<orderDate>21/01/2020</orderDate>
+		<shipDate>22/01/2020</shipDate>
+		<deliveryDate>12/02/2020</deliveryDate>
+	</order>
+</orders>
+
+

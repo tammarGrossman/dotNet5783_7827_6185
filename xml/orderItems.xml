@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<orderItems xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<orderItem>
+		<orderItemID>1</orderItemID>
+		<productID>1000000</productID>
+		<orderID>1</orderID>
+		<price>200</price>
+		<amount>2</amount>
+	</orderItem>
+
+	<orderItem>
+		<orderItemID>2</orderItemID>
+		<productID>2000000</productID>
+		<orderID>2</orderID>
+		<price>200</price>
+		<amount>3</amount>
+	</orderItem>
+	<orderItemID>3</orderItemID>
+	<productID>3000000</productID>
+	<orderID>3</orderID>
+	<price>300</price>
+	<amount>2</amount>
+
+	<orderItem>
+		<orderItemID>1</orderItemID>
+		<productID>1000000</productID>
+		<orderID>1</orderID>
+		<price>200</price>
+		<amount>2</amount>
+	</orderItem>
+
+	<orderItem>
+		<orderItemID>2</orderItemID>
+		<productID>2000000</productID>
+		<orderID>2</orderID>
+		<price>200</price>
+		<amount>3</amount>
+	</orderItem>
+	<orderItemID>3</orderItemID>
+	<productID>3000000</productID>
+	<orderID>3</orderID>
+	<price>300</price>
+	<amount>2</amount>
+	<orderItem>
+		<orderItemID>1</orderItemID>
+		<productID>1000000</productID>
+		<orderID>1</orderID>
+		<price>200</price>
+		<amount>2</amount>
+	</orderItem>
+	<orderItemID>1</orderItemID>
+	<productID>1000000</productID>
+	<orderID>1</orderID>
+	<price>200</price>
+	<amount>2</amount>
+	<orderItem>
+		<orderItemID>1</orderItemID>
+		<productID>1000000</productID>
+		<orderID>1</orderID>
+		<price>200</price>
+		<amount>2</amount>
+	</orderItem>
+	<orderItemID>1</orderItemID>
+	<productID>1000000</productID>
+	<orderID>1</orderID>
+	<price>200</price>
+	<amount>2</amount>
+	<orderItem>
+		<orderItemID>1</orderItemID>
+		<productID>1000000</productID>
+		<orderID>1</orderID>
+		<price>200</price>
+		<amount>2</amount>
+	</orderItem>
+	<orderItemID>1</orderItemID>
+	<productID>1000000</productID>
+	<orderID>1</orderID>
+	<price>200</price>
+	<amount>2</amount>
+	<orderItem>
+		<orderItemID>1</orderItemID>
+		<productID>1000000</productID>
+		<orderID>1</orderID>
+		<price>200</price>
+		<amount>2</amount>
+	</orderItem>
+</orderItems>
+
+

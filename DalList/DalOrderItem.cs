@@ -105,9 +105,9 @@ internal class DalOrderItem : IOrderItem
 /// <param name="Condition"></param>
 /// <returns></returns>
 /// <exception cref="NotExist"></exception>
-    public OrderItem GetByCon(Func<OrderItem?, bool>? Condition )
+    public OrderItem GetByCon(Func<OrderItem?, bool> Condition )
     {
-        return DataSource.orderItems.Find(x => Condition!(x)) ??
+        return DataSource.orderItems.Find(x => Condition(x)) ??
          throw new NotExist(0, "order item");
        
     }
