@@ -1,13 +1,13 @@
 ﻿
-
+using System.Xml.Linq;
 namespace Dal;
 using DalApi;
 using DO;
 using System.Linq;
 
-    internal class OrderItem : IOrderItem
-    {
-    const string s_orderItems = @"orderItems";
+internal class OrderItem : IOrderItem
+{
+    const string s_orderItems = "orderItems";
     /// <summary>
     /// add object
     /// </summary>
@@ -24,7 +24,7 @@ using System.Linq;
 
         XmlTools.SaveListToXMLSerializer(orderItems, s_orderItems);
 
-        return oI.OrderItemID;    
+        return oI.OrderItemID;
     }
 
     /// <summary>
@@ -76,11 +76,11 @@ using System.Linq;
     public void Delete(int id)
     {
         List<DO.OrderItem?> orderItems = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItems);
-        if (orderItems.RemoveAll(oI => oI?.OrderItemID == id) == 0) 
+        if (orderItems.RemoveAll(oI => oI?.OrderItemID == id) == 0)
             throw new NotExist(id, "order item");
 
         XmlTools.SaveListToXMLSerializer(orderItems, s_orderItems);
-      
+
     }
 
     /// <summary>
@@ -117,10 +117,11 @@ using System.Linq;
     public IEnumerable<DO.OrderItem?> GetProductsInOrder(int oID)
     {
         List<DO.OrderItem?> orderItems = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItems);
-        List<DO.OrderItem?> OrderItemsList =orderItems.FindAll(order => order?.OrderID == oID);
+        List<DO.OrderItem?> OrderItemsList = orderItems.FindAll(order => order?.OrderID == oID);
         if (OrderItemsList.Count() > 0)
             return OrderItemsList;
         throw new NotExist(oID, "order item");
     }
- }
+}
+
 

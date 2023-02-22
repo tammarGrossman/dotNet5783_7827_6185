@@ -90,9 +90,9 @@ internal class DalOrder : IOrder
                select order; 
 
     }
-    public Order GetByCon(Func<Order?, bool>? Condition)
+    public Order GetByCon(Func<Order?, bool> Condition)
     {
-        return DataSource.orders.Find(x => Condition!(x)) ??
+        return DataSource.orders.Find(x => Condition(x)) ??
           throw new NotExist(0, "order");
     }
 }

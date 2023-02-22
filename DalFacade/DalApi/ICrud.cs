@@ -36,6 +36,6 @@ namespace DalApi
         /// </summary>
         /// <returns></returns>
         public IEnumerable<T?> GetAll(Func<T?, bool>? Condition=null);
-        public T GetByCon(Func<T?,bool>? Condition);
+        public T GetByCon(Func<T?,bool> Condition);
     }
 }

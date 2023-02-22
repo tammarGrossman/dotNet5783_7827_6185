@@ -1,16 +1,13 @@
 ﻿using DalApi;
-using System.Diagnostics;
+namespace Dal
+{  
+        sealed internal class DalXml : IDal
+        {
+            public static IDal Instance { get; } = new DalXml();
+            private DalXml() { }
 
-namespace DalXml
-{
-    sealed internal class DalXml : IDal
-    {
-        public static IDal Instance { get; } = new DalXml();
-        private DalXml() { }
-
-        public IProduct Product { get; } = new Dal.Product();
-        public IOrder Order { get; } = new Dal.Order();
-        public IOrderItem OrderItem { get; } = new Dal.OrderItem();
-
+            public IProduct Product { get; } = new Product();
+            public IOrder Order { get; } = new Order();
+            public IOrderItem OrderItem { get; } = new OrderItem();
+        }
     }
-}
