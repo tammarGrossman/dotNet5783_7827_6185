@@ -1,6 +1,7 @@
 ﻿
 using BlApi;
 using BO;
+using DO;
 
 namespace BlImplementation;
 internal class Order : IOrder
@@ -253,12 +254,21 @@ internal class Order : IOrder
 
         return orderTracking;
     }
-
-    public Order FindOrderToUpdate()
+    /// <summary>
+    /// a method to update the next order 
+    /// </summary>
+    /// <returns></returns>
+    public DO.Order FindOrderToUpdate()
     {
-    //    (from DO.Order? order in dal!.Order.GetAll()
-   //      select order?.ShipDate??order?.OrderDate).Min()
-  
+        var ordersUpdate = (from DO.Order order in dal!.Order.GetAll()
+                            where order.ShipDate != null || order.ShipDate == null && order.OrderDate != null
+                            select order);
+        var minDate = DateTime.Now;
+
+       return  (from o in ordersUpdate
+                    from o2 in ordersUpdate
+                          where o.OrderDate != null && o.ShipDate == null && o.OrderDate < o2.OrderDate || o.ShipDate != null && o.ShipDate < o2.ShipDate
+                          select o).FirstOrDefault(x=> x.ID!=0);
     }
 }
 

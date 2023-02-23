@@ -35,4 +35,9 @@ public interface IOrder
     /// <returns></returns>
     public OrderTracking TrackOrder(int id);
 
+    /// <summary>
+    /// a method to update the next order 
+    /// </summary>
+    /// <returns></returns>
+    public DO.Order FindOrderToUpdate();
 }

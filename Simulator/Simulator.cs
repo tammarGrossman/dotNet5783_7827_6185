@@ -1,10 +1,13 @@
-﻿using BO;
+﻿using BlApi;
+using BO;
 
 namespace Simulator
 {
     public static class Simulator
     {
+        private static BlApi.IBl? bl = BlApi.Factory.Get();
         private static EventHandler<OrderStatusUpdateEventArgs> orderStatusChanged;
+        private static EventHandler<OrderEndEventArgs> endSimulator;
         private static volatile bool active;
         public static void initilize()
         {
@@ -14,16 +17,29 @@ namespace Simulator
 
         private static void RunSimulator(object? obj)
         {
+            Random rn = new Random();
             while (active)
             {
-                Order order;//==FindOrderToUpdate
-                if (order != null)
+                DO.Order order = bl!.Order.FindOrderToUpdate();
+                if (order.ID != 0)
                 {
-                    int rn=0;//rand(3,10)
-                    //calculate next status and estimated time
-                    orderStatusChanged?.Invoke(null, new OrderStatusUpdateEventArgs(order.ID, order.Status));
-                    Thread.Sleep(rn * 1000);
-                    //bl.update status
+                    int seconds = rn.Next(3, 11);
+                    var nextStatus = OrderStatus.payment;
+                    var estTime = DateTime.Now.AddSeconds(seconds);
+                    var currentStatus = bl.Order.TrackOrder(order.ID).Status;
+                    if (currentStatus == OrderStatus.payment)
+                        nextStatus = OrderStatus.shiped;
+                    else if (currentStatus == OrderStatus.shiped)
+                        currentStatus = OrderStatus.delivered;
+
+                    orderStatusChanged?.Invoke(null, new OrderStatusUpdateEventArgs(order.ID, currentStatus, nextStatus, DateTime.Now, estTime));
+                    Thread.Sleep(seconds * 1000);
+                    if (nextStatus == OrderStatus.shiped)
+                        bl.Order.UpdateSend(order.ID);
+
+                    else
+                        bl.Order.UpdateSupply(order.ID);
+
                 }
                 Thread.Sleep(1000);
             }
@@ -40,10 +56,25 @@ namespace Simulator
             orderStatusChanged += changeStatusOfOrder;
         }
 
-        public static void UnregisterOrderStatusEvent(EventHandler<OrderStatusUpdateEventArgs> changeStatusOfOrder)
+        public static void UnRegisterOrderStatusEvent(EventHandler<OrderStatusUpdateEventArgs> changeStatusOfOrder)
         {
             orderStatusChanged -= changeStatusOfOrder;
         }
+
+
+        public static void RegisterEndEvent(EventHandler<OrderEndEventArgs> endStatus)
+        {
+            endSimulator += endStatus;
+        }
+
+        public static void UnRegisterEndEvent(EventHandler<OrderEndEventArgs> endStatus)
+        {
+            endSimulator -= endStatus;
+        }
+
+
+
+
     }
 
     public class OrderStatusUpdateEventArgs : EventArgs
@@ -54,10 +85,32 @@ namespace Simulator
         DateTime StartTime { get; set; }
         DateTime EstimatedTime { get; set; }
 
-        public OrderStatusUpdateEventArgs(int orderId, OrderStatus? currentStatus)//add all props
+        public OrderStatusUpdateEventArgs(int orderId, OrderStatus? currentStatus, OrderStatus? nextStatus, DateTime startTime, DateTime estimatedTime)//add all props
         {
             OrderId = orderId;
             CurrentStatus = currentStatus;
+            NextStatus = nextStatus;
+            StartTime = startTime;
+            EstimatedTime = estimatedTime;
+        }
+    }
+
+    public class OrderEndEventArgs : EventArgs
+    {
+        int OrderId { get; set; }
+        OrderStatus? CurrentStatus { get; set; }
+        OrderStatus? NextStatus { get; set; }
+        DateTime StartTime { get; set; }
+        DateTime EstimatedTime { get; set; }
+
+        public OrderEndEventArgs(int orderId, OrderStatus? currentStatus, OrderStatus? nextStatus, DateTime startTime, DateTime estimatedTime)//add all props
+        {
+            OrderId = orderId;
+            CurrentStatus = currentStatus;
+            NextStatus = nextStatus;
+            StartTime = startTime;
+            EstimatedTime = estimatedTime;
         }
     }
 }
+    

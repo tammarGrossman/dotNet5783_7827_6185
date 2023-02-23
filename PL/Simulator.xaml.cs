@@ -39,7 +39,7 @@ namespace PL
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             sim.Simulator.RegisterOrderStatusEvent(ChangeStatusOfOrder);
-            // sim.Simulator.RegisterSimulatorEndedEvent(SimulatorEnded)
+            sim.Simulator.UnRegisterEndEvent(SimulatorEnded)
 
             sim.Simulator.initilize();
             while(!worker.CancellationPending)
@@ -61,16 +61,22 @@ namespace PL
         {
             if(e.ProgressPercentage==0)
             {
-                //clock.text=e.UserState;
-            }else if (e.ProgressPercentage == 1)
+                clock.Text = e.UserState.ToString();
+            }
+            else if (e.ProgressPercentage == 1)
             {
+                //orderID.Text =;
+                //currentStatus.Text=;
+                //nextStatus.Text=;
+                //estimatedTime=;
                 //update ui
             }
         }
 
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            sim.Simulator.UnregisterOrderStatusEvent(ChangeStatusOfOrder);
+            sim.Simulator.UnRegisterOrderStatusEvent(ChangeStatusOfOrder);
+            sim.Simulator.UnRegisterEndEvent(ChangeStatusOfOrder);
             //unregister end event
         }
 
