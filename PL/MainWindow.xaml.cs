@@ -25,6 +25,6 @@ namespace PL
 
         private void orderWindowBut_Click(object sender, RoutedEventArgs e) => new ProductsCatalog().Show();
 
-        private void startProgress_Click(object sender, RoutedEventArgs e)=> new Simulator().Show();
+        private void startProgress_Click(object sender, RoutedEventArgs e) => new SimulatorWindow().Show();
     }
 }

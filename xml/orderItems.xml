@@ -84,4 +84,32 @@
     <Price>0</Price>
     <Amount>1</Amount>
   </OrderItem>
+  <OrderItem>
+    <OrderItemID>8</OrderItemID>
+    <ProductID>10000000</ProductID>
+    <OrderID>11</OrderID>
+    <Price>0</Price>
+    <Amount>1</Amount>
+  </OrderItem>
+  <OrderItem>
+    <OrderItemID>9</OrderItemID>
+    <ProductID>10000000</ProductID>
+    <OrderID>12</OrderID>
+    <Price>0</Price>
+    <Amount>1</Amount>
+  </OrderItem>
+  <OrderItem>
+    <OrderItemID>10</OrderItemID>
+    <ProductID>123123123</ProductID>
+    <OrderID>12</OrderID>
+    <Price>34</Price>
+    <Amount>1</Amount>
+  </OrderItem>
+  <OrderItem>
+    <OrderItemID>11</OrderItemID>
+    <ProductID>154545555</ProductID>
+    <OrderID>12</OrderID>
+    <Price>100</Price>
+    <Amount>1</Amount>
+  </OrderItem>
 </ArrayOfOrderItem>

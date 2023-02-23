@@ -261,7 +261,7 @@ internal class Order : IOrder
     public DO.Order FindOrderToUpdate()
     {
         var ordersUpdate = (from DO.Order order in dal!.Order.GetAll()
-                            where order.ShipDate != null || order.ShipDate == null && order.OrderDate != null
+                            where order.DeliveryDate == null 
                             select order);
         var minDate = DateTime.Now;
 
@@ -270,5 +270,7 @@ internal class Order : IOrder
                           where o.OrderDate != null && o.ShipDate == null && o.OrderDate < o2.OrderDate || o.ShipDate != null && o.ShipDate < o2.ShipDate
                           select o).FirstOrDefault(x=> x.ID!=0);
     }
+
+
 }
 

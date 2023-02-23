@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{215EE401-2F0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{69A0C6F1-92E7-4D4F-8ABC-3417C8BEBFE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "Simulator\Simulator.csproj", "{2E55CAA4-FD44-4418-8E7D-B7E54A4C8E7C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "Simulator\Simulator.csproj", "{42EFB5D6-71CB-451C-8825-E4CF3C0F44AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,10 +72,10 @@ Global
 		{69A0C6F1-92E7-4D4F-8ABC-3417C8BEBFE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69A0C6F1-92E7-4D4F-8ABC-3417C8BEBFE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69A0C6F1-92E7-4D4F-8ABC-3417C8BEBFE4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E55CAA4-FD44-4418-8E7D-B7E54A4C8E7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E55CAA4-FD44-4418-8E7D-B7E54A4C8E7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E55CAA4-FD44-4418-8E7D-B7E54A4C8E7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E55CAA4-FD44-4418-8E7D-B7E54A4C8E7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42EFB5D6-71CB-451C-8825-E4CF3C0F44AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42EFB5D6-71CB-451C-8825-E4CF3C0F44AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42EFB5D6-71CB-451C-8825-E4CF3C0F44AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42EFB5D6-71CB-451C-8825-E4CF3C0F44AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

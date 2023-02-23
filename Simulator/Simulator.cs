@@ -7,12 +7,13 @@ namespace Simulator
     {
         private static BlApi.IBl? bl = BlApi.Factory.Get();
         private static EventHandler<OrderStatusUpdateEventArgs> orderStatusChanged;
-        private static EventHandler<OrderEndEventArgs> endSimulator;
+        private static EventHandler<EventArgs> endSimulator;
         private static volatile bool active;
         public static void initilize()
         {
             Thread t = new Thread(RunSimulator);
             active = true;
+            t.Start();
         }
 
         private static void RunSimulator(object? obj)
@@ -43,7 +44,7 @@ namespace Simulator
                 }
                 Thread.Sleep(1000);
             }
-            //raise event of end simultor
+            endSimulator?.Invoke(null, new());
         }
 
         public static void stop()
@@ -62,28 +63,24 @@ namespace Simulator
         }
 
 
-        public static void RegisterEndEvent(EventHandler<OrderEndEventArgs> endStatus)
+        public static void RegisterEndEvent(EventHandler<EventArgs> endStatus)
         {
             endSimulator += endStatus;
         }
 
-        public static void UnRegisterEndEvent(EventHandler<OrderEndEventArgs> endStatus)
+        public static void UnRegisterEndEvent(EventHandler<EventArgs> endStatus)
         {
             endSimulator -= endStatus;
         }
-
-
-
-
     }
 
     public class OrderStatusUpdateEventArgs : EventArgs
     {
-        int OrderId { get; set; }
-        OrderStatus? CurrentStatus { get; set; }
-        OrderStatus? NextStatus { get; set; }
-        DateTime StartTime { get; set; }
-        DateTime EstimatedTime { get; set; }
+        public int OrderId { get; set; }
+        public OrderStatus? CurrentStatus { get; set; }
+        public OrderStatus? NextStatus { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EstimatedTime { get; set; }
 
         public OrderStatusUpdateEventArgs(int orderId, OrderStatus? currentStatus, OrderStatus? nextStatus, DateTime startTime, DateTime estimatedTime)//add all props
         {
@@ -95,22 +92,6 @@ namespace Simulator
         }
     }
 
-    public class OrderEndEventArgs : EventArgs
-    {
-        int OrderId { get; set; }
-        OrderStatus? CurrentStatus { get; set; }
-        OrderStatus? NextStatus { get; set; }
-        DateTime StartTime { get; set; }
-        DateTime EstimatedTime { get; set; }
 
-        public OrderEndEventArgs(int orderId, OrderStatus? currentStatus, OrderStatus? nextStatus, DateTime startTime, DateTime estimatedTime)//add all props
-        {
-            OrderId = orderId;
-            CurrentStatus = currentStatus;
-            NextStatus = nextStatus;
-            StartTime = startTime;
-            EstimatedTime = estimatedTime;
-        }
-    }
 }
-    
+

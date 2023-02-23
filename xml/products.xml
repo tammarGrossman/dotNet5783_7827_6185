@@ -5,7 +5,7 @@
     <name>ggg</name>
     <price>0</price>
     <category>Kids</category>
-    <inStock>143</inStock>
+    <inStock>141</inStock>
   </product>
   <product>
     <id>20000000</id>
@@ -52,9 +52,9 @@
   <product>
     <id>154545555</id>
     <name>dfffff</name>
-    <price>100</price>
+    <price>0</price>
     <category>Accesories</category>
-    <inStock>100</inStock>
+    <inStock>99</inStock>
   </product>
   <product>
     <id>10101010</id>
@@ -66,8 +66,8 @@
   <product>
     <id>123123123</id>
     <name>fghjk</name>
-    <price>34</price>
+    <price>0</price>
     <category>Women</category>
-    <inStock>23</inStock>
+    <inStock>22</inStock>
   </product>
 </products>
