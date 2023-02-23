@@ -102,6 +102,7 @@ internal class Order : IOrder
     {
         try
         {
+
             DO.Order dalOrder = dal!.Order.Get(id);
             BO.Order blOrder;
             IEnumerable<DO.OrderItem?> orderItems = dal!.OrderItem.GetProductsInOrder(id);
