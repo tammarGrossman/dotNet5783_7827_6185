@@ -66,7 +66,6 @@ namespace PL.Carts
                 }
                 MessageBox.Show("the cart confirm succesfuly");
                 this.Close();
-                new MainWindow().Show();
             }
             else
             {

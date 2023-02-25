@@ -1,73 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <products>
   <product>
-    <id>10000000</id>
-    <name>ggg</name>
-    <price>0</price>
-    <category>Kids</category>
-    <inStock>141</inStock>
+    <id>122455</id>
+    <name>tight</name>
+    <price>100</price>
+    <category>Women</category>
+    <inStock>1</inStock>
   </product>
   <product>
-    <id>20000000</id>
-    <name>shirt</name>
-    <price>0</price>
-    <category>Men</category>
-    <inStock>179</inStock>
-  </product>
-  <product>
-    <id>30000000</id>
+    <id>123123</id>
     <name>ball</name>
-    <price>0</price>
-    <category>Kids</category>
-    <inStock>119</inStock>
-  </product>
-  <product>
-    <id>40000000</id>
-    <name>bmb</name>
-    <price>0</price>
-    <category>Accesories</category>
-    <inStock>497</inStock>
-  </product>
-  <product>
-    <id>50000000</id>
-    <name>skirt</name>
-    <price>100</price>
-    <category>Women</category>
-    <inStock>144</inStock>
-  </product>
-  <product>
-    <id>60000000</id>
-    <name>skirt</name>
-    <price>100</price>
-    <category>Women</category>
-    <inStock>144</inStock>
-  </product>
-  <product>
-    <id>70000000</id>
-    <name>tights</name>
-    <price>100</price>
-    <category>Men</category>
-    <inStock>144</inStock>
-  </product>
-  <product>
-    <id>154545555</id>
-    <name>dfffff</name>
-    <price>0</price>
-    <category>Accesories</category>
-    <inStock>99</inStock>
-  </product>
-  <product>
-    <id>10101010</id>
-    <name>gumi</name>
     <price>120</price>
-    <category>Accesories</category>
-    <inStock>100</inStock>
+    <category>Kids</category>
+    <inStock>5</inStock>
   </product>
   <product>
-    <id>123123123</id>
-    <name>fghjk</name>
-    <price>0</price>
-    <category>Women</category>
-    <inStock>22</inStock>
+    <id>124578</id>
+    <name>mat</name>
+    <price>150</price>
+    <category>Accesories</category>
+    <inStock>2</inStock>
   </product>
 </products>

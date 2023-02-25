@@ -170,7 +170,8 @@ internal class Cart : ICart
                               ID = prod.ID,
                               Category_ = prod.Category_,
                               Name = prod.Name,
-                              InStock = prod.InStock - item.Amount 
+                              InStock = prod.InStock - item.Amount,
+                              Price=prod.Price
                           }
                           let temp = UpdateProd(newProd)
                           select new DO.OrderItem()

@@ -21,22 +21,41 @@ internal class Order : IOrder
     /// <exception cref="Exception"></exception>
     public int Add(DO.Order o)
     {
-        XElement elem = XElement.Load(@"..\xml\config.xml");
-        var id =elem.Element("lastOrderID");
-        int idO = Convert.ToInt32(id.Value);
+        if (o.ID == 0)
+        {
+            XElement elem = XElement.Load(@"..\xml\config.xml");
+            var id = elem.Element("lastOrderID");
+            int idO = Convert.ToInt32(id!.Value);
+            o.ID = idO + 1;
+            elem.Element("lastOrderID")!.SetValue(o.ID);
+            elem.Save(@"..\xml\config.xml");
+        }
         List<DO.Order?> orders = XmlTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
         if (orders.FirstOrDefault(order => order?.ID == o.ID) != null)
             throw new Duplication(o.ID, "order");
-        o.ID = idO+1 ;
+       
           
-        orders.Add(o);
-        elem.Element("lastOrderID")!.SetValue(idO + 1);
-        elem.Save(@"..\xml\config.xml");
+        orders.Add(o);       
         XmlTools.SaveListToXMLSerializer(orders, s_orders);
 
         return o.ID;
+
+
+       
     }
 
+
+    public void AddToUpdate(DO.Order o)
+    {
+        List<DO.Order?> orders = XmlTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
+        if (orders.FirstOrDefault(order => order?.ID == o.ID) != null)
+            throw new Duplication(o.ID, "order");
+       
+        orders.Add(o);
+        XmlTools.SaveListToXMLSerializer(orders, s_orders);
+
+        
+    }
 
     /// <summary>
     /// get object

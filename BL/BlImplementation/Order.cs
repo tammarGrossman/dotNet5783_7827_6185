@@ -1,10 +1,11 @@
 ﻿
 using BlApi;
 using BO;
+using DalApi;
 using DO;
 
 namespace BlImplementation;
-internal class Order : IOrder
+internal class Order : BlApi.IOrder
 {
     DalApi.IDal? dal = DalApi.Factory.Get();
     /// <summary>
@@ -261,17 +262,17 @@ internal class Order : IOrder
     /// <returns></returns>
     public DO.Order FindOrderToUpdate()
     {
+        DO.Order orderUpdate = new DO.Order();
+
+
         var ordersUpdate = (from DO.Order order in dal!.Order.GetAll()
-                            where order.DeliveryDate == null 
+                            where order.DeliveryDate == null
                             select order);
-        var minDate = DateTime.Now;
-
-       return  (from o in ordersUpdate
-                    from o2 in ordersUpdate
-                          where o.OrderDate != null && o.ShipDate == null && o.OrderDate < o2.OrderDate || o.ShipDate != null && o.ShipDate < o2.ShipDate
-                          select o).FirstOrDefault(x=> x.ID!=0);
+        if (ordersUpdate.Count() > 0)
+        {
+            ordersUpdate.MinBy(order => order.ShipDate == null ? order.OrderDate : order.ShipDate);          
+        }
+        return orderUpdate;
     }
-
-
 }
 

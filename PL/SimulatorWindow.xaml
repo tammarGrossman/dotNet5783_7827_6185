@@ -8,10 +8,16 @@
         Title="SimulatorWindow" Height="450" Width="800">
     <Grid>
         <Button Content="stop" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="stop" Click="stop_Click" Margin="0,328,0,0"/>
-        <TextBox x:Name="clock" HorizontalAlignment="Left" Margin="495,26,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="75" Width="273"/>
-        <TextBox x:Name="orderID" HorizontalAlignment="Left" Margin="58,55,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="currentStatus" HorizontalAlignment="Left" Margin="58,83,0,0"  Width="120"/>
-        <TextBox x:Name="nextStatus" HorizontalAlignment="Left" Margin="58,115,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="estimatedTime" HorizontalAlignment="Left" Margin="58,146,0,0" TextWrapping="Wrap"  Width="120"/>
+
+        <TextBox x:Name="clock" HorizontalAlignment="Left" Margin="495,26,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="75" Width="273" />
+        <TextBox x:Name="orderID" HorizontalAlignment="Left" Margin="58,55,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"  />
+        <TextBox x:Name="currentStatus" HorizontalAlignment="Left" Margin="58,83,0,330"  Width="120"/>
+        <TextBox x:Name="nextStatus" HorizontalAlignment="Left" Margin="58,124,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="22"/>
+        <TextBox x:Name="estimatedTime" HorizontalAlignment="Left" Margin="58,162,0,246" TextWrapping="Wrap"  Width="120"/>
+        <Label Content="מספר הזמנה " HorizontalAlignment="Left" Margin="203,51,0,0" VerticalAlignment="Top"/>
+        <Label Content="סטטוס נוכחי" HorizontalAlignment="Left" Margin="203,88,0,0" VerticalAlignment="Top" Height="31" Width="120"/>
+        <Label Content="סטטוס הבא" HorizontalAlignment="Left" Margin="203,124,0,0" VerticalAlignment="Top"/>
+        <Label Content="זמן משוער לסיום עדכון" HorizontalAlignment="Left" Margin="203,162,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="noUpdateOrders" Content="אין הזמנות שממתינות לעדכון :) " HorizontalAlignment="Left" Margin="328,239,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

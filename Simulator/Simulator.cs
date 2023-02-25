@@ -31,7 +31,7 @@ namespace Simulator
                     if (currentStatus == OrderStatus.payment)
                         nextStatus = OrderStatus.shiped;
                     else if (currentStatus == OrderStatus.shiped)
-                        currentStatus = OrderStatus.delivered;
+                        nextStatus = OrderStatus.delivered;
 
                     orderStatusChanged?.Invoke(null, new OrderStatusUpdateEventArgs(order.ID, currentStatus, nextStatus, DateTime.Now, estTime));
                     Thread.Sleep(seconds * 1000);

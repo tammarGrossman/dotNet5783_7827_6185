@@ -32,6 +32,7 @@ namespace PL
             InitializeComponent();
             worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
             worker.DoWork += Worker_DoWork;
             worker.ProgressChanged += Worker_ProgressChanged;
             worker.RunWorkerCompleted += Worker_RunWorkerCompleted;         
@@ -39,16 +40,17 @@ namespace PL
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            sim.Simulator.RegisterOrderStatusEvent(ChangeStatusOfOrder);
-            sim.Simulator.RegisterEndEvent(SimulatorEnded);
+                sim.Simulator.RegisterOrderStatusEvent(ChangeStatusOfOrder);
+                sim.Simulator.RegisterEndEvent(SimulatorEnded);
 
-            sim.Simulator.initilize();
-            while (!worker.CancellationPending)
-            {
-                Thread.Sleep(1000);
-                worker.ReportProgress(0, DateTime.Now);
+                sim.Simulator.initilize();
+                while (!worker.CancellationPending)
+                {
+                    Thread.Sleep(1000);
+                    worker.ReportProgress(0, DateTime.Now);
+                }
             }
-        }
+        
 
         private void ChangeStatusOfOrder(object? sender, OrderStatusUpdateEventArgs e)
         {
@@ -70,10 +72,22 @@ namespace PL
             {
                 OrderStatusUpdateEventArgs e2 = (OrderStatusUpdateEventArgs)e.UserState!;
 
-                orderID.Text = e2.OrderId.ToString();
-                currentStatus.Text = e2.CurrentStatus.ToString();
-                nextStatus.Text = e2.NextStatus.ToString();
-                estimatedTime.Text = e2.EstimatedTime.ToLongTimeString();
+                if (e2.OrderId != 0)
+                {
+                    noUpdateOrders.Visibility = Visibility.Hidden;
+                    orderID.Text = e2.OrderId.ToString();
+                    currentStatus.Text = e2.CurrentStatus.ToString();
+                    nextStatus.Text = e2.NextStatus.ToString();
+                    estimatedTime.Text = e2.EstimatedTime.ToLongTimeString();
+                }
+                else
+                {
+                    noUpdateOrders.Visibility = Visibility.Visible;
+                    orderID.Visibility = Visibility.Hidden;
+                    currentStatus.Visibility = Visibility.Hidden;
+                    nextStatus.Visibility = Visibility.Hidden;
+                    estimatedTime.Visibility = Visibility.Hidden;
+                }
 
             }
         }
@@ -88,6 +102,8 @@ namespace PL
         private void stop_Click(object sender, RoutedEventArgs e)
         {
             sim.Simulator.stop();
+            this.Close();
+            new Thanks().Show();
             
         }
     }
