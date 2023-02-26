@@ -1,24 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfOrderItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <OrderItem>
-    <OrderItemID>1</OrderItemID>
-    <ProductID>124578</ProductID>
-    <OrderID>1</OrderID>
-    <Price>150</Price>
-    <Amount>1</Amount>
-  </OrderItem>
-  <OrderItem>
-    <OrderItemID>2</OrderItemID>
-    <ProductID>124578</ProductID>
-    <OrderID>2</OrderID>
-    <Price>150</Price>
-    <Amount>1</Amount>
-  </OrderItem>
-  <OrderItem>
-    <OrderItemID>3</OrderItemID>
-    <ProductID>123123</ProductID>
-    <OrderID>3</OrderID>
-    <Price>120</Price>
-    <Amount>1</Amount>
-  </OrderItem>
+  
 </ArrayOfOrderItem>

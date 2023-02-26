@@ -264,15 +264,15 @@ internal class Order : BlApi.IOrder
     {
         DO.Order orderUpdate = new DO.Order();
 
-
         var ordersUpdate = (from DO.Order order in dal!.Order.GetAll()
                             where order.DeliveryDate == null
                             select order);
         if (ordersUpdate.Count() > 0)
         {
-            ordersUpdate.MinBy(order => order.ShipDate == null ? order.OrderDate : order.ShipDate);          
+            orderUpdate = ordersUpdate.MinBy(order => order.ShipDate == null ? order.OrderDate : order.ShipDate);
         }
         return orderUpdate;
+
     }
 }
 

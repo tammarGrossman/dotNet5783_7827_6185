@@ -5,20 +5,20 @@
     <name>tight</name>
     <price>100</price>
     <category>Women</category>
-    <inStock>1</inStock>
+    <inStock>99</inStock>
   </product>
   <product>
     <id>123123</id>
     <name>ball</name>
     <price>120</price>
     <category>Kids</category>
-    <inStock>5</inStock>
+    <inStock>149</inStock>
   </product>
   <product>
     <id>124578</id>
     <name>mat</name>
     <price>150</price>
     <category>Accesories</category>
-    <inStock>2</inStock>
+    <inStock>120</inStock>
   </product>
 </products>

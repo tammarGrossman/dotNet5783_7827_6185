@@ -35,22 +35,22 @@ namespace PL
             worker.WorkerSupportsCancellation = true;
             worker.DoWork += Worker_DoWork;
             worker.ProgressChanged += Worker_ProgressChanged;
-            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;         
+            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
             worker.RunWorkerAsync();
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-                sim.Simulator.RegisterOrderStatusEvent(ChangeStatusOfOrder);
-                sim.Simulator.RegisterEndEvent(SimulatorEnded);
+            sim.Simulator.RegisterOrderStatusEvent(ChangeStatusOfOrder);
+            sim.Simulator.RegisterEndEvent(SimulatorEnded);
 
-                sim.Simulator.initilize();
-                while (!worker.CancellationPending)
-                {
-                    Thread.Sleep(1000);
-                    worker.ReportProgress(0, DateTime.Now);
-                }
+            sim.Simulator.initilize();
+            while (!worker.CancellationPending)
+            {
+                Thread.Sleep(1000);
+                worker.ReportProgress(0, DateTime.Now);
             }
-        
+        }
+
 
         private void ChangeStatusOfOrder(object? sender, OrderStatusUpdateEventArgs e)
         {
@@ -64,6 +64,7 @@ namespace PL
         }
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+          
             if (e.ProgressPercentage == 0)
             {
                 clock.Text = DateTime.Now.ToLongTimeString();
@@ -75,6 +76,14 @@ namespace PL
                 if (e2.OrderId != 0)
                 {
                     noUpdateOrders.Visibility = Visibility.Hidden;
+                    orderID.Visibility = Visibility.Visible;
+                    currentStatus.Visibility = Visibility.Visible;
+                    nextStatus.Visibility = Visibility.Visible;
+                    estimatedTime.Visibility = Visibility.Visible;
+                    lblorderID.Visibility = Visibility.Visible;
+                    lblcurrentStatus.Visibility = Visibility.Visible;
+                    lblnextStatus.Visibility = Visibility.Visible;
+                    lblestimatedTime.Visibility = Visibility.Visible;
                     orderID.Text = e2.OrderId.ToString();
                     currentStatus.Text = e2.CurrentStatus.ToString();
                     nextStatus.Text = e2.NextStatus.ToString();
@@ -87,9 +96,13 @@ namespace PL
                     currentStatus.Visibility = Visibility.Hidden;
                     nextStatus.Visibility = Visibility.Hidden;
                     estimatedTime.Visibility = Visibility.Hidden;
+                    lblorderID.Visibility = Visibility.Hidden;
+                    lblcurrentStatus.Visibility = Visibility.Hidden;
+                    lblnextStatus.Visibility = Visibility.Hidden;
+                    lblestimatedTime.Visibility = Visibility.Hidden;
                 }
-
             }
+           
         }
 
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -105,6 +118,11 @@ namespace PL
             this.Close();
             new Thanks().Show();
             
+        }
+
+        private void currentStatus_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -42,6 +42,10 @@ namespace Simulator
                         bl.Order.UpdateSupply(order.ID);
 
                 }
+                else
+                {
+                    orderStatusChanged?.Invoke(null, new OrderStatusUpdateEventArgs(0, null, null, DateTime.MinValue, DateTime.MinValue));
+                }
                 Thread.Sleep(1000);
             }
             endSimulator?.Invoke(null, new());

@@ -1,30 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Order>
-    <ID>1</ID>
-    <CustomerName>dfghjk</CustomerName>
-    <CustomerEmail>dfghj@.dfghj</CustomerEmail>
-    <CustomerAdress>fghjk</CustomerAdress>
-    <OrderDate>2023-02-25T20:11:46.4834044+02:00</OrderDate>
-    <ShipDate>2023-02-25T20:13:25.3241622+02:00</ShipDate>
-    <DeliveryDate>2023-02-25T20:18:27.614351+02:00</DeliveryDate>
-  </Order>
-  <Order>
-    <ID>2</ID>
-    <CustomerName>dfghjk</CustomerName>
-    <CustomerEmail>dfghj@.sdfghj</CustomerEmail>
-    <CustomerAdress>dfghj</CustomerAdress>
-    <OrderDate>2023-02-25T20:27:30.1468936+02:00</OrderDate>
-    <ShipDate>2023-02-25T20:27:46.5499413+02:00</ShipDate>
-    <DeliveryDate>2023-02-25T20:27:54.5779368+02:00</DeliveryDate>
-  </Order>
-  <Order>
-    <ID>3</ID>
-    <CustomerName>ddddddd</CustomerName>
-    <CustomerEmail>hhhhhh@.sdfghj</CustomerEmail>
-    <CustomerAdress>ggggggg</CustomerAdress>
-    <OrderDate>2023-02-25T20:59:56.1916394+02:00</OrderDate>
-    <ShipDate xsi:nil="true" />
-    <DeliveryDate xsi:nil="true" />
-  </Order>
+  
 </ArrayOfOrder>
