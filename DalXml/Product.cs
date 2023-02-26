@@ -15,22 +15,30 @@ internal class Product : IProduct
 
     XElement productRoot;
     string productPath = @"..\xml\products.xml";
-
+    /// <summary>
+    /// build the product dal
+    /// </summary>
     public Product()
     {
-        if (!File.Exists(productPath))
+        if (!File.Exists(productPath))//not exist file 
         {
-            CreateFiles();
+            CreateFiles();//create this file
         }
         else
-            LoadData();
+            LoadData();//load data from xml
     }
 
+    /// <summary>
+    /// create a file with products tag
+    /// </summary>
     private void CreateFiles()
     {
         productRoot = new XElement("products");
         productRoot.Save(productPath);
     }
+    /// <summary>
+    /// load data from product.xml
+    /// </summary>
     private void LoadData()
     {
         try
@@ -45,7 +53,7 @@ internal class Product : IProduct
 
 
     /// <summary>
-    /// add object
+    /// add product
     /// </summary>
     /// <param name="p"></param>
     /// <returns></returns>
@@ -53,22 +61,45 @@ internal class Product : IProduct
     public int Add(DO.Product p)
     {
         LoadData();
+        if (productExist(p.ID))
+            throw new Duplication(p.ID, "product");
+
         XElement id = new XElement("id", p.ID);
         XElement name = new XElement("name", p.Name);
         XElement price = new XElement("price", p.Price);
         XElement category = new XElement("category", p.Category_);
         XElement instock = new XElement("inStock", p.InStock);
 
-        //  if (productExist(p.ID))
-        //  throw new Duplication(p.ID, "product");
-
         productRoot.Add(new XElement("product", id, name, price, category, instock));
         productRoot.Save(productPath);
         return p.ID;
     }
-
     /// <summary>
-    /// get object
+    ///  the function checks that there is no product duplication
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="DO.MissingInputValue"></exception>
+    private bool productExist(int id)
+    {
+        LoadData();
+        List<DO.Product> products=new();
+            products = (from p in productRoot.Elements()
+                        select new DO.Product()
+                        {
+                            ID = Convert.ToInt32(p.Element("id")!.Value),
+                            Name = p.Element("name")!.Value,
+                            Price = Convert.ToInt32(p.Element("price")!.Value),
+                            Category_ = (Category)Enum.Parse(typeof(Category), p.Element("category")!.Value ?? throw new DO.MissingInputValue("category")),
+                            InStock = Convert.ToInt32(p.Element("inStock")!.Value)
+                        }).ToList();
+            if (products.Count(p => p.ID == id) > 0)
+                return true;
+            return false;
+   
+        }
+    /// <summary>
+    /// get product
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -101,7 +132,7 @@ internal class Product : IProduct
 
 
     /// <summary>
-    /// delete object
+    /// delete product
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -125,7 +156,7 @@ internal class Product : IProduct
     }
 
     /// <summary>
-    /// update object
+    /// update product
     /// </summary>
     /// <param name="p"></param>
     /// <exception cref="Exception"></exception>
@@ -149,7 +180,7 @@ internal class Product : IProduct
     }
 
     /// <summary>
-    /// get all objects
+    /// get all products
     /// </summary>
     /// <returns></returns>
     public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? Condition = null)
@@ -182,6 +213,12 @@ internal class Product : IProduct
         }
 
     }
+    /// <summary>
+    /// get product by condition
+    /// </summary>
+    /// <param name="Condition"></param>
+    /// <returns></returns>
+    /// <exception cref="DO.MissingInputValue"></exception>
     public DO.Product GetByCon(Func<DO.Product?, bool> Condition)
     {
         LoadData();

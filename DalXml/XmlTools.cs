@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -14,6 +15,13 @@ static class XmlTools
             Directory.CreateDirectory(s_dir);
 
     }
+    /// <summary>
+    /// save list to xml 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="lst"></param>
+    /// <param name="entity"></param>
+    /// <exception cref="Exception"></exception>
     public static void SaveListToXMLSerializer<T>(List<T?> lst, string entity) where T: struct
     {
         string filePath = $"{s_dir + entity}.xml";
@@ -28,7 +36,13 @@ static class XmlTools
             throw new Exception("ex {0}", ex);
         }
     }
-
+    /// <summary>
+    /// load from xml to list
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static List<T?> LoadListFromXMLSerializer<T>(string entity) where T : struct
     {
         string filePath = $"{s_dir + entity}.xml";

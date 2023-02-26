@@ -23,20 +23,6 @@ namespace PL.Orders
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
 
-
-
-        //public ObservableCollection<BO.OrderItem> orderItems
-        //{
-        //    get { return (ObservableCollection<BO.OrderItem>)GetValue(orderItemsProperty); }
-        //    set { SetValue(orderItemsProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for orderItems.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty orderItemsProperty =
-        //    DependencyProperty.Register("orderItems", typeof(ObservableCollection<BO.OrderItem>), typeof(Window), new PropertyMetadata(null));
-
-
-
         public BO.OrderTracking? trackOrder
         {
             get { return (BO.OrderTracking?)GetValue(trackOrderProperty); }

@@ -9,7 +9,7 @@ internal class OrderItem : IOrderItem
 {
     const string s_orderItems = "orderItems";
     /// <summary>
-    /// add object
+    /// add order item
     /// </summary>
     /// <param name="oI"></param>
     /// <returns></returns>
@@ -33,7 +33,7 @@ internal class OrderItem : IOrderItem
     }
 
     /// <summary>
-    /// get object
+    /// get order item
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -46,7 +46,7 @@ internal class OrderItem : IOrderItem
     }
 
     /// <summary>
-    /// get object by ids
+    /// get order item by ids
     /// </summary>
     /// <param name="pId"></param>
     /// <param name="oId"></param>
@@ -59,7 +59,7 @@ internal class OrderItem : IOrderItem
         return orderItems.FirstOrDefault(orderItem => orderItem?.OrderID == oId && orderItem?.ProductID == pId) ?? throw new DO.NotExist(0, "order item");
     }
     /// <summary>
-    /// get all objects
+    /// get all order items
     /// </summary>
     /// <returns></returns>
     public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? Condition = null)
@@ -72,7 +72,7 @@ internal class OrderItem : IOrderItem
     }
 
     /// <summary>
-    /// delete object
+    /// delete order item
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -89,7 +89,7 @@ internal class OrderItem : IOrderItem
     }
 
     /// <summary>
-    /// update object
+    /// update order item
     /// </summary>
     /// <param name="oI"></param>
     /// <exception cref="Exception"></exception>
@@ -99,7 +99,7 @@ internal class OrderItem : IOrderItem
         Add(oI);
     }
     /// <summary>
-    /// get object by condition
+    /// get order item by condition
     /// </summary>
     /// <param name="Condition"></param>
     /// <returns></returns>
@@ -114,7 +114,7 @@ internal class OrderItem : IOrderItem
     }
 
     /// <summary>
-    /// get objects in order
+    /// get order items in order
     /// </summary>
     /// <param name="oIID"></param>
     /// <returns></returns>

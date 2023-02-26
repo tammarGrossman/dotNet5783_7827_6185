@@ -40,7 +40,7 @@ namespace PL.Carts
         {
             InitializeComponent();
             fullCart = ProductsCatalog.c;
-            fullCart.TotalPrice = fullCart.Items.Sum(x => x?.TotalPrice??0);
+            fullCart.TotalPrice = fullCart.Items.Sum(x => x?.TotalPrice ?? 0);
             ProductsCatalog.c.TotalPrice = fullCart.TotalPrice;
         }
         private void orderConfirmation_Click(object sender, RoutedEventArgs e)
@@ -77,10 +77,13 @@ namespace PL.Carts
 
         private void addProductToCart_Click(object sender, RoutedEventArgs e)
         {
+
             try
             {
+                backToCart.Visibility = Visibility.Hidden;
                 int id = ((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductID;
                 fullCart = bl!.Cart.Update(fullCart, id, 1);
+                ProductsCatalog.c = fullCart;
                 MessageBox.Show("the product added sucsessfuly to the cart ");
             }
 
@@ -99,9 +102,18 @@ namespace PL.Carts
         {
             try
             {
+                backToCart.Visibility = Visibility.Hidden;
                 int id = ((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductID;
-               fullCart= bl!.Cart.Update(fullCart, id, -1);
+
+                fullCart = bl!.Cart.Update(fullCart, id, -1);
+                ProductsCatalog.c = fullCart;
                 MessageBox.Show("the product decreased sucsessfuly from the cart ");
+                if (fullCart.Items.Count() == 0)
+                {
+                    backToCart.Visibility = Visibility.Visible;
+                }
+
+
 
             }
 
@@ -119,10 +131,16 @@ namespace PL.Carts
         {
             try
             {
+
                 int id = ((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductID;
                 int index = fullCart.Items.FindIndex(x => x?.ProductID == id);
-                fullCart= bl!.Cart.Update(fullCart, id, -(fullCart.Items[index].Amount));
+                fullCart = bl!.Cart.Update(fullCart, id, -(fullCart.Items[index].Amount));
+                ProductsCatalog.c = fullCart;
                 MessageBox.Show("the product deleted sucsessfuly from the cart ");
+                if (fullCart.Items.Count() == 0)
+                {
+                    backToCart.Visibility = Visibility.Visible;
+                }
 
             }
 
@@ -136,5 +154,13 @@ namespace PL.Carts
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void backToCart_Click(object sender, RoutedEventArgs e) 
+            {
+            new ProductsCatalog().Show();
+            this.Close();
+    }
+
+
     }
 }

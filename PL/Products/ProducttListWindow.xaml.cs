@@ -31,8 +31,7 @@ namespace PL
         {
             InitializeComponent();
             var help = bl!.Product.GetAll();
-            products = help == null ? new() : new(help);
-           // ProductListView.ItemsSource = bl.Product.GetAll();
+            products = help == null ? new() : new(help!);
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
         /// <summary>

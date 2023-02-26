@@ -19,7 +19,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Button Content="Add new Product" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="109,5,0,5" Padding="5" x:Name="addNewProduct" Click="addNewProduct_Click"/>
-        <Button Content="Grouping Products" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="109,5,0,5" Padding="5" x:Name="groupingProducts" Click="groupingProducts_Click"/>
+        <Button Content="Grouping Products" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="109,5,0,5" Padding="5" x:Name="groupingProducts" Click="groupingProducts_Click" Width="214"/>
         <ListView Grid.Row="1" Grid.ColumnSpan="2"  x:Name="productListView" SelectionChanged="productListView_SelectionChanged" ItemsSource="{Binding}"/>
 
 

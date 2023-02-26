@@ -9,13 +9,19 @@ namespace Simulator
         private static EventHandler<OrderStatusUpdateEventArgs> orderStatusChanged;
         private static EventHandler<EventArgs> endSimulator;
         private static volatile bool active;
+        /// <summary>
+        /// creating a process with function  and start it
+        /// </summary>
         public static void initilize()
         {
             Thread t = new Thread(RunSimulator);
             active = true;
             t.Start();
         }
-
+        /// <summary>
+        /// the function treat the procces updating orders and timer
+        /// </summary>
+        /// <param name="obj"></param>
         private static void RunSimulator(object? obj)
         {
             Random rn = new Random();
@@ -50,34 +56,49 @@ namespace Simulator
             }
             endSimulator?.Invoke(null, new());
         }
-
+        /// <summary>
+        /// stop the process 
+        /// </summary>
         public static void stop()
         {
             active = false;
         }
-
+        /// <summary>
+        /// adding the function to the event
+        /// </summary>
+        /// <param name="changeStatusOfOrder"></param>
         public static void RegisterOrderStatusEvent(EventHandler<OrderStatusUpdateEventArgs> changeStatusOfOrder)
         {
             orderStatusChanged += changeStatusOfOrder;
         }
-
+        /// <summary>
+        ///  decrease the function from the event
+        /// </summary>
+        /// <param name="changeStatusOfOrder"></param>
         public static void UnRegisterOrderStatusEvent(EventHandler<OrderStatusUpdateEventArgs> changeStatusOfOrder)
         {
             orderStatusChanged -= changeStatusOfOrder;
         }
-
-
+        /// <summary>
+        /// adding the function to the event
+        /// </summary>
+        /// <param name="endStatus"></param>
         public static void RegisterEndEvent(EventHandler<EventArgs> endStatus)
         {
             endSimulator += endStatus;
         }
-
+        /// <summary>
+        /// decrease the function from the event
+        /// </summary>
+        /// <param name="endStatus"></param>
         public static void UnRegisterEndEvent(EventHandler<EventArgs> endStatus)
         {
             endSimulator -= endStatus;
         }
     }
-
+  /// <summary>
+  /// the event args contain information of order
+  /// </summary>
     public class OrderStatusUpdateEventArgs : EventArgs
     {
         public int OrderId { get; set; }

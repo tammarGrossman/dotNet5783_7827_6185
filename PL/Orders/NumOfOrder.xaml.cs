@@ -44,14 +44,14 @@ namespace PL.Orders
 
         private void moveToTrackOrder_Click(object sender, RoutedEventArgs e)
         {
-            //change which value
-            if (Convert.ToString(orderID)!= "")
+            
+            if (Convert.ToString(orderID)!= ""&& bl!.Order.GetAll().Count(o=>o?.ID==orderID)!=0)
             {
                 new TrackOrderWindow(orderID).Show();
             }
             else
             {
-                MessageBox.Show("id detail is missing");
+                MessageBox.Show("press again");
             }
 
 

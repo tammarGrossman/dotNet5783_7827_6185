@@ -14,7 +14,7 @@ internal class Order : IOrder
     const string s_orders = "orders";
 
     /// <summary>
-    /// add object
+    /// add order
     /// </summary>
     /// <param name="o"></param>
     /// <returns></returns>
@@ -44,21 +44,8 @@ internal class Order : IOrder
        
     }
 
-
-    public void AddToUpdate(DO.Order o)
-    {
-        List<DO.Order?> orders = XmlTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
-        if (orders.FirstOrDefault(order => order?.ID == o.ID) != null)
-            throw new Duplication(o.ID, "order");
-       
-        orders.Add(o);
-        XmlTools.SaveListToXMLSerializer(orders, s_orders);
-
-        
-    }
-
     /// <summary>
-    /// get object
+    /// get order
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -72,7 +59,7 @@ internal class Order : IOrder
 
 
     /// <summary>
-    /// delete object
+    /// delete order
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -87,7 +74,7 @@ internal class Order : IOrder
     }
 
     /// <summary>
-    /// update object
+    /// update order
     /// </summary>
     /// <param name="o"></param>
     /// <exception cref="Exception"></exception>
@@ -98,7 +85,7 @@ internal class Order : IOrder
     }
 
     /// <summary>
-    /// get all objects
+    /// get all orders
     /// </summary>
     /// <returns></returns>
     public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? Condition = null)
@@ -109,6 +96,12 @@ internal class Order : IOrder
             return orders.Where(Condition).OrderBy(o => o?.ID);
         return orders.Select(o => o).OrderBy(o => o?.ID);
     }
+    /// <summary>
+    /// get order by condition
+    /// </summary>
+    /// <param name="Condition"></param>
+    /// <returns></returns>
+    /// <exception cref="NotExist"></exception>
     public DO.Order GetByCon(Func<DO.Order?, bool> Condition)
     {
         List<DO.Order?> orders = XmlTools.LoadListFromXMLSerializer<DO.Order>(s_orders);

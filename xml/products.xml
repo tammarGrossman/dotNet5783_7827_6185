@@ -5,14 +5,14 @@
     <name>tight</name>
     <price>100</price>
     <category>Women</category>
-    <inStock>99</inStock>
+    <inStock>96</inStock>
   </product>
   <product>
     <id>123123</id>
     <name>ball</name>
     <price>120</price>
     <category>Kids</category>
-    <inStock>149</inStock>
+    <inStock>147</inStock>
   </product>
   <product>
     <id>124578</id>
@@ -20,5 +20,61 @@
     <price>150</price>
     <category>Accesories</category>
     <inStock>120</inStock>
+  </product>
+  <product>
+    <id>123345</id>
+    <name>band</name>
+    <price>100</price>
+    <category>Accesories</category>
+    <inStock>121</inStock>
+  </product>
+  <product>
+    <id>456456</id>
+    <name>walker</name>
+    <price>100</price>
+    <category>Accesories</category>
+    <inStock>40</inStock>
+  </product>
+  <product>
+    <id>567555</id>
+    <name>shirt</name>
+    <price>120</price>
+    <category>Women</category>
+    <inStock>36</inStock>
+  </product>
+  <product>
+    <id>333444</id>
+    <name>socks</name>
+    <price>50</price>
+    <category>Kids</category>
+    <inStock>50</inStock>
+  </product>
+  <product>
+    <id>444588</id>
+    <name>skirt</name>
+    <price>200</price>
+    <category>Women</category>
+    <inStock>120</inStock>
+  </product>
+  <product>
+    <id>445554</id>
+    <name>tights</name>
+    <price>35</price>
+    <category>Men</category>
+    <inStock>59</inStock>
+  </product>
+  <product>
+    <id>453354</id>
+    <name>shoes</name>
+    <price>600</price>
+    <category>Men</category>
+    <inStock>148</inStock>
+  </product>
+  <product>
+    <id>457784</id>
+    <name>socks</name>
+    <price>100</price>
+    <category>Women</category>
+    <inStock>99</inStock>
   </product>
 </products>

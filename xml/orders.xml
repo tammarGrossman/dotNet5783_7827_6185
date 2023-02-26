@@ -1,4 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  
+  <Order>
+    <ID>1</ID>
+    <CustomerName>dani</CustomerName>
+    <CustomerEmail>d@gmail.com</CustomerEmail>
+    <CustomerAdress>daniel</CustomerAdress>
+    <OrderDate>2023-02-26T19:22:00.7195011+02:00</OrderDate>
+    <ShipDate>2023-02-26T19:24:53.2482682+02:00</ShipDate>
+    <DeliveryDate>2023-02-26T19:25:45.9343645+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>2</ID>
+    <CustomerName>michal</CustomerName>
+    <CustomerEmail>ms@gmail.com</CustomerEmail>
+    <CustomerAdress>pinkas</CustomerAdress>
+    <OrderDate>2023-02-26T19:23:28.6230773+02:00</OrderDate>
+    <ShipDate>2023-02-26T19:25:36.8679876+02:00</ShipDate>
+    <DeliveryDate>2023-02-26T19:25:53.952294+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>3</ID>
+    <CustomerName>tamar</CustomerName>
+    <CustomerEmail>t@gmail.com</CustomerEmail>
+    <CustomerAdress>rozovsky</CustomerAdress>
+    <OrderDate>2023-02-26T19:27:05.3142203+02:00</OrderDate>
+    <ShipDate>2023-02-26T19:39:43.8183883+02:00</ShipDate>
+    <DeliveryDate>2023-02-26T19:40:04.8497417+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>4</ID>
+    <CustomerName>yael</CustomerName>
+    <CustomerEmail>yyy@gmail.com</CustomerEmail>
+    <CustomerAdress>povarski</CustomerAdress>
+    <OrderDate>2023-02-26T19:39:28.9551261+02:00</OrderDate>
+    <ShipDate>2023-02-26T19:39:53.8389927+02:00</ShipDate>
+    <DeliveryDate>2023-02-26T19:40:13.8628328+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>5</ID>
+    <CustomerName>baruch</CustomerName>
+    <CustomerEmail>bb@gmail.com</CustomerEmail>
+    <CustomerAdress>gotliv</CustomerAdress>
+    <OrderDate>2023-02-26T19:41:29.8121231+02:00</OrderDate>
+    <ShipDate xsi:nil="true" />
+    <DeliveryDate xsi:nil="true" />
+  </Order>
 </ArrayOfOrder>
